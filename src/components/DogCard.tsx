@@ -53,17 +53,19 @@ export default function DogCard() {
   );
 
   const cardError = (message: string) => <Typography color='error'>{message}</Typography>;
-
   return (
     <Card className={classes.root}>
       {dogPic ? cardImage(dogPic) : ''}
       <CardContent className={classes.cardContent}>
-        {!loading && !dogPic && !errorMessage ? (
-          <Typography>Waiting for doggo...</Typography>
-        ) : (
-          ''
-        )}
-        {loading ? <CircularProgress size='80px' color='primary'></CircularProgress> : ''}
+        {
+          !loading && !dogPic && !errorMessage
+            ? <Typography>Waiting for doggo...</Typography> : ''
+        }
+        {
+          loading
+            ? <CircularProgress size='80px' color='primary'></CircularProgress>
+            : ''
+        }
         {errorMessage && !dogPic && !loading ? cardError(errorMessage) : ''}
       </CardContent>
     </Card>
