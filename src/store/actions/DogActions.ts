@@ -33,7 +33,7 @@ export const RandomDogAction: ActionCreator<ThunkAction<
 >> = (dogBreed: string) => {
   return async (dispatch: Dispatch) => {
     try {
-      let result = await (
+      const result = await (
         await fetch(`https://dog.ceo/api/breed/${dogBreed}/images/random`)
       ).json();
       if (result.status !== 'success') throw new Error(result.message);
