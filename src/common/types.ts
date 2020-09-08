@@ -9,17 +9,6 @@ export enum Waves {
   Rear = 'Rear',
 }
 
-export interface IBoard {
-  turn: {
-    player: Players,
-    wave: Waves,
-  },
-  board: {
-    redCore: IBoardCard[][],
-    blueCore: IBoardCard[][],
-  },
-}
-
 export enum AttackTypes {
   Melee = 'Melee',
   Range = 'Range'
@@ -53,7 +42,6 @@ export interface ICardLeader {
 
   power: IPower,
 }
-
 
 export interface IBoardCard {
   cardType: string,
@@ -97,4 +85,9 @@ export interface ILeader {
 
   readonly powerDescription: string,
   power(): any,
+}
+
+export interface ITurn {
+  player: Players,
+  wave: Waves,
 }

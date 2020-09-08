@@ -1,6 +1,11 @@
 import { Reducer } from 'redux';
+import { Players } from '../../common/Types';
 
-export interface IBoardState {}
+export interface IBoardState {
+  [Players.Blue]: {
+    leader:
+  },
+}
 
 const initialBoardState: IBoardState = {};
 
