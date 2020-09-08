@@ -1,14 +1,42 @@
 import { Reducer } from 'redux';
-import { Players } from '../../common/Types';
+import { ICardHero, Players, Waves, Positions, CharacterList } from '../../common/Types';
 
 export interface IBoardState {
   [Players.Blue]: {
-    leader:
+    [Waves.Vanguard]: {
+      [Positions.Left]?: CharacterList,
+      [Positions.Center]?: CharacterList,
+      [Positions.Right]?: CharacterList,
+    },
+    [Waves.Flank]: {
+      [Positions.Left]?: CharacterList,
+      [Positions.Right]?: CharacterList,
+    },
+    [Waves.Rear]: {
+      [Positions.Left]?: CharacterList,
+      [Positions.Center]?: CharacterList,
+      [Positions.Right]?: CharacterList,
+    },
+  },
+  [Players.Red]: {
+    [Waves.Vanguard]: {
+      [Positions.Left]?: CharacterList,
+      [Positions.Center]?: CharacterList,
+      [Positions.Right]?: CharacterList,
+    },
+    [Waves.Flank]: {
+      [Positions.Left]?: CharacterList,
+      [Positions.Right]?: CharacterList,
+    },
+    [Waves.Rear]: {
+      [Positions.Left]?: CharacterList,
+      [Positions.Center]?: CharacterList,
+      [Positions.Right]?: CharacterList,
+    },
   },
 }
 
-const initialBoardState: IBoardState = {};
-
-export const boardReducer: Reducer<IBoardState> = (state = initialBoardState) => {
+export const boardReducer: Reducer<IBoardState> = (state = undefined) => {
   return state;
 };
+

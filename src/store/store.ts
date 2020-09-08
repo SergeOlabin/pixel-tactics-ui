@@ -19,9 +19,9 @@ import { ILeadersState } from './reducers/LeadersReducer';
 export interface IGameState {
   board: IBoardState,
   leaders: ILeadersState,
-  turn?: {
-    firstPlayer: ITurn,
-    secondPlayer: ITurn,
+  turns?: {
+    [Players.Red]: ITurn,
+    [Players.Blue]: ITurn,
   },
   firstPlayer?: Players,
 }

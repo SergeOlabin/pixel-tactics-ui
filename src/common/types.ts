@@ -1,3 +1,12 @@
+export enum CharacterList {
+  Alchemist = 'Alchemist',
+  DragonMage = 'DragonMage',
+  Illusionist = 'Illusionist',
+  Knight = 'Knight',
+  Mascot = 'Mascot',
+  Overlord = 'Overlord',
+}
+
 export enum Players {
   Red = 'Red',
   Blue = 'Blue'
@@ -7,6 +16,12 @@ export enum Waves {
   Vanguard = 'Vanguard',
   Flank = 'Flank',
   Rear = 'Rear',
+}
+
+export enum Positions {
+  Left = 'Left',
+  Center = 'Center',
+  Right = 'Right',
 }
 
 export enum AttackTypes {
@@ -88,6 +103,6 @@ export interface ILeader {
 }
 
 export interface ITurn {
-  player: Players,
   wave: Waves,
+  stage: 'InProgress' | 'Finished' | 'Waiting',
 }
