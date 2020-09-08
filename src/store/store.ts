@@ -15,8 +15,8 @@ import { dogReducer, IDogState } from './reducers/DogReducer';
 
 // Create an interface for the application state
 export interface IAppState {
-  dogState: IDogState;
-  boardState: IBoardState;
+  dogState: IDogState,
+  boardState: IBoardState,
 }
 
 // Create the root reducer

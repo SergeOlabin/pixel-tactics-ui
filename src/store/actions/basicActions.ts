@@ -7,8 +7,8 @@ export enum BasicActionTypes {
 }
 
 export interface IBasicAnyAction {
-  type: BasicActionTypes.ANY;
-  property: any;
+  type: BasicActionTypes.ANY,
+  property: any,
 }
 
 export type BasicActions = IBasicAnyAction;

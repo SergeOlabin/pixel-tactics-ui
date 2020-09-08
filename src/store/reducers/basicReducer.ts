@@ -2,7 +2,7 @@ import { Reducer } from 'redux';
 import { BasicActions, BasicActionTypes } from '../actions/basicActions';
 
 export interface IBasicState {
-  property: any;
+  property: any,
 }
 
 const initialBasicState: IBasicState = {

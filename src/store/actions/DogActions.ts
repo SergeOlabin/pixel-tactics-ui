@@ -9,18 +9,18 @@ export enum DogActionTypes {
 }
 
 export interface IRandomDogAction {
-  type: DogActionTypes.RANDOM_DOG;
-  image: string;
+  type: DogActionTypes.RANDOM_DOG,
+  image: string,
 }
 
 export interface ILoadDogAction {
-  type: DogActionTypes.LOAD_DOG;
-  loading: boolean;
+  type: DogActionTypes.LOAD_DOG,
+  loading: boolean,
 }
 
 export interface IErrorAction {
-  type: DogActionTypes.ERROR;
-  errorMessage: string;
+  type: DogActionTypes.ERROR,
+  errorMessage: string,
 }
 export type DogActions = IRandomDogAction | ILoadDogAction | IErrorAction;
 

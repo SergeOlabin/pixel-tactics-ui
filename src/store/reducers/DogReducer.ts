@@ -2,9 +2,9 @@ import { Reducer } from 'redux';
 import { DogActions, DogActionTypes } from '../actions/DogActions';
 
 export interface IDogState {
-  image: string;
-  loading: boolean;
-  errorMessage: string;
+  image: string,
+  loading: boolean,
+  errorMessage: string,
 }
 
 const initialDogState: IDogState = {
