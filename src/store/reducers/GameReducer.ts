@@ -22,19 +22,20 @@ const initialGameState: IGameState = {
   board: {
     [Players.Red]: {
       [Waves.Vanguard]: {
-        Left: CharacterList.Knight,
+        Left: { type: CharacterList.Knight },
+        Center: { type: CharacterList.Overlord },
       },
       [Waves.Flank]: {
-        Right: CharacterList.Mascot,
+        Right: { type: CharacterList.Mascot },
       },
       [Waves.Rear]: { },
     },
     [Players.Blue]: {
       [Waves.Vanguard]: {
-        Left: CharacterList.Knight,
+        Left: { type: CharacterList.Knight },
       },
       [Waves.Flank]: {
-        Right: CharacterList.Mascot,
+        Right: { type: CharacterList.Mascot },
       },
       [Waves.Rear]: { },
     },

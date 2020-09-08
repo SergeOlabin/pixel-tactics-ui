@@ -1,1 +1,3 @@
-export enum LeadersActions
+export enum LeadersActions {
+
+}

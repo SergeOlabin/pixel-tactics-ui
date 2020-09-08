@@ -59,7 +59,7 @@ export interface ICardLeader {
 }
 
 export interface IBoardCard {
-  cardType: string,
+  type: CharacterList,
   attackType?: AttackTypes,
   corpse?: boolean,
   damage?: number,
