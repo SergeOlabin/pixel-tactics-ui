@@ -1,38 +1,11 @@
 import { IBoardCard, Players, Positions, Waves } from '../../common/Types';
 
+type WaveRecords = Record<Waves, CardRecord>;
+type CardRecord = Partial<Record<Positions, IBoardCard | undefined>>;
+
 export interface IBoardState {
-  [Players.Blue]: {
-    [Waves.Vanguard]: {
-      [Positions.Left]?: IBoardCard,
-      [Positions.Center]?: IBoardCard,
-      [Positions.Right]?: IBoardCard,
-    },
-    [Waves.Flank]: {
-      [Positions.Left]?: IBoardCard,
-      [Positions.Right]?: IBoardCard,
-    },
-    [Waves.Rear]: {
-      [Positions.Left]?: IBoardCard,
-      [Positions.Center]?: IBoardCard,
-      [Positions.Right]?: IBoardCard,
-    },
-  },
-  [Players.Red]: {
-    [Waves.Vanguard]: {
-      [Positions.Left]?: IBoardCard,
-      [Positions.Center]?: IBoardCard,
-      [Positions.Right]?: IBoardCard,
-    },
-    [Waves.Flank]: {
-      [Positions.Left]?: IBoardCard,
-      [Positions.Right]?: IBoardCard,
-    },
-    [Waves.Rear]: {
-      [Positions.Left]?: IBoardCard,
-      [Positions.Center]?: IBoardCard,
-      [Positions.Right]?: IBoardCard,
-    },
-  },
+  [Players.Blue]: WaveRecords,
+  [Players.Red]: WaveRecords,
 }
 
 // export const boardReducer: Reducer<IBoardState> = (state) => {

@@ -1,9 +1,9 @@
 import { Reducer } from 'redux';
-import { Players, ICardLeader } from '../../common/Types';
+import { IBoardCard, Players } from '../../common/Types';
 
 export interface ILeadersState {
-  [Players.Blue]?: ICardLeader,
-  [Players.Red]?: ICardLeader,
+  [Players.Blue]?: IBoardCard,
+  [Players.Red]?: IBoardCard,
 }
 
 const initialLeadersState: ILeadersState = {};

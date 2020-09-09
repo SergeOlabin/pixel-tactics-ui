@@ -3,8 +3,8 @@ import { Character } from '../Characters';
 
 export class DragonMageHero implements IHero {
   public readonly type = 'DragonMage';
-  public readonly attack = 2;
-  public readonly health = 4;
+  public readonly attack = 6;
+  public readonly health = 3;
 
   public vanguardDescription = `
     Attack: Defeat a hero in melee.

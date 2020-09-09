@@ -1,13 +1,13 @@
 import { Reducer } from 'redux';
 import { Players, Waves, CharacterList } from '../../common/Types';
 import { IGameState } from '../store';
-import { cards } from '../../common/Characters';
 
 const initialGameState: IGameState = {
   leaders: {
-    Blue: cards[CharacterList.Alchemist].leader,
-    Red: cards[CharacterList.DragonMage].leader,
+    Blue: { type: CharacterList.Alchemist },
+    Red: { type: CharacterList.DragonMage },
   },
+  activePlayer: Players.Blue,
   firstPlayer: Players.Blue,
   turns: {
     [Players.Blue]: {
@@ -33,11 +33,14 @@ const initialGameState: IGameState = {
     [Players.Blue]: {
       [Waves.Vanguard]: {
         Left: { type: CharacterList.Knight },
+        Center: { type: CharacterList.Illusionist },
       },
       [Waves.Flank]: {
         Right: { type: CharacterList.Mascot },
       },
-      [Waves.Rear]: { },
+      [Waves.Rear]: {
+        Left: { type: CharacterList.DragonMage },
+      },
     },
   },
 };

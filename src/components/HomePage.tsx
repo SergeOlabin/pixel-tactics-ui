@@ -4,6 +4,7 @@ import React from 'react';
 import DogCard from './DogCard';
 import SimpleCard from './SimpleCard';
 import HeroCard from './HeroCard';
+import Board from './Board';
 
 const useStyles = makeStyles({
   root: {
@@ -20,7 +21,8 @@ const HomePage = () => {
 
   return (
     <Container className={classes.root}>
-      <HeroCard type='HUI'></HeroCard>
+      <Board></Board>
+      {/* <HeroCard type='HUI'></HeroCard> */}
       {/* <SimpleCard /> */}
       {/* <DogCard /> */}
     </Container>

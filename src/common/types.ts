@@ -56,10 +56,12 @@ export interface ICardLeader {
   attackType: AttackTypes,
 
   power: IPower,
+  effects?: ICardEffect[],
 }
 
 export interface IBoardCard {
   type: CharacterList,
+  leader?: boolean,
   attackType?: AttackTypes,
   corpse?: boolean,
   damage?: number,
