@@ -1,13 +1,13 @@
-import React from 'react';
 import { makeStyles } from '@material-ui/core';
+import React from 'react';
 import { useSelector } from 'react-redux';
-import { IAppState } from '../store/store';
 import { cards } from '../common/Characters';
+import { IAppState } from '../store/store';
+import HeaderIcon from './card-parts/HeaderIcon';
 
 const useStyles = makeStyles({
   root: {
     width: 150,
-    height: 180,
     backgroundColor: '#e4e8f1',
     borderRadius: '4px',
     border: '3px solid #171818',
@@ -19,9 +19,16 @@ const useStyles = makeStyles({
   header: {
     height: 35,
     display: 'flex',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
+    padding: '0 5px',
+  },
+  stats: {
+    fontSize: '19px',
+    fontWeight: 600,
+    color: '#ee3433',
+    textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000',
   },
   content: {
     flexGrow: 1,
@@ -32,11 +39,16 @@ const useStyles = makeStyles({
     borderRadius: '4px',
     borderStyle: 'solid',
     borderWidth: '2px',
-    margin: '4px 3px',
-    flexGrow: 1,
+    margin: '2px 3px',
+    flexGrow: 0,
     width: 140,
-    fontSize: '10px',
+    fontSize: 8,
     lineHeight: 1.1,
+    textAlign: 'left',
+    padding: 2,
+    height: 30,
+    display: 'flex',
+    alignItems: 'center',
   },
   vanguard: {
     backgroundColor: '#f9dbdb',
@@ -61,20 +73,26 @@ interface IHeroCardProps {
 }
 
 const HeroCard: React.FC<IHeroCardProps> = () => {
-  const card = useSelector((state: IAppState) => state.gameState.board.Red.Vanguard.Center);
   const classes = useStyles();
+  const attackIcon = 'https://img.icons8.com/wired/24/000000/sword.png';
+  const shieldIcon = 'https://img.icons8.com/dotty/24/000000/shield.png';
+
+  const card = useSelector((state: IAppState) => state.gameState.board.Red.Vanguard.Center);
 
   if (!card) return <div>EMPTY</div>;
 
   const cardData = cards[card?.type].hero;
 
-
   return (
     <section className={classes.root}>
       <header className={classes.header}>
         <span>{cardData.type}</span>
-        <span>Attack: {cardData.attack}</span>
-        <span>Health: {cardData.health}</span>
+        <HeaderIcon src={attackIcon}>
+          <span className={classes.stats}>{cardData.attack}</span>
+        </HeaderIcon>
+        <HeaderIcon src={shieldIcon}>
+          <span className={classes.stats}>{cardData.health}</span>
+        </HeaderIcon>
       </header>
       <div className={classes.content}>
         <section className={`${classes.descriptionBlock} ${classes.vanguard}`}>
