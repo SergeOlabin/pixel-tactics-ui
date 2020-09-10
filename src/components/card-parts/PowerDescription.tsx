@@ -5,23 +5,23 @@ export interface IPowerDescriptionProps {
   additionalClasses?: string[],
 }
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   descriptionBlock: {
     borderRadius: '4px',
     borderStyle: 'solid',
     borderWidth: '2px',
-    margin: '2px 3px',
-    flexGrow: 0,
-    width: 140,
+    margin: theme.spacing(0.25),
+    height: 'auto',
+    maxHeight: '100%',
     fontSize: 8,
     lineHeight: 1.1,
     textAlign: 'left',
-    padding: 2,
-    height: 30,
+    padding: theme.spacing(0.25),
     display: 'flex',
     alignItems: 'center',
+    overflow: 'hidden',
   },
-});
+}));
 
 const PowerDescription: React.FC<IPowerDescriptionProps> = (props) => {
   const classes = useStyles();

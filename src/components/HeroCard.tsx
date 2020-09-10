@@ -45,7 +45,7 @@ const HeroCard: React.FC<IHeroCardProps> = (props) => {
   const card = useSelector((state: IAppState) =>
     state.gameState.board[player][place.wave][place.position]);
 
-  if (!card) return (<EmptyBoardCard></EmptyBoardCard>);
+  if (!card) return <EmptyBoardCard></EmptyBoardCard>;
 
   const cardData = cards[card.type].hero;
   const stats = {
@@ -53,26 +53,34 @@ const HeroCard: React.FC<IHeroCardProps> = (props) => {
     health: cardData.health,
   };
 
+  const onMouseEnter = () => console.log('mouseEnter');
+  const onMouseLeave = () => console.log('mouseLeave');
+
   return (
-    <BoardCard
-      header={<CardHeader stats={stats} name={cardData.type}></CardHeader>}
-      content={
-        <React.Fragment>
-          <PowerDescription additionalClasses={[classes.vanguard]}>
-            {cardData.powers.vanguard.description}
-          </PowerDescription>
-          <PowerDescription additionalClasses={[classes.flank]}>
-            {cardData.powers.flank.description}
-          </PowerDescription>
-          <PowerDescription additionalClasses={[classes.rear]}>
-            {cardData.powers.rear.description}
-          </PowerDescription>
-          <PowerDescription additionalClasses={[classes.order]}>
-            {cardData.powers.order.description}
-          </PowerDescription>
-        </React.Fragment>
-      }
-      ></BoardCard>
+    <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+      <BoardCard>
+        {{
+          header: <CardHeader stats={stats} name={cardData.type}></CardHeader>,
+          content: (
+            <React.Fragment>
+              <PowerDescription additionalClasses={[classes.vanguard]}>
+                {cardData.powers.vanguard.description}
+              </PowerDescription>
+              <PowerDescription additionalClasses={[classes.flank]}>
+                {cardData.powers.flank.description}
+              </PowerDescription>
+              <PowerDescription additionalClasses={[classes.rear]}>
+                {cardData.powers.rear.description}
+              </PowerDescription>
+              <PowerDescription additionalClasses={[classes.order]}>
+                {cardData.powers.order.description}
+              </PowerDescription>
+            </React.Fragment>
+          ),
+        }}
+      </BoardCard>
+    </div>
+
   );
 };
 

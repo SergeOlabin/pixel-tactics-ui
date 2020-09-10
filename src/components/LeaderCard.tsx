@@ -25,16 +25,16 @@ const LeaderCard: React.FC<ILeaderCardProps> = () => {
   };
 
   return (
-    <BoardCard
-      header={<CardHeader stats={stats} name={cardData.name}></CardHeader>}
-      content={
-        <React.Fragment>
+    <BoardCard>
+      {{
+        header: <CardHeader stats={stats} name={cardData.name}></CardHeader>,
+        content: (<React.Fragment>
           <PowerDescription>
             {cardData.power.description}
           </PowerDescription>
-        </React.Fragment>
-      }
-    ></BoardCard>
+        </React.Fragment>),
+      }}
+    </BoardCard>
   );
 };
 

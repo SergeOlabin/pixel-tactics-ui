@@ -3,9 +3,9 @@ import React from 'react';
 
 const useStyles = makeStyles({
   root: {
-    width: 150,
+    width: '100%',
     height: '100%',
-    minHeight: 170,
+    overflow: 'hidden',
     backgroundColor: '#e4e8f1',
     borderRadius: '4px',
     border: '3px solid #171818',
@@ -28,16 +28,18 @@ const useStyles = makeStyles({
   },
   content: {
     flexGrow: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: 'grid',
+    gridAutoRows: 'minmax(1px, 1fr)',
+    gridTemplateColumns: '1fr',
+    overflow: 'hidden',
   },
 });
 
 interface IBoardCardProps {
-  header?: React.ReactNode,
-  content?: React.ReactNode,
+  children: {
+    header?: React.ReactNode,
+    content?: React.ReactNode,
+  },
 }
 
 const BoardCard: React.FC<IBoardCardProps> = (props) => {
@@ -46,10 +48,10 @@ const BoardCard: React.FC<IBoardCardProps> = (props) => {
   return (
     <section className={classes.root}>
       <header className={classes.header}>
-        {props.header}
+        {props.children.header}
       </header>
       <div className={classes.content}>
-        {props.content}
+        {props.children.content}
       </div>
     </section>
   );
