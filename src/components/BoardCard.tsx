@@ -39,6 +39,7 @@ interface IBoardCardProps {
   children: {
     header?: React.ReactNode,
     content?: React.ReactNode,
+    className?: string,
   },
 }
 

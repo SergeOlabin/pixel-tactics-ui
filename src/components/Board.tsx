@@ -4,6 +4,7 @@ import Unit from './Unit';
 import { useSelector } from 'react-redux';
 import { IAppState } from '../store/store';
 import { Players } from '../common/Types';
+import TurnCardPlacer from './TurnCardPlacer';
 
 const useStyles = makeStyles(theme => createStyles({
   root: {
@@ -17,6 +18,14 @@ const useStyles = makeStyles(theme => createStyles({
   },
   divider: {
     margin: theme.spacing(1),
+    width: 350,
+  },
+  playerGroup: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  turnCardPlacer: {
+    marginLeft: theme.spacing(10),
   },
 }), { name: 'Board' });
 
@@ -35,13 +44,19 @@ const Board: React.FC<IBoardProps> = () => {
   return (
     <div className={classes.root}>
       <div className={classes.boardsContainer}>
-        <PlayerContext.Provider value={opponent} >
-          <Unit player={opponent} mirrored></Unit>
-        </PlayerContext.Provider>
-        <Divider variant='middle' className={classes.divider}/>
-        <PlayerContext.Provider value={activePlayer}>
-          <Unit player={activePlayer}></Unit>
-        </PlayerContext.Provider>
+        <div className={classes.playerGroup}>
+          <PlayerContext.Provider value={opponent} >
+            <Unit player={opponent} mirrored></Unit>
+            <div className={classes.turnCardPlacer}><TurnCardPlacer mirrored></TurnCardPlacer></div>
+          </PlayerContext.Provider>
+        </div>
+        <Divider variant='middle' className={classes.divider} />
+        <div className={classes.playerGroup}>
+          <PlayerContext.Provider value={activePlayer}>
+            <Unit player={activePlayer}></Unit>
+            <div className={classes.turnCardPlacer}><TurnCardPlacer></TurnCardPlacer></div>
+          </PlayerContext.Provider>
+        </div>
       </div>
     </div>
 

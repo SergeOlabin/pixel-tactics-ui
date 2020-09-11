@@ -16,7 +16,7 @@ const initialGameState: IGameState = {
     },
     [Players.Red]: {
       wave: Waves.Vanguard,
-      stage: 'Waiting',
+      stage: 'Finished',
     },
   },
   board: {
