@@ -1,10 +1,8 @@
 import { Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
-import DogCard from './DogCard';
-import SimpleCard from './SimpleCard';
-import HeroCard from './HeroCard';
 import Board from './Board';
+import PlayerHand from './PlayerHand';
 
 const useStyles = makeStyles({
   root: {
@@ -12,9 +10,10 @@ const useStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'column',
     height: '100vh',
   },
-});
+}, { name: 'Home' });
 
 const HomePage = () => {
   const classes = useStyles();
@@ -22,9 +21,7 @@ const HomePage = () => {
   return (
     <Container className={classes.root}>
       <Board></Board>
-      {/* <HeroCard type='HUI'></HeroCard> */}
-      {/* <SimpleCard /> */}
-      {/* <DogCard /> */}
+      <PlayerHand></PlayerHand>
     </Container>
   );
 };

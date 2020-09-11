@@ -1,13 +1,10 @@
 import { makeStyles } from '@material-ui/core';
-import React, { useContext } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 import { cards } from '../common/Characters';
-import { Positions, Waves } from '../common/Types';
-import { IAppState } from '../store/store';
-import { PlayerContext } from './Board';
-import BoardCard, { EmptyBoardCard } from './BoardCard';
-import PowerDescription from './card-parts/PowerDescription';
+import { IBoardCard, Positions, Waves } from '../common/Types';
 import CardHeader from './card-parts/CardHeader';
+import PowerDescription from './card-parts/PowerDescription';
+import CardTemplate from './CardTemplate';
 
 const useStyles = makeStyles({
   vanguard: {
@@ -34,31 +31,23 @@ interface Place {
 }
 
 interface IHeroCardProps {
-  place: Place,
+  card: IBoardCard,
 }
 
 const HeroCard: React.FC<IHeroCardProps> = (props) => {
   const classes = useStyles();
-  const player = useContext(PlayerContext);
-  const { place } = props;
-
-  const card = useSelector((state: IAppState) =>
-    state.gameState.board[player][place.wave][place.position]);
-
-  if (!card) return <EmptyBoardCard></EmptyBoardCard>;
-
-  const cardData = cards[card.type].hero;
+  const cardData = cards[props.card.type].hero;
   const stats = {
     attack: cardData.attack,
     health: cardData.health,
   };
 
-  const onMouseEnter = () => console.log('mouseEnter');
-  const onMouseLeave = () => console.log('mouseLeave');
+  // const onMouseEnter = () => console.log('mouseEnter');
+  // const onMouseLeave = () => console.log('mouseLeave');
 
   return (
-    <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-      <BoardCard>
+    <>
+      <CardTemplate>
         {{
           header: <CardHeader stats={stats} name={cardData.type}></CardHeader>,
           content: (
@@ -78,8 +67,8 @@ const HeroCard: React.FC<IHeroCardProps> = (props) => {
             </React.Fragment>
           ),
         }}
-      </BoardCard>
-    </div>
+      </CardTemplate>
+    </>
 
   );
 };

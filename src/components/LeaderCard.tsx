@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { IBoardCard } from '../common/Types';
 import { PlayerContext } from './Board';
-import BoardCard, { EmptyBoardCard } from './BoardCard';
+import CardTemplate, { EmptyCardTemplate } from './CardTemplate';
 import CardHeader from './card-parts/CardHeader';
 import PowerDescription from './card-parts/PowerDescription';
 import { useSelector } from 'react-redux';
@@ -16,7 +16,7 @@ const LeaderCard: React.FC<ILeaderCardProps> = () => {
   const player = useContext(PlayerContext);
   const card = useSelector((state: IAppState) => state.gameState.leaders?.[player]);
 
-  if (!card) return <EmptyBoardCard></EmptyBoardCard>;
+  if (!card) return <EmptyCardTemplate></EmptyCardTemplate>;
 
   const cardData = cards[card.type].leader;
   const stats = {
@@ -25,7 +25,7 @@ const LeaderCard: React.FC<ILeaderCardProps> = () => {
   };
 
   return (
-    <BoardCard>
+    <CardTemplate>
       {{
         header: <CardHeader stats={stats} name={cardData.name}></CardHeader>,
         content: (<React.Fragment>
@@ -34,7 +34,7 @@ const LeaderCard: React.FC<ILeaderCardProps> = () => {
           </PowerDescription>
         </React.Fragment>),
       }}
-    </BoardCard>
+    </CardTemplate>
   );
 };
 

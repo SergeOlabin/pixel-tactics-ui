@@ -43,6 +43,13 @@ const initialGameState: IGameState = {
       },
     },
   },
+  hand: [
+    CharacterList.Alchemist,
+    CharacterList.Overlord,
+    CharacterList.Knight,
+    CharacterList.DragonMage,
+    CharacterList.Illusionist,
+  ],
 };
 
 export const gameReducer: Reducer<IGameState> = (state = initialGameState) => {

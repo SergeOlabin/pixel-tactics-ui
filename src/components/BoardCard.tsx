@@ -1,69 +1,29 @@
-import { makeStyles } from '@material-ui/core';
-import React from 'react';
+import React, { useContext } from 'react';
+import { Waves, Positions } from '../common/Types';
+import { PlayerContext } from './Board';
+import { useSelector } from 'react-redux';
+import { IAppState } from '../store/store';
+import HeroCard from './HeroCard';
+import { EmptyCardTemplate } from './CardTemplate';
 
-const useStyles = makeStyles({
-  root: {
-    width: '100%',
-    height: '100%',
-    overflow: 'hidden',
-    backgroundColor: '#e4e8f1',
-    borderRadius: '4px',
-    border: '3px solid #171818',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
+interface Place {
+  wave: Waves,
+  position: Positions,
+}
 
-    '&.empty': {
-      border: '2px dotted #171818',
-    },
-  },
-  header: {
-    height: 20,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
-    padding: '0 5px',
-  },
-  content: {
-    flexGrow: 1,
-    display: 'grid',
-    gridAutoRows: 'minmax(1px, 1fr)',
-    gridTemplateColumns: '1fr',
-    overflow: 'hidden',
-  },
-});
-
-interface IBoardCardProps {
-  children: {
-    header?: React.ReactNode,
-    content?: React.ReactNode,
-    className?: string,
-  },
+export interface IBoardCardProps {
+  place: Place,
 }
 
 const BoardCard: React.FC<IBoardCardProps> = (props) => {
-  const classes = useStyles();
+  const { place } = props;
+  const player = useContext(PlayerContext);
+  const card = useSelector((state: IAppState) =>
+    state.gameState.board[player][place.wave][place.position]);
 
-  return (
-    <section className={classes.root}>
-      <header className={classes.header}>
-        {props.children.header}
-      </header>
-      <div className={classes.content}>
-        {props.children.content}
-      </div>
-    </section>
-  );
-};
+  if (!card) return <EmptyCardTemplate></EmptyCardTemplate>;
 
-export const EmptyBoardCard: React.FC<unknown> = () => {
-  const classes = useStyles();
-
-  return (
-    <section className={[classes.root, 'empty'].join(' ')}>No Card</section>
-  );
+  return (<HeroCard card={card}></HeroCard>);
 };
 
 export default BoardCard;

@@ -1,20 +1,25 @@
-import { makeStyles, createStyles, Divider } from '@material-ui/core';
+import { makeStyles, createStyles, Divider, Button } from '@material-ui/core';
 import React from 'react';
 import Unit from './Unit';
 import { useSelector } from 'react-redux';
 import { IAppState } from '../store/store';
 import { Players } from '../common/Types';
 import TurnCardPlacer from './TurnCardPlacer';
+import FinishTurnButton from './FinishTurn';
 
 const useStyles = makeStyles(theme => createStyles({
   root: {
     width: '100%',
     height: '100%',
-    backgroundColor: theme.palette.primary.light,
+    backgroundColor: theme.palette.background.default,
     padding: theme.spacing(2),
+    display: 'flex',
   },
   boardsContainer: {
-    width: '60%',
+    flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   divider: {
     margin: theme.spacing(1),
@@ -26,6 +31,11 @@ const useStyles = makeStyles(theme => createStyles({
   },
   turnCardPlacer: {
     marginLeft: theme.spacing(10),
+  },
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 }), { name: 'Board' });
 
@@ -57,6 +67,9 @@ const Board: React.FC<IBoardProps> = () => {
             <div className={classes.turnCardPlacer}><TurnCardPlacer></TurnCardPlacer></div>
           </PlayerContext.Provider>
         </div>
+      </div>
+      <div className={classes.buttonContainer}>
+        <FinishTurnButton></FinishTurnButton>
       </div>
     </div>
 
