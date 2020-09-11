@@ -40,22 +40,47 @@ const Unit: React.FC<IUnitProps> = (props) => {
   };
   const classes = useStyles(cardDimensions);
 
-  const playerBoard = useSelector((state: IAppState) => state.gameState.board[props.player]);
+  // const playerUnit = useSelector((state: IAppState) => state.gameState.board[props.player]);
+  const unitMap = [
+    [
+      { wave: Waves.Vanguard, position: Positions.Left },
+      { wave: Waves.Vanguard, position: Positions.Center },
+      { wave: Waves.Vanguard, position: Positions.Right },
+    ],
+    [
+      { wave: Waves.Flank, position: Positions.Left },
+      undefined,
+      { wave: Waves.Flank, position: Positions.Right },
+    ],
+    [
+      { wave: Waves.Rear, position: Positions.Left },
+      { wave: Waves.Rear, position: Positions.Center },
+      { wave: Waves.Rear, position: Positions.Right },
+    ],
+  ];
+
+  if (props.mirrored) {
+    unitMap.map(wave => wave.reverse());
+    unitMap.reverse();
+  }
+
+  const cards = unitMap.map(waves =>
+    waves.map(place => !!place && <HeroCard place={place} key={getKey(place)}></HeroCard>));
+
+  // setLeader
+  cards[1][1] = <LeaderCard key='leader'></LeaderCard>;
 
   return (
     <div className={classes.root}>
-      <HeroCard place={{ wave: Waves.Vanguard, position: Positions.Left }}></HeroCard>
-      <HeroCard place={{ wave: Waves.Vanguard, position: Positions.Center }}></HeroCard>
-      <HeroCard place={{ wave: Waves.Vanguard, position: Positions.Right }}></HeroCard>
-      <HeroCard place={{ wave: Waves.Flank, position: Positions.Left }}></HeroCard>
-      <LeaderCard></LeaderCard>
-      <HeroCard place={{ wave: Waves.Flank, position: Positions.Right }}></HeroCard>
-      <HeroCard place={{ wave: Waves.Rear, position: Positions.Left }}></HeroCard>
-      <HeroCard place={{ wave: Waves.Rear, position: Positions.Center }}></HeroCard>
-      <HeroCard place={{ wave: Waves.Rear, position: Positions.Right }}></HeroCard>
-
+      {[...cards]}
     </div>
   );
 };
 
+const getKey = (place: {
+  wave: Waves,
+  position: Positions,
+}) => `${place.wave}-${place.position}`;
+
 export default Unit;
+
