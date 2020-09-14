@@ -25,7 +25,7 @@ const LeaderCard: React.FC<ILeaderCardProps> = () => {
   };
 
   return (
-    <CardTemplate>
+    <CardTemplate singleDescription>
       {{
         header: <CardHeader stats={stats} name={cardData.name}></CardHeader>,
         content: (<React.Fragment>

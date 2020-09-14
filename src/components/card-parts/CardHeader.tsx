@@ -10,6 +10,7 @@ export interface ICardStats {
 export interface ICardHeaderProps {
   name: string,
   stats: ICardStats,
+  singleDescription?: boolean,
 }
 
 const useStyles = makeStyles({

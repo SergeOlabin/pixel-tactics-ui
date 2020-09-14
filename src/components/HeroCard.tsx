@@ -25,13 +25,9 @@ const useStyles = makeStyles({
   },
 });
 
-interface Place {
-  wave: Waves,
-  position: Positions,
-}
-
 interface IHeroCardProps {
   card: IBoardCard,
+  activeDescriptionWave?: Waves,
 }
 
 const HeroCard: React.FC<IHeroCardProps> = (props) => {
@@ -45,27 +41,38 @@ const HeroCard: React.FC<IHeroCardProps> = (props) => {
   // const onMouseEnter = () => console.log('mouseEnter');
   // const onMouseLeave = () => console.log('mouseLeave');
 
+  const description = props.activeDescriptionWave
+    ? (<PowerDescription additionalClasses={[classes[props.activeDescriptionWave.toLowerCase()]]}>
+      {cardData.powers[props.activeDescriptionWave.toLowerCase()].description}
+    </PowerDescription>)
+    : (
+      <React.Fragment>
+        <PowerDescription additionalClasses={[classes.vanguard]}>
+          {cardData.powers.vanguard.description}
+        </PowerDescription>
+        <PowerDescription additionalClasses={[classes.flank]}>
+          {cardData.powers.flank.description}
+        </PowerDescription>
+        <PowerDescription additionalClasses={[classes.rear]}>
+          {cardData.powers.rear.description}
+        </PowerDescription>
+        <PowerDescription additionalClasses={[classes.order]}>
+          {cardData.powers.order.description}
+        </PowerDescription>
+      </React.Fragment>
+    );
+
   return (
     <>
-      <CardTemplate>
+      <CardTemplate
+        singleDescription={!!props.activeDescriptionWave}
+      >
         {{
-          header: <CardHeader stats={stats} name={cardData.type}></CardHeader>,
-          content: (
-            <React.Fragment>
-              <PowerDescription additionalClasses={[classes.vanguard]}>
-                {cardData.powers.vanguard.description}
-              </PowerDescription>
-              <PowerDescription additionalClasses={[classes.flank]}>
-                {cardData.powers.flank.description}
-              </PowerDescription>
-              <PowerDescription additionalClasses={[classes.rear]}>
-                {cardData.powers.rear.description}
-              </PowerDescription>
-              <PowerDescription additionalClasses={[classes.order]}>
-                {cardData.powers.order.description}
-              </PowerDescription>
-            </React.Fragment>
-          ),
+          header: <CardHeader
+            stats={stats}
+            name={cardData.type}
+          ></CardHeader>,
+          content: (description),
         }}
       </CardTemplate>
     </>

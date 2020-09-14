@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 
 export interface IPowerDescriptionProps {
@@ -20,15 +20,28 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     overflow: 'hidden',
+    '& > p': {
+      width: '100%',
+      maxHeight: '100%',
+      padding: theme.spacing(0.25),
+      position: 'relative',
+    },
   },
-}));
+  textAlign: {
+    textAlign: 'center',
+  },
+}), { name: 'PowerDescription' });
 
 const PowerDescription: React.FC<IPowerDescriptionProps> = (props) => {
   const classes = useStyles();
 
   return (
     <section className={[classes.descriptionBlock, ...props.additionalClasses || []].join(' ')}>
-      {props.children}
+      <Typography
+        variant='body2'
+        className={classes.textAlign}>
+        {props.children}
+      </Typography>
     </section>
   );
 };

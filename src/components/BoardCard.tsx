@@ -23,7 +23,7 @@ const BoardCard: React.FC<IBoardCardProps> = (props) => {
 
   if (!card) return <EmptyCardTemplate></EmptyCardTemplate>;
 
-  return (<HeroCard card={card}></HeroCard>);
+  return (<HeroCard card={card} activeDescriptionWave={props.place.wave}></HeroCard>);
 };
 
 export default BoardCard;

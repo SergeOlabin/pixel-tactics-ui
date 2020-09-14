@@ -8,7 +8,7 @@ const useStyles = makeStyles({
     overflow: 'hidden',
     backgroundColor: '#e4e8f1',
     borderRadius: '4px',
-    border: '3px solid #171818',
+    border: '2px solid #171818',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -18,22 +18,22 @@ const useStyles = makeStyles({
       border: '2px dotted #171818',
     },
   },
-  header: {
-    height: 20,
+  header: (props?: any) => ({
+    height: props.singleDescription ? 40 : 20,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
     padding: '0 5px',
-  },
+  }),
   content: {
     flexGrow: 1,
     display: 'grid',
     gridAutoRows: 'minmax(1px, 1fr)',
-    gridTemplateColumns: '1fr',
+    minWidth: '100%',
     overflow: 'hidden',
   },
-});
+}, { name: 'CardTemplate' });
 
 interface ICardTemplateProps {
   children: {
@@ -41,10 +41,11 @@ interface ICardTemplateProps {
     content?: React.ReactNode,
     className?: string,
   },
+  singleDescription?: boolean,
 }
 
 const CardTemplate: React.FC<ICardTemplateProps> = (props) => {
-  const classes = useStyles();
+  const classes = useStyles(props);
 
   return (
     <section className={classes.root}>
