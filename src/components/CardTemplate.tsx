@@ -15,7 +15,6 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     cursor: 'pointer',
 
-    // eslint-disable-next-line max-len
     boxShadow: '0px 0px 3px 0px black',
     '&.empty': {
       border: '2px dotted #171818',
