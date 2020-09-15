@@ -26,7 +26,7 @@ export interface IGameState {
   activePlayer: Players,
   firstPlayer?: Players,
   hand?: CharacterList[],
-  selectedCard?: IBoardCard,
+  activeCard?: IBoardCard,
 }
 
 // Create an interface for the application state

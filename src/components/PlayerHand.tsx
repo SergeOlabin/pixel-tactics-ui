@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { makeStyles, createStyles } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { IAppState } from '../store/store';
-import HeroCard from './HeroCard';
+import HeroCard, { MagnifiedContext } from './HeroCard';
 import { cardDimensions } from '../common/Constants';
 import { CharacterList } from '../common/Types';
 
@@ -29,8 +29,8 @@ const useStyles = makeStyles(theme => createStyles({
 
   },
   magnified: {
-    width: cardDimensions.width * 1.8,
-    height: cardDimensions.height * 2,
+    width: cardDimensions.width * cardDimensions.magnifyMultipliers.width,
+    height: cardDimensions.height * cardDimensions.magnifyMultipliers.height,
   },
 }), { name: 'PlayerHand' });
 
@@ -63,13 +63,15 @@ const PlayerHand: React.FC<IPlayerHandProps> = (props) => {
         ? classes.magnified
         : '',
       // classes.magnified,
-      ].join(' ')}>
+    ].join(' ')}>
       <div
         className={classes.cardContainer}
         onMouseEnter={() => onMouseEnter(type)}
         onMouseLeave={() => onMouseLeave()}
       >
-        <HeroCard card={{ type }} />
+        <MagnifiedContext.Provider value={magnifiedCardType === type}>
+          <HeroCard card={{ type }} />
+        </MagnifiedContext.Provider>
       </div>
     </div>,
   );

@@ -14,7 +14,7 @@ export const cardDimensions: ICardDimensions = {
   height: 120,
 
   magnifyMultipliers: {
-    height: 1.8,
-    width: 1.6,
+    height: 3,
+    width: 2,
   },
 };

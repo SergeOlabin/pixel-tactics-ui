@@ -1,16 +1,19 @@
 import { makeStyles, Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useContext } from 'react';
+import { MagnifiedContext } from '../HeroCard';
 
 export interface IPowerDescriptionProps {
   additionalClasses?: string[],
+  magnified?: boolean,
 }
 
 const useStyles = makeStyles(theme => ({
-  descriptionBlock: {
+  descriptionBlock: (props?: any) => ({
     borderRadius: '4px',
     borderStyle: 'solid',
     borderWidth: '2px',
-    margin: theme.spacing(0.25),
+    marginTop: props?.magnified ? theme.spacing(0.75) : theme.spacing(0.25),
+    // margin: props?.magnified ? theme.spacing(0.5) : theme.spacing(0.25),
     height: 'auto',
     maxHeight: '100%',
     lineHeight: 1.1,
@@ -25,19 +28,22 @@ const useStyles = makeStyles(theme => ({
       padding: theme.spacing(0.25),
       position: 'relative',
     },
-  },
+  }),
   textAlign: {
     textAlign: 'center',
   },
 }), { name: 'PowerDescription' });
 
 const PowerDescription: React.FC<IPowerDescriptionProps> = (props) => {
-  const classes = useStyles();
+  const magnified = useContext(MagnifiedContext);
+  const classes = useStyles({
+    magnified,
+  });
 
   return (
     <section className={[classes.descriptionBlock, ...props.additionalClasses || []].join(' ')}>
       <Typography
-        variant='body2'
+        variant={ magnified ? 'body1' : 'body2' }
         className={classes.textAlign}>
         {props.children}
       </Typography>

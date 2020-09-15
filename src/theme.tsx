@@ -15,8 +15,11 @@ const theme = createMuiTheme({
     },
   },
   typography: {
-    htmlFontSize: 25,
-
+    // htmlFontSize: 25,
+    fontSize: 10,
+    body1: {
+      lineHeight: 1.2,
+    },
   },
   props: {
 

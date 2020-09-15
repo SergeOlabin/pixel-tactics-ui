@@ -1,8 +1,10 @@
 import { makeStyles } from '@material-ui/core';
-import React from 'react';
+import React, { useContext } from 'react';
+import theme from '../theme';
+import { MagnifiedContext } from './HeroCard';
 
 const useStyles = makeStyles({
-  root: {
+  root:  (props?: any) => ({
     width: '100%',
     height: '100%',
     // overflow: 'hidden',
@@ -14,14 +16,15 @@ const useStyles = makeStyles({
     alignItems: 'center',
     flexDirection: 'column',
     cursor: 'pointer',
+    padding:  props?.magnified ? theme.spacing(0.75) : theme.spacing(0.25),
 
     boxShadow: '0px 0px 3px 0px black',
     '&.empty': {
       border: '2px dotted #171818',
     },
-  },
+  }),
   header: (props?: any) => ({
-    height: props.singleDescription ? 40 : 20,
+    height: (props?.singleDescription || props?.magnified) ? 40 : 20,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -48,7 +51,11 @@ interface ICardTemplateProps {
 }
 
 const CardTemplate: React.FC<ICardTemplateProps> = (props) => {
-  const classes = useStyles(props);
+  const magnified = useContext(MagnifiedContext);
+  const classes = useStyles({
+    singleDescription: props.singleDescription,
+    magnified,
+  });
 
   return (
     <section className={classes.root}>

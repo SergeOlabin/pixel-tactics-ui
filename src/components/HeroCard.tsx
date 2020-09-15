@@ -28,8 +28,9 @@ const useStyles = makeStyles({
 interface IHeroCardProps {
   card: IBoardCard,
   activeDescriptionWave?: Waves,
-  magnified?: boolean,
 }
+
+export const MagnifiedContext = React.createContext<boolean>(false);
 
 const HeroCard: React.FC<IHeroCardProps> = (props, ref) => {
   const classes = useStyles();
@@ -38,9 +39,6 @@ const HeroCard: React.FC<IHeroCardProps> = (props, ref) => {
     attack: cardData.attack,
     health: cardData.health,
   };
-
-  // const onMouseEnter = () => console.log('mouseEnter');
-  // const onMouseLeave = () => console.log('mouseLeave');
 
   const description = props.activeDescriptionWave
     ? (<PowerDescription additionalClasses={[classes[props.activeDescriptionWave.toLowerCase()]]}>
@@ -67,7 +65,6 @@ const HeroCard: React.FC<IHeroCardProps> = (props, ref) => {
     <>
       <CardTemplate
         singleDescription={!!props.activeDescriptionWave}
-        // magnified={props.magnified}
       >
         {{
           header: <CardHeader

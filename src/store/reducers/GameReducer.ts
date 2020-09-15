@@ -28,7 +28,9 @@ const initialGameState: IGameState = {
       [Waves.Flank]: {
         Right: { type: CharacterList.Mascot },
       },
-      [Waves.Rear]: { },
+      [Waves.Rear]: {
+        Left: { type: CharacterList.Knight },
+      },
     },
     [Players.Blue]: {
       [Waves.Vanguard]: {
