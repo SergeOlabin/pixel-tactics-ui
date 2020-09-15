@@ -13,7 +13,6 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(0.25),
     height: 'auto',
     maxHeight: '100%',
-    fontSize: 8,
     lineHeight: 1.1,
     textAlign: 'left',
     padding: theme.spacing(0.25),

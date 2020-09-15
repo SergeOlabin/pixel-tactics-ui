@@ -5,7 +5,7 @@ const useStyles = makeStyles({
   root: {
     width: '100%',
     height: '100%',
-    overflow: 'hidden',
+    // overflow: 'hidden',
     backgroundColor: '#e4e8f1',
     borderRadius: '4px',
     border: '2px solid #171818',
@@ -13,7 +13,10 @@ const useStyles = makeStyles({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
+    cursor: 'pointer',
 
+    // eslint-disable-next-line max-len
+    boxShadow: '0px 0px 3px 0px black',
     '&.empty': {
       border: '2px dotted #171818',
     },
@@ -42,6 +45,7 @@ interface ICardTemplateProps {
     className?: string,
   },
   singleDescription?: boolean,
+  magnified?: boolean,
 }
 
 const CardTemplate: React.FC<ICardTemplateProps> = (props) => {

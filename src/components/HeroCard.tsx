@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import React from 'react';
 import { cards } from '../common/Characters';
-import { IBoardCard, Positions, Waves } from '../common/Types';
+import { IBoardCard, Waves } from '../common/Types';
 import CardHeader from './card-parts/CardHeader';
 import PowerDescription from './card-parts/PowerDescription';
 import CardTemplate from './CardTemplate';
@@ -28,9 +28,10 @@ const useStyles = makeStyles({
 interface IHeroCardProps {
   card: IBoardCard,
   activeDescriptionWave?: Waves,
+  magnified?: boolean,
 }
 
-const HeroCard: React.FC<IHeroCardProps> = (props) => {
+const HeroCard: React.FC<IHeroCardProps> = (props, ref) => {
   const classes = useStyles();
   const cardData = cards[props.card.type].hero;
   const stats = {
@@ -66,6 +67,7 @@ const HeroCard: React.FC<IHeroCardProps> = (props) => {
     <>
       <CardTemplate
         singleDescription={!!props.activeDescriptionWave}
+        // magnified={props.magnified}
       >
         {{
           header: <CardHeader

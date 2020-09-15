@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'grid',
       gridTemplateColumns: `repeat(3, ${cardDimensions.width}px)`,
       gridTemplateRows: `repeat(3, ${cardDimensions.height}px)`,
-      gap: `${theme.spacing(1)}px`,
+      gap: `${theme.spacing(2)}px`,
     }),
     paper: {
       padding: theme.spacing(1),

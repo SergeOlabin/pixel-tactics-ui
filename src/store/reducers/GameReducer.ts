@@ -40,6 +40,7 @@ const initialGameState: IGameState = {
       },
       [Waves.Rear]: {
         Left: { type: CharacterList.DragonMage },
+        Center: { type: CharacterList.DragonMage },
       },
     },
   },

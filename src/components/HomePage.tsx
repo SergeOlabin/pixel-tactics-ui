@@ -13,6 +13,16 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     height: '100vh',
   },
+  boardContainer: {
+    zIndex: 0,
+    flexGrow: 1,
+  },
+  playerHandContainer: {
+    // height: 150,
+    // position: 'absolute',
+    // bottom: 0,
+    zIndex: 10,
+  },
 }, { name: 'Home' });
 
 const HomePage = () => {
@@ -20,8 +30,12 @@ const HomePage = () => {
 
   return (
     <Container className={classes.root}>
-      <Board></Board>
-      <PlayerHand></PlayerHand>
+      <div className={classes.boardContainer}>
+        <Board />
+      </div>
+      <div className={classes.playerHandContainer}>
+        <PlayerHand />
+      </div>
     </Container>
   );
 };
