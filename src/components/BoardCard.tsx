@@ -69,7 +69,7 @@ const BoardCard: React.FC<IBoardCardProps> = (props) => {
     const payload = isActive ? null : {
       card,
       place,
-      type: 'board',
+      location: 'board',
     };
     dispatch(SetActiveCardAction(payload));
   };
