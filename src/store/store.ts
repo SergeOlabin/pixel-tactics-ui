@@ -10,6 +10,7 @@ Redux Thunk middleware allows you to write action creators that return a functio
 */
 import thunk from 'redux-thunk';
 import { ITurn, Players, IBoardCard, CharacterList } from '../common/Types';
+import { activeCardReducer, IActiveCardState } from './reducers/ActiveCardReducer';
 import { IBoardState } from './reducers/BoardReducer';
 // Import reducers and state type
 import { dogReducer, IDogState } from './reducers/DogReducer';
@@ -26,13 +27,13 @@ export interface IGameState {
   activePlayer: Players,
   firstPlayer?: Players,
   hand?: CharacterList[],
-  activeCard?: IBoardCard,
 }
 
 // Create an interface for the application state
 export interface IAppState {
   dogState: IDogState,
   gameState: IGameState,
+  activeCard: IActiveCardState,
 }
 
  // eslint-disable-next-line
@@ -58,6 +59,7 @@ const rootReducer = combineReducers<IAppState>({
   //   leaders: leadersReducer,
   // }),
   gameState: gameReducer,
+  activeCard: activeCardReducer,
 });
 
 // Create a configure store function of type `IAppState`

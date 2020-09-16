@@ -1,31 +1,33 @@
-import React, { useContext, useRef, useState } from 'react';
-import { Waves, Positions } from '../common/Types';
-import { PlayerContext } from './Board';
-import { useSelector } from 'react-redux';
-import { IAppState } from '../store/store';
-import HeroCard, { MagnifiedContext } from './HeroCard';
-import { EmptyCardTemplate } from './CardTemplate';
+import { createStyles, Fade, makeStyles, Theme } from '@material-ui/core';
 import Popper from '@material-ui/core/Popper';
-import { makeStyles, createStyles, Fade } from '@material-ui/core';
+import React, { useContext, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { cardDimensions } from '../common/Constants';
-
-interface Place {
-  wave: Waves,
-  position: Positions,
-}
+import { IPlace } from '../common/Types';
+import { SetActiveCardAction } from '../store/actions/ActiveCardActions';
+import { IAppState } from '../store/store';
+import { PlayerContext } from './Board';
+import { EmptyCardTemplate } from './CardTemplate';
+import HeroCard, { MagnifiedContext } from './HeroCard';
 
 export interface IBoardCardProps {
-  place: Place,
+  place: IPlace,
 }
 
 const TRANSITION_TIMEOUT = 350;
 
-const useStyles = makeStyles(theme => createStyles({
+const useStyles = makeStyles((theme: Theme) => createStyles({
   cardContainer: {
     transition: `box-shadow ${TRANSITION_TIMEOUT}ms`,
     boxShadow: 'none',
     '&:hover': {
-      boxShadow: '0 0 20px 10px #c0bdde',
+      boxShadow: theme.palette.cardShadows?.hover,
+    },
+  },
+  activeCard: {
+    boxShadow: theme.palette.cardShadows?.active,
+    '&:hover': {
+      boxShadow: theme.palette.cardShadows?.active,
     },
   },
   popperContainer: {
@@ -38,31 +40,54 @@ const useStyles = makeStyles(theme => createStyles({
 
 const BoardCard: React.FC<IBoardCardProps> = (props) => {
   const { place } = props;
-  const player = useContext(PlayerContext);
+  const dispatch = useDispatch();
+
+  const ownerPlayer = useContext(PlayerContext);
+  const currentPlayer = useSelector((state: IAppState) => state.gameState.activePlayer);
+
+  const activeCard = useSelector((state: IAppState) => state.activeCard);
   const card = useSelector((state: IAppState) =>
-    state.gameState.board[player][place.wave][place.position]);
-  const classes = useStyles();
+    state.gameState.board[ownerPlayer][place.wave][place.position]);
 
   const [popperOpen, setPopperOpen] = useState(false);
+  const isActive = activeCard?.place === place;
 
-  const handlePopoverOpen = () => {
-    console.log('OPEN');
-    setPopperOpen(true);
+  const handlePopoverOpen = () => setPopperOpen(true);
+  const handlePopoverClose = () => setPopperOpen(false);
+
+  const onCardClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    if (!activeCard && ownerPlayer !== currentPlayer) {
+      console.log('NOT OWNER');
+      return;
+    }
+
+    toggleCardSelection();
   };
-  const handlePopoverClose = () => {
-    console.log('CLOSE');
-    setPopperOpen(false);
+
+  const toggleCardSelection = () => {
+    const payload = isActive ? null : {
+      card,
+      place,
+      type: 'board',
+    };
+    dispatch(SetActiveCardAction(payload));
   };
 
   const anchorRef = useRef<HTMLDivElement>(null);
+  const classes = useStyles();
 
   if (!card) return <EmptyCardTemplate></EmptyCardTemplate>;
 
   return (
     <>
       <div
-        className={classes.cardContainer}
+        className={[
+          classes.cardContainer,
+          isActive ? classes.activeCard : '',
+        ].join(' ')}
         style={{ width: '100%', height: '100%' }}
+        onClick={onCardClick}
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}
         ref={anchorRef}

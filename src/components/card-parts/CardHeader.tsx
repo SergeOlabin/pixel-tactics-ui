@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import React from 'react';
 import HeaderIcon from './HeaderIcon';
-import { ATTACK_ICON } from './Icons';
+import { ATTACK_ICON, SHIELD_ICON  } from './Icons';
 
 export interface ICardStats {
   attack: number,
@@ -43,10 +43,15 @@ const useStyles = makeStyles(theme => ({
     top: -7,
   },
   attackContainer: {
-    left: -15,
+    top: -17,
+    left: -22,
   },
   healthContainer: {
-    right: -15,
+    top: -17,
+    right: -13,
+  },
+  attackText: {
+    // position: 'a'
   },
 
   // statsContainer: {
@@ -76,20 +81,20 @@ const CardHeader: React.FC<ICardHeaderProps> = (props) => {
   return (
     <div className={classes.root}>
       <div className={[classes.statsContainer, classes.attackContainer].join(' ')}>
-        <HeaderIcon src={attackIcon}>
-          {/* {ATTACK_ICON} */}
-
+        {/* <HeaderIcon src={attackIcon}>
           <span className={classes.stats}>{props.stats.attack}</span>
-        </HeaderIcon>
+        </HeaderIcon> */}
+        {ATTACK_ICON}
       </div>
 
       <div className={classes.nameContainer}>
         <span className={classes.name}>{props.name}</span>
       </div>
       <div className={[classes.statsContainer, classes.healthContainer].join(' ')}>
-        <HeaderIcon src={shieldIcon}>
+        {/* <HeaderIcon src={shieldIcon}>
           <span className={classes.stats}>{props.stats.health}</span>
-        </HeaderIcon>
+        </HeaderIcon> */}
+        {SHIELD_ICON}
       </div>
     </div>
   );

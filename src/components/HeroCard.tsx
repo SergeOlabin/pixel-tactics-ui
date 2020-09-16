@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core';
+import { deepPurple } from '@material-ui/core/colors';
 import React from 'react';
 import { cards } from '../common/Characters';
 import { IBoardCard, Waves } from '../common/Types';
@@ -20,7 +21,7 @@ const useStyles = makeStyles({
     borderColor: '#00464d',
   },
   order: {
-    backgroundColor: '#e4d5e8',
+    backgroundColor: deepPurple[100],
     borderColor: '#71206c',
   },
 });

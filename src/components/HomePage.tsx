@@ -1,6 +1,8 @@
 import { Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { SetActiveCardAction } from '../store/actions/ActiveCardActions';
 import Board from './Board';
 import PlayerHand from './PlayerHand';
 
@@ -27,9 +29,16 @@ const useStyles = makeStyles({
 
 const HomePage = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const resetActiveCard = () => {
+    console.log('CARD RESET ON ROOT CLICK');
+
+    dispatch(SetActiveCardAction(null));
+  };
 
   return (
-    <Container className={classes.root}>
+    <Container className={classes.root} onClick={resetActiveCard}>
       <div className={classes.boardContainer}>
         <Board />
       </div>
