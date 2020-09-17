@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { IBoardCard } from '../common/Types';
 import { PlayerContext } from './Board';
 import CardTemplate, { EmptyCardTemplate } from './CardTemplate';
@@ -10,7 +10,7 @@ import { cards } from '../common/Characters';
 
 import { makeStyles, createStyles, Fade, Popper } from '@material-ui/core';
 import { SetActiveCardAction } from '../store/actions/ActiveCardActions';
-import { TRANSITION_TIMEOUT } from '../common/Constants';
+import { CARD_DIMENSIONS, TRANSITION_TIMEOUT } from '../common/Constants';
 import HeroCard, { MagnifiedContext } from './HeroCard';
 
 export interface ILeaderCardProps {
@@ -29,7 +29,12 @@ const useStyles = makeStyles(theme => createStyles({
       boxShadow: theme.palette.cardShadows?.active,
     },
   },
-
+  popperContainer: {
+    marginLeft: theme.spacing(2),
+    width: CARD_DIMENSIONS.width * CARD_DIMENSIONS.magnifyMultipliers.width,
+    height: CARD_DIMENSIONS.width * CARD_DIMENSIONS.magnifyMultipliers.height,
+    boxShadow: '0 0 40px 10px #00000099',
+  },
 }), { name: 'LeaderCard' });
 
 const LeaderCard: React.FC<ILeaderCardProps> = () => {
@@ -40,7 +45,14 @@ const LeaderCard: React.FC<ILeaderCardProps> = () => {
   const card = useSelector((state: IAppState) => state.gameState.leaders?.[ownerPlayer]);
   const activeCard = useSelector((state: IAppState) => state.activeCard);
 
+
+  const [popperOpen, setPopperOpen] = useState(false);
+  const handlePopoverOpen = () => setPopperOpen(true);
+  const handlePopoverClose = () => setPopperOpen(false);
+
   const classes = useStyles();
+
+  const anchorRef = useRef<HTMLDivElement>(null);
 
   if (!card) return <EmptyCardTemplate></EmptyCardTemplate>;
 
@@ -74,7 +86,12 @@ const LeaderCard: React.FC<ILeaderCardProps> = () => {
       <div className={[
         classes.card,
         isActive ? classes.active : '',
-      ].join(' ')} onClick={onCardClick}>
+      ].join(' ')}
+        onClick={onCardClick}
+        onMouseEnter={handlePopoverOpen}
+        onMouseLeave={handlePopoverClose}
+        ref={anchorRef}
+      >
         <CardTemplate singleDescription>
           {{
             header: <CardHeader stats={stats} name={cardData.name}></CardHeader>,
@@ -86,7 +103,7 @@ const LeaderCard: React.FC<ILeaderCardProps> = () => {
           }}
         </CardTemplate>
       </div>
-      {/* (
+      {(
         <Popper
           style={{ zIndex: 100 }}
           anchorEl={anchorRef.current}
@@ -104,7 +121,7 @@ const LeaderCard: React.FC<ILeaderCardProps> = () => {
             </Fade>
           )}
         </Popper >
-      ) */}
+      )}
     </>
   );
 };
