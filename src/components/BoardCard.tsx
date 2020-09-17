@@ -2,7 +2,7 @@ import { createStyles, Fade, makeStyles, Theme } from '@material-ui/core';
 import Popper from '@material-ui/core/Popper';
 import React, { useContext, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { cardDimensions } from '../common/Constants';
+import { CARD_DIMENSIONS, TRANSITION_TIMEOUT } from '../common/Constants';
 import { IPlace } from '../common/Types';
 import { SetActiveCardAction } from '../store/actions/ActiveCardActions';
 import { IAppState } from '../store/store';
@@ -13,8 +13,6 @@ import HeroCard, { MagnifiedContext } from './HeroCard';
 export interface IBoardCardProps {
   place: IPlace,
 }
-
-const TRANSITION_TIMEOUT = 350;
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   cardContainer: {
@@ -32,8 +30,8 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   popperContainer: {
     marginLeft: theme.spacing(2),
-    width: cardDimensions.width * cardDimensions.magnifyMultipliers.width,
-    height: cardDimensions.width * cardDimensions.magnifyMultipliers.height,
+    width: CARD_DIMENSIONS.width * CARD_DIMENSIONS.magnifyMultipliers.width,
+    height: CARD_DIMENSIONS.width * CARD_DIMENSIONS.magnifyMultipliers.height,
     boxShadow: '0 0 40px 10px #00000099',
   },
 }), { name: 'BoardCard' });

@@ -62,6 +62,10 @@ const useStyles = makeStyles(theme => ({
   //   justifyContent: 'space-evenly',
   // },
   stats: {
+    width: 30,
+    position: 'absolute',
+    top: 5,
+    left: 1,
     fontSize: '16px',
     fontWeight: 600,
     color: theme.palette.grey[200],
@@ -81,9 +85,8 @@ const CardHeader: React.FC<ICardHeaderProps> = (props) => {
   return (
     <div className={classes.root}>
       <div className={[classes.statsContainer, classes.attackContainer].join(' ')}>
-        {/* <HeaderIcon src={attackIcon}>
-          <span className={classes.stats}>{props.stats.attack}</span>
-        </HeaderIcon> */}
+        <div className={classes.stats}>{props.stats.attack}</div>
+
         {ATTACK_ICON}
       </div>
 
@@ -94,7 +97,9 @@ const CardHeader: React.FC<ICardHeaderProps> = (props) => {
         {/* <HeaderIcon src={shieldIcon}>
           <span className={classes.stats}>{props.stats.health}</span>
         </HeaderIcon> */}
+        <div className={classes.stats}>{props.stats.health}</div>
         {SHIELD_ICON}
+
       </div>
     </div>
   );

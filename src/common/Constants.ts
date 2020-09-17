@@ -9,7 +9,7 @@ export interface ICardDimensions {
   },
 }
 
-export const cardDimensions: ICardDimensions = {
+export const CARD_DIMENSIONS: ICardDimensions = {
   width: 100,
   height: 120,
 
@@ -18,3 +18,5 @@ export const cardDimensions: ICardDimensions = {
     width: 2,
   },
 };
+
+export const TRANSITION_TIMEOUT = 350;

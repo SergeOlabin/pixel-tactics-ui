@@ -8,8 +8,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IAppState } from '../store/store';
 import { cards } from '../common/Characters';
 
-import { makeStyles, createStyles } from '@material-ui/core';
+import { makeStyles, createStyles, Fade, Popper } from '@material-ui/core';
 import { SetActiveCardAction } from '../store/actions/ActiveCardActions';
+import { TRANSITION_TIMEOUT } from '../common/Constants';
+import HeroCard, { MagnifiedContext } from './HeroCard';
 
 export interface ILeaderCardProps {
   card?: IBoardCard,
@@ -68,21 +70,42 @@ const LeaderCard: React.FC<ILeaderCardProps> = () => {
   };
 
   return (
-    <div className={[
-      classes.card,
-      isActive ? classes.active : '',
-    ].join(' ')} onClick={onCardClick}>
-      <CardTemplate singleDescription>
-        {{
-          header: <CardHeader stats={stats} name={cardData.name}></CardHeader>,
-          content: (<React.Fragment>
-            <PowerDescription>
-              {cardData.power.description}
-            </PowerDescription>
-          </React.Fragment>),
-        }}
-      </CardTemplate>
-    </div>
+    <>
+      <div className={[
+        classes.card,
+        isActive ? classes.active : '',
+      ].join(' ')} onClick={onCardClick}>
+        <CardTemplate singleDescription>
+          {{
+            header: <CardHeader stats={stats} name={cardData.name}></CardHeader>,
+            content: (<React.Fragment>
+              <PowerDescription>
+                {cardData.power.description}
+              </PowerDescription>
+            </React.Fragment>),
+          }}
+        </CardTemplate>
+      </div>
+      {/* (
+        <Popper
+          style={{ zIndex: 100 }}
+          anchorEl={anchorRef.current}
+          open={popperOpen}
+          placement='right'
+          transition
+        >
+          {({ TransitionProps }) => (
+            <Fade {...TransitionProps} timeout={TRANSITION_TIMEOUT}>
+              <div className={classes.popperContainer}>
+                <MagnifiedContext.Provider value={true}>
+                  <HeroCard card={card} />
+                </MagnifiedContext.Provider>
+              </div>
+            </Fade>
+          )}
+        </Popper >
+      ) */}
+    </>
   );
 };
 

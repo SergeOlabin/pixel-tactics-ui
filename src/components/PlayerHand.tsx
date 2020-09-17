@@ -3,7 +3,7 @@ import { makeStyles, createStyles } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { IAppState } from '../store/store';
 import HeroCard, { MagnifiedContext } from './HeroCard';
-import { cardDimensions } from '../common/Constants';
+import { CARD_DIMENSIONS } from '../common/Constants';
 import { CharacterList } from '../common/Types';
 import { SetActiveCardAction } from '../store/actions/ActiveCardActions';
 
@@ -11,15 +11,15 @@ const useStyles = makeStyles(theme => createStyles({
   root: {
     display: 'flex',
     alignItems: 'flex-end',
-    gridTemplateColumns: `repeat(1, ${cardDimensions.width}px)`,
-    gridTemplateRows: `repeat(auto, ${cardDimensions.height}px)`,
+    gridTemplateColumns: `repeat(1, ${CARD_DIMENSIONS.width}px)`,
+    gridTemplateRows: `repeat(auto, ${CARD_DIMENSIONS.height}px)`,
     gap: `${theme.spacing(2)}px`,
     padding: theme.spacing(2),
     height: 150,
   },
   card: {
-    width: cardDimensions.width,
-    height: cardDimensions.height,
+    width: CARD_DIMENSIONS.width,
+    height: CARD_DIMENSIONS.height,
     transition: 'width 0.5s, height 0.2s',
     '&:hover': {
       boxShadow: theme.palette.cardShadows?.hover,
@@ -32,8 +32,8 @@ const useStyles = makeStyles(theme => createStyles({
     },
   },
   magnified: {
-    width: cardDimensions.width * cardDimensions.magnifyMultipliers.width,
-    height: cardDimensions.height * cardDimensions.magnifyMultipliers.height,
+    width: CARD_DIMENSIONS.width * CARD_DIMENSIONS.magnifyMultipliers.width,
+    height: CARD_DIMENSIONS.height * CARD_DIMENSIONS.magnifyMultipliers.height,
   },
 }), { name: 'PlayerHand' });
 

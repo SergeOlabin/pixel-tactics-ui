@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { makeStyles, createStyles } from '@material-ui/core';
 import { Waves, Players } from '../common/Types';
-import { cardDimensions, ICardDimensions } from '../common/Constants';
+import { CARD_DIMENSIONS, ICardDimensions } from '../common/Constants';
 import { PlayerContext } from './Board';
 import { useSelector } from 'react-redux';
 import { IAppState } from '../store/store';
@@ -9,8 +9,8 @@ import { IAppState } from '../store/store';
 const useStyles = makeStyles(theme => createStyles({
   root: {
     display: 'grid',
-    gridTemplateColumns: `repeat(1, ${cardDimensions.width}px)`,
-    gridTemplateRows: `repeat(3, ${cardDimensions.height}px)`,
+    gridTemplateColumns: `repeat(1, ${CARD_DIMENSIONS.width}px)`,
+    gridTemplateRows: `repeat(3, ${CARD_DIMENSIONS.height}px)`,
     gap: `${theme.spacing(1)}px`,
   },
   cardSlot: (props: ICardDimensions) => ({
@@ -30,7 +30,7 @@ export interface ITurnCardPlacerProps {
 }
 
 const TurnCardPlacer: React.FC<ITurnCardPlacerProps> = (props) => {
-  const classes = useStyles(cardDimensions);
+  const classes = useStyles(CARD_DIMENSIONS);
   const slots = Object.values(Waves);
   if (props.mirrored) slots.reverse();
 

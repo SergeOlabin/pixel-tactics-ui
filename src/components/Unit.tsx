@@ -1,6 +1,6 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import React from 'react';
-import { cardDimensions, ICardDimensions } from '../common/Constants';
+import { CARD_DIMENSIONS, ICardDimensions } from '../common/Constants';
 import { Players, Positions, Waves } from '../common/Types';
 import BoardCard from './BoardCard';
 import LeaderCard from './LeaderCard';
@@ -46,7 +46,7 @@ const getUnitMap = () => [
 ];
 
 const Unit: React.FC<IUnitProps> = (props) => {
-  const classes = useStyles(cardDimensions);
+  const classes = useStyles(CARD_DIMENSIONS);
 
   // const playerUnit = useSelector((state: IAppState) => state.gameState.board[props.player]);
 
