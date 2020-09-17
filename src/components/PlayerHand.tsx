@@ -14,8 +14,8 @@ const useStyles = makeStyles(theme => createStyles({
     gridTemplateColumns: `repeat(1, ${CARD_DIMENSIONS.width}px)`,
     gridTemplateRows: `repeat(auto, ${CARD_DIMENSIONS.height}px)`,
     gap: `${theme.spacing(2)}px`,
-    padding: theme.spacing(2),
-    height: 150,
+    // padding: theme.spacing(2),
+    height: '100%',
   },
   card: {
     width: CARD_DIMENSIONS.width,

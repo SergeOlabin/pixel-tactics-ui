@@ -1,4 +1,4 @@
-import { Container } from '@material-ui/core';
+import { Container, createStyles } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -6,7 +6,7 @@ import { SetActiveCardAction } from '../store/actions/ActiveCardActions';
 import Board from './Board';
 import PlayerHand from './PlayerHand';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => createStyles({
   root: {
     textAlign: 'center',
     display: 'flex',
@@ -20,12 +20,13 @@ const useStyles = makeStyles({
     flexGrow: 1,
   },
   playerHandContainer: {
-    // height: 150,
+    height: 120,
+    paddingBottom: theme.spacing(1),
     // position: 'absolute',
     // bottom: 0,
     zIndex: 10,
   },
-}, { name: 'Home' });
+}), { name: 'Home' });
 
 const HomePage = () => {
   const classes = useStyles();

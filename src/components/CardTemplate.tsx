@@ -9,7 +9,6 @@ const useStyles = makeStyles({
     width: '100%',
     height: '100%',
     // overflow: 'hidden',
-    // backgroundColor: orange[50],
     backgroundColor: deepPurple[50],
     borderRadius: '4px',
     border: '2px solid #171818',
@@ -23,6 +22,7 @@ const useStyles = makeStyles({
     boxShadow: '0px 0px 3px 0px black',
     '&.empty': {
       border: '2px dotted #171818',
+      backgroundColor: yellow[50],
     },
   }),
   header: (props?: any) => ({
