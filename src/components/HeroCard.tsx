@@ -26,7 +26,7 @@ const useStyles = makeStyles({
   },
 });
 
-interface IHeroCardProps {
+export interface IHeroCardProps {
   card: IBoardCard,
   activeDescriptionWave?: Waves,
 }

@@ -25,7 +25,6 @@ const useStyles = makeStyles(theme => ({
     position: 'relative',
   },
   nameContainer: {
-    // flexGrow: 3,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -36,8 +35,6 @@ const useStyles = makeStyles(theme => ({
     borderRadius: '50%',
     height: 25,
     width: 25,
-    // border: '2px solid #171818',
-    // backgroundColor: theme.palette.background.default,
     position: 'absolute',
     zIndex: 50,
     top: -7,
@@ -50,17 +47,6 @@ const useStyles = makeStyles(theme => ({
     top: -17,
     right: -13,
   },
-  attackText: {
-    // position: 'a'
-  },
-
-  // statsContainer: {
-  //   flexGrow: 1,
-  //   display: 'flex',
-  //   alignItems: 'center',
-  //   height: '100%',
-  //   justifyContent: 'space-evenly',
-  // },
   stats: {
     width: 30,
     position: 'absolute',
@@ -78,9 +64,6 @@ const useStyles = makeStyles(theme => ({
 
 const CardHeader: React.FC<ICardHeaderProps> = (props) => {
   const classes = useStyles();
-  const iconSize = 36;
-  const attackIcon = `https://img.icons8.com/officel/${iconSize}/000000/sword.png`;
-  const shieldIcon = `https://img.icons8.com/color/${iconSize}/000000/shield--v1.png`;
 
   return (
     <div className={classes.root}>
