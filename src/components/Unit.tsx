@@ -2,7 +2,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import React from 'react';
 import { CARD_DIMENSIONS, ICardDimensions } from '../common/Constants';
 import { Players, Positions, Waves } from '../common/Types';
-import BoardCard from './BoardCard';
+import BoardCard, { BoardCardWithPreview } from './BoardCard';
 import LeaderCard from './LeaderCard';
 
 
@@ -57,7 +57,7 @@ const Unit: React.FC<IUnitProps> = (props) => {
   }
 
   const cards = unitMap.map(waves =>
-    waves.map(place => !!place && <BoardCard place={place} key={getKey(place)}></BoardCard>));
+    waves.map(place => !!place && <BoardCardWithPreview place={place} key={getKey(place)} />));
 
   // setLeader
   cards[1][1] = <LeaderCard key='leader'></LeaderCard>;

@@ -9,6 +9,7 @@ import { IAppState } from '../store/store';
 import { PlayerContext } from './Board';
 import { EmptyCardTemplate } from './CardTemplate';
 import HeroCard, { MagnifiedContext } from './HeroCard';
+import WithPopperPreview from './WithPopperPreview';
 
 export interface IBoardCardProps {
   place: IPlace,
@@ -47,11 +48,11 @@ const BoardCard: React.FC<IBoardCardProps> = (props) => {
   const card = useSelector((state: IAppState) =>
     state.gameState.board[ownerPlayer][place.wave][place.position]);
 
-  const [popperOpen, setPopperOpen] = useState(false);
+  // const [popperOpen, setPopperOpen] = useState(false);
   const isActive = activeCard?.place === place;
 
-  const handlePopoverOpen = () => setPopperOpen(true);
-  const handlePopoverClose = () => setPopperOpen(false);
+  // const handlePopoverOpen = () => setPopperOpen(true);
+  // const handlePopoverClose = () => setPopperOpen(false);
 
   const onCardClick = (event: React.MouseEvent) => {
     event.stopPropagation();
@@ -86,13 +87,13 @@ const BoardCard: React.FC<IBoardCardProps> = (props) => {
         ].join(' ')}
         style={{ width: '100%', height: '100%' }}
         onClick={onCardClick}
-        onMouseEnter={handlePopoverOpen}
-        onMouseLeave={handlePopoverClose}
+        // onMouseEnter={handlePopoverOpen}
+        // onMouseLeave={handlePopoverClose}
         ref={anchorRef}
       >
         <HeroCard card={card} activeDescriptionWave={props.place.wave} />
       </div>
-      {
+      {/* {
         (
           <Popper
             style={{ zIndex: 100 }}
@@ -112,9 +113,11 @@ const BoardCard: React.FC<IBoardCardProps> = (props) => {
             )}
           </Popper >
         )
-      }
+      } */}
     </>
   );
 };
+
+export const BoardCardWithPreview = WithPopperPreview<IBoardCardProps>(BoardCard);
 
 export default BoardCard;
