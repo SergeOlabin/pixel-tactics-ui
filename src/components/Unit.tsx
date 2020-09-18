@@ -3,7 +3,7 @@ import React from 'react';
 import { CARD_DIMENSIONS, ICardDimensions } from '../common/Constants';
 import { Players, Positions, Waves } from '../common/Types';
 import BoardCard from './BoardCard';
-import LeaderCard from './LeaderCard';
+import LeaderCard, { LeaderCardWithPopperPreview } from './LeaderCard';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -60,7 +60,7 @@ const Unit: React.FC<IUnitProps> = (props) => {
     waves.map(place => !!place && <BoardCard place={place} key={getKey(place)} />));
 
   // setLeader
-  cards[1][1] = <LeaderCard key='leader'></LeaderCard>;
+  cards[1][1] = <LeaderCardWithPopperPreview key='leader' />;
 
   return (
     <div className={classes.root}>
