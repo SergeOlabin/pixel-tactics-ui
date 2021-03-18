@@ -72,7 +72,11 @@ const CardTemplate: React.FC<ICardTemplateProps> = (props) => {
 };
 
 export const EmptyCardTemplate: React.FC<unknown> = () => {
-  const classes = useStyles();
+  const classes = useStyles({
+    root: {
+
+    },
+  });
 
   return (
     <section className={[classes.root, 'empty'].join(' ')}>No Card</section>
