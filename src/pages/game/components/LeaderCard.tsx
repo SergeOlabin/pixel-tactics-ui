@@ -2,8 +2,8 @@ import { createStyles, makeStyles } from '@material-ui/core';
 import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CARDS } from '../../../shared/Characters';
-import { IBoardCard } from '../../../shared/Types';
-import { SetActiveCardAction } from '../../../store/actions/ActiveCardActions';
+import { IBoardCard } from '../../../shared/types';
+import { ActiveCardLocation, setActiveCard } from '../../../store/slices/active-card-slice';
 import { IAppState } from '../../../store/store';
 import { PlayerContext } from './Board';
 import CardHeader from './card-parts/CardHeader';
@@ -35,8 +35,8 @@ const LeaderCard: React.FC<ILeaderCardProps> = () => {
   const dispatch = useDispatch();
   const ownerPlayer = useContext(PlayerContext);
 
-  const currentPlayer = useSelector((state: IAppState) => state.gameState.activePlayer);
-  const card = useSelector((state: IAppState) => state.gameState.leaders?.[ownerPlayer]);
+  const currentPlayer = useSelector((state: IAppState) => state.game.activePlayer);
+  const card = useSelector((state: IAppState) => state.game.leaders?.[ownerPlayer]);
   const activeCard = useSelector((state: IAppState) => state.activeCard);
 
   const classes = useStyles();
@@ -48,7 +48,8 @@ const LeaderCard: React.FC<ILeaderCardProps> = () => {
     attack: cardData.attack,
     health: cardData.health,
   };
-  const isActive = activeCard?.location === 'leader' && ownerPlayer === currentPlayer;
+  const isActive = activeCard?.location === ActiveCardLocation.Leader
+    && ownerPlayer === currentPlayer;
 
   const onCardClick = (event: React.MouseEvent) => {
     event.stopPropagation();
@@ -63,9 +64,9 @@ const LeaderCard: React.FC<ILeaderCardProps> = () => {
   const toggleCardSelection = () => {
     const payload = isActive ? null : {
       card,
-      location: 'leader',
+      location: ActiveCardLocation.Leader,
     };
-    dispatch(SetActiveCardAction(payload));
+    dispatch(setActiveCard(payload));
   };
 
   return (

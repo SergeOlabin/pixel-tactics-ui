@@ -3,7 +3,7 @@ import { makeStyles, createStyles } from '@material-ui/core';
 import { PlayerContext } from './Board';
 import { useSelector } from 'react-redux';
 import { CARD_DIMENSIONS, ICardDimensions } from '../../../shared/constants/CardGeometry';
-import { Waves, Players } from '../../../shared/Types';
+import { Waves, Players } from '../../../shared/types';
 import { IAppState } from '../../../store/store';
 
 const useStyles = makeStyles(theme => createStyles({
@@ -35,7 +35,7 @@ const TurnCardPlacer: React.FC<ITurnCardPlacerProps> = (props) => {
   if (props.mirrored) slots.reverse();
 
   const player = useContext(PlayerContext);
-  const turn = useSelector((state: IAppState) => state.gameState.turns[player]);
+  const turn = useSelector((state: IAppState) => state.game.turns[player]);
   console.log(turn);
 
   return (

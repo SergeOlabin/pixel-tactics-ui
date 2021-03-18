@@ -3,7 +3,7 @@ import React from 'react';
 import Unit from './Unit';
 import { useSelector } from 'react-redux';
 import { IAppState } from '../../../store/store';
-import { Players } from '../../../shared/Types';
+import { Players } from '../../../shared/types';
 import TurnCardPlacer from './TurnCardPlacer';
 import FinishTurnButton from './FinishTurn';
 
@@ -47,7 +47,7 @@ export const PlayerContext = React.createContext<Players>(Players.Blue); // 'Blu
 
 const Board: React.FC<IBoardProps> = () => {
   const classes = useStyles();
-  const activePlayer = useSelector((state: IAppState) => state.gameState.activePlayer);
+  const activePlayer = useSelector((state: IAppState) => state.game.activePlayer);
 
   const opponent = (Object.values(Players).find(v => v !== activePlayer)) as Players;
 

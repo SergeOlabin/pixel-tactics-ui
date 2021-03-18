@@ -2,7 +2,7 @@ import { Container, createStyles } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { SetActiveCardAction } from '../../store/actions/ActiveCardActions';
+import { setActiveCard } from '../../store/slices/active-card-slice';
 import Board from './components/Board';
 import PlayerHand from './components/PlayerHand';
 
@@ -35,7 +35,7 @@ const GamePage = () => {
   const resetActiveCard = () => {
     console.log('CARD RESET ON ROOT CLICK');
 
-    dispatch(SetActiveCardAction(null));
+    dispatch(setActiveCard(null));
   };
 
   return (

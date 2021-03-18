@@ -3,9 +3,9 @@ import { makeStyles, createStyles } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import HeroCard, { MagnifiedContext } from './HeroCard';
 import { CARD_DIMENSIONS } from '../../../shared/constants/CardGeometry';
-import { CharacterList } from '../../../shared/Types';
-import { SetActiveCardAction } from '../../../store/actions/ActiveCardActions';
+import { CharacterList } from '../../../shared/types';
 import { IAppState } from '../../../store/store';
+import { ActiveCardLocation, setActiveCard } from '../../../store/slices/active-card-slice';
 
 const useStyles = makeStyles(theme => createStyles({
   root: {
@@ -44,7 +44,7 @@ export interface IPlayerHandProps {
 const PlayerHand: React.FC<IPlayerHandProps> = (props) => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const hand = useSelector((state: IAppState) => state.gameState.hand);
+  const hand = useSelector((state: IAppState) => state.game.hand);
   const activeCard = useSelector((state: IAppState) => state.activeCard);
 
   const [magnifiedCardType, setMagnifier] = useState<CharacterList | null>(null);
@@ -57,14 +57,14 @@ const PlayerHand: React.FC<IPlayerHandProps> = (props) => {
   const onCardClick = (event: React.MouseEvent, cardType: CharacterList) => {
     event.stopPropagation();
 
-    const isActive = activeCard?.location === 'hand'
+    const isActive = activeCard?.location === ActiveCardLocation.Hand
       && activeCard.card.type === cardType;
 
     const payload = isActive ? null : {
       card: { type: cardType },
-      location: 'hand',
+      location: ActiveCardLocation.Hand,
     };
-    dispatch(SetActiveCardAction(payload));
+    dispatch(setActiveCard(payload));
   };
 
   const cards = hand.map(type =>
@@ -73,7 +73,7 @@ const PlayerHand: React.FC<IPlayerHandProps> = (props) => {
       className={[
         classes.card,
         magnifiedCardType === type ? classes.magnified : '',
-        activeCard?.location === 'hand' && activeCard?.card.type === type
+        activeCard?.location === ActiveCardLocation.Hand && activeCard?.card.type === type
           ? classes.activeCard : '',
       ].join(' ')}
       onMouseEnter={() => onMouseEnter(type)}

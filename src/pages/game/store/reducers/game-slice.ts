@@ -1,8 +1,8 @@
-import { Reducer } from 'redux';
-import { Players, Waves, CharacterList, Positions } from '../../../../shared/Types';
-import { IGameState } from '../../../../store/types';
+import { createSlice } from '@reduxjs/toolkit';
+import { CharacterList, Players, Positions, Waves } from '../../../../shared/types';
+import { IGameState } from './types';
 
-const initialGameState: IGameState = {
+const initialState: IGameState = {
   leaders: {
     [Players.Blue]: { type: CharacterList.Alchemist },
     [Players.Red]: { type: CharacterList.DragonMage },
@@ -55,6 +55,19 @@ const initialGameState: IGameState = {
   ],
 };
 
-export const gameReducer: Reducer<IGameState> = (state = initialGameState) => {
-  return state;
-};
+// export const gameReducer: Reducer<IGameState> = (state = initialGameState) => {
+//   return state;
+// };
+
+const gameSlice = createSlice({
+  name: 'game',
+  initialState,
+  reducers: {
+
+  },
+
+});
+
+// export const { loadImportant, setImportantLoadingStatus } = mainSlice.actions;
+
+export default gameSlice.reducer;

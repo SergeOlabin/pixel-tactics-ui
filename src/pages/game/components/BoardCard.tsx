@@ -1,9 +1,9 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
-import React, { useContext, useRef } from 'react';
+import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TRANSITION_TIMEOUT } from '../../../shared/constants/CardGeometry';
-import { IPlace } from '../../../shared/Types';
-import { SetActiveCardAction } from '../../../store/actions/ActiveCardActions';
+import { IPlace } from '../../../shared/types';
+import { ActiveCardLocation, setActiveCard } from '../../../store/slices/active-card-slice';
 import { IAppState } from '../../../store/store';
 import { PlayerContext } from './Board';
 import { EmptyCardTemplate } from './CardTemplate';
@@ -35,11 +35,11 @@ const BoardCard: React.FC<IBoardCardProps> = (props) => {
   const dispatch = useDispatch();
 
   const ownerPlayer = useContext(PlayerContext);
-  const currentPlayer = useSelector((state: IAppState) => state.gameState.activePlayer);
+  const currentPlayer = useSelector((state: IAppState) => state.game.activePlayer);
 
   const activeCard = useSelector((state: IAppState) => state.activeCard);
   const card = useSelector((state: IAppState) =>
-    state.gameState.board[ownerPlayer][place.wave][place.position]);
+    state.game.board[ownerPlayer][place.wave][place.position]);
 
   const isActive = activeCard?.place === place;
 
@@ -54,12 +54,14 @@ const BoardCard: React.FC<IBoardCardProps> = (props) => {
   };
 
   const toggleCardSelection = () => {
-    const payload = isActive ? null : {
-      card,
-      place,
-      location: 'board',
-    };
-    dispatch(SetActiveCardAction(payload));
+    if (card) {
+      const payload = isActive ? null : {
+        card,
+        place,
+        location: ActiveCardLocation.Board,
+      };
+      dispatch(setActiveCard(payload));
+    }
   };
 
   const classes = useStyles();

@@ -1,7 +1,7 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import React from 'react';
 import { ICardDimensions, CARD_DIMENSIONS } from '../../../shared/constants/CardGeometry';
-import { Players, Waves, Positions } from '../../../shared/Types';
+import { Players, Waves, Positions } from '../../../shared/types';
 import BoardCard from './BoardCard';
 import { LeaderCardWithPopperPreview } from './LeaderCard';
 

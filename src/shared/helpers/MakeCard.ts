@@ -1,4 +1,4 @@
-import { IHero, ILeader, ICard, ICardHero, ICardLeader } from '../Types';
+import { IHero, ILeader, ICard, ICardHero, ICardLeader } from '../types';
 import { Character } from '../Characters';
 
 export const makeCardFromCharacter = (Character: Character): ICard => ({
