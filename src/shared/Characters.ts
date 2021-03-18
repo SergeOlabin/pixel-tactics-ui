@@ -15,7 +15,6 @@ export interface Character {
   Leader: LeaderClassType,
 }
 
-
 export const CARDS: { [key: string]: ICard } = {
   [CharacterList.Alchemist]: makeCardFromCharacter(Alchemist),
   [CharacterList.DragonMage]: makeCardFromCharacter(DragonMage),
