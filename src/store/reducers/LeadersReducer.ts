@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import { IBoardCard, Players } from '../../common/Types';
+import { IBoardCard, Players } from '../../shared/Types';
 
 export interface ILeadersState {
   [Players.Blue]?: IBoardCard,

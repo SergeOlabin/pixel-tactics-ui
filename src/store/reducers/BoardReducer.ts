@@ -1,4 +1,4 @@
-import { IBoardCard, Players, Positions, Waves } from '../../common/Types';
+import { IBoardCard, Players, Positions, Waves } from '../../shared/Types';
 
 type WaveRecords = Record<Waves, CardRecord>;
 type CardRecord = Partial<Record<Positions, IBoardCard | undefined>>;

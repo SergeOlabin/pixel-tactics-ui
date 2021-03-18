@@ -15,7 +15,8 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended", // Uses the recommended rules from @eslint-plugin-react
-    "plugin:@typescript-eslint/recommended" // Uses the recommended rules from @typescript-eslint/eslint-plugin
+    "plugin:@typescript-eslint/recommended", // Uses the recommended rules from @typescript-eslint/eslint-plugin
+    "plugin:react-hooks/recommended"
   ],
   "rules": {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
@@ -45,7 +46,7 @@
     "@typescript-eslint/no-empty-interface": [
       "warn",
       {
-        "allowSingleExtends": false
+        "allowSingleExtends": true
       }
     ],
     "@typescript-eslint/member-delimiter-style": ["error", {
@@ -60,7 +61,8 @@
     }],
     "@typescript-eslint/no-empty-function": "off",
     // disable the rule for all files
-    "@typescript-eslint/explicit-member-accessibility": "off"
+    "@typescript-eslint/explicit-member-accessibility": "off",
+
   },
   "overrides": [
     {

@@ -1,6 +1,6 @@
 import { ActionCreator, Dispatch } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { IBoardCard } from '../../common/Types';
+import { IBoardCard } from '../../shared/Types';
 import { IActiveCardState } from '../reducers/ActiveCardReducer';
 
 export enum ActiveCardActionTypes {

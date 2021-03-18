@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import { IBoardCard, IPlace } from '../../common/Types';
+import { IBoardCard, IPlace } from '../../shared/Types';
 import { ActiveCardActions, ActiveCardActionTypes } from '../actions/ActiveCardActions';
 
 export type ActiveCardLocation = 'board' | 'hand' | 'leader'
