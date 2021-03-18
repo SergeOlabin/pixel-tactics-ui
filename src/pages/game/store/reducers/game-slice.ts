@@ -55,10 +55,6 @@ const initialState: IGameState = {
   ],
 };
 
-// export const gameReducer: Reducer<IGameState> = (state = initialGameState) => {
-//   return state;
-// };
-
 const gameSlice = createSlice({
   name: 'game',
   initialState,
@@ -67,7 +63,5 @@ const gameSlice = createSlice({
   },
 
 });
-
-// export const { loadImportant, setImportantLoadingStatus } = mainSlice.actions;
 
 export default gameSlice.reducer;

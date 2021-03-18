@@ -5,7 +5,8 @@ import HeroCard, { MagnifiedContext } from './HeroCard';
 import { CARD_DIMENSIONS } from '../../../shared/constants/CardGeometry';
 import { CharacterList } from '../../../shared/types';
 import { IAppState } from '../../../store/store';
-import { ActiveCardLocation, setActiveCard } from '../../../store/slices/active-card-slice';
+import { setActiveCard } from '../../../store/slices/active-card-slice';
+import { ActiveCardLocation } from '../../../store/slices/types';
 
 const useStyles = makeStyles(theme => createStyles({
   root: {

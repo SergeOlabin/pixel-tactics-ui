@@ -3,7 +3,8 @@ import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CARDS } from '../../../shared/Characters';
 import { IBoardCard } from '../../../shared/types';
-import { ActiveCardLocation, setActiveCard } from '../../../store/slices/active-card-slice';
+import { setActiveCard } from '../../../store/slices/active-card-slice';
+import { ActiveCardLocation } from '../../../store/slices/types';
 import { IAppState } from '../../../store/store';
 import { PlayerContext } from './Board';
 import CardHeader from './card-parts/CardHeader';
@@ -81,11 +82,9 @@ const LeaderCard: React.FC<ILeaderCardProps> = () => {
           {{
             header: <CardHeader stats={stats} name={cardData.name}></CardHeader>,
             content: (
-              <>
-                <PowerDescription>
-                  {cardData.power.description}
-                </PowerDescription>
-              </>
+              <PowerDescription>
+                {cardData.power.description}
+              </PowerDescription>
             ),
           }}
         </CardTemplate>

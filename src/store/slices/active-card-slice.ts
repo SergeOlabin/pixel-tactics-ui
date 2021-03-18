@@ -1,18 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IBoardCard, IPlace } from '../../shared/types';
-
-export enum ActiveCardLocation {
-  Board = 'Board',
-  Hand = 'Hand',
-  Leader = 'Leader',
-}
-
-export type IActiveCardState = {
-  card: IBoardCard,
-  location: ActiveCardLocation,
-  place?: IPlace,
-} | null;
-
+import { IActiveCardState } from './types';
 
 const initialState: IActiveCardState = null;
 
