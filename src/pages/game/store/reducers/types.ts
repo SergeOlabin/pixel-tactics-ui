@@ -5,7 +5,7 @@ import {
   Waves,
   Positions,
   IBoardCard,
-} from '../../../../shared/types';
+} from '../../../../shared/types/types';
 
 type WaveRecords = Record<Waves, CardRecord>;
 type CardRecord = Partial<Record<Positions, IBoardCard | undefined>>;

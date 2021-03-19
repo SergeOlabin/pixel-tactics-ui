@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core';
 import { deepPurple } from '@material-ui/core/colors';
 import React from 'react';
 import { CARDS } from '../../../shared/Characters';
-import { IBoardCard, Waves } from '../../../shared/types';
+import { IBoardCard, Waves } from '../../../shared/types/types';
 import CardHeader from './card-parts/CardHeader';
 import PowerDescription from './card-parts/PowerDescription';
 import CardTemplate from './CardTemplate';

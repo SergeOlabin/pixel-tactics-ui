@@ -1,4 +1,4 @@
-import { IHero, ILeader, AttackTypes } from '../../shared/types';
+import { IHero, ILeader, AttackTypes } from '../../shared/types/types';
 import { Character } from '../../shared/Characters';
 
 export class IllusionistHero implements IHero {

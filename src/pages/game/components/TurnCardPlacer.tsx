@@ -3,7 +3,7 @@ import { makeStyles, createStyles } from '@material-ui/core';
 import { PlayerContext } from './Board';
 import { useSelector } from 'react-redux';
 import { CARD_DIMENSIONS, ICardDimensions } from '../../../shared/constants/CardGeometry';
-import { Waves, Players } from '../../../shared/types';
+import { Waves, Players } from '../../../shared/types/types';
 import { IAppState } from '../../../store/store';
 
 const useStyles = makeStyles(theme => createStyles({

@@ -1,4 +1,4 @@
-import { IBoardCard, IPlace } from '../../shared/types';
+import { IBoardCard, IPlace } from '../../shared/types/types';
 
 export enum ActiveCardLocation {
   Board = 'Board',

@@ -2,7 +2,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TRANSITION_TIMEOUT } from '../../../shared/constants/CardGeometry';
-import { IPlace } from '../../../shared/types';
+import { IPlace } from '../../../shared/types/types';
 import { setActiveCard } from '../../../store/slices/active-card-slice';
 import { ActiveCardLocation } from '../../../store/slices/types';
 import { IAppState } from '../../../store/store';

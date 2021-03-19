@@ -1,4 +1,4 @@
-import { IHero, ILeader, ICard, CharacterList } from './types';
+import { IHero, ILeader, ICard, CharacterList } from './types/types';
 import { Alchemist } from '../static/cards/Alchemist';
 import { makeCardFromCharacter } from './helpers/MakeCard';
 import { DragonMage } from '../static/cards/DragonMage';

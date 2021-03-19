@@ -2,7 +2,7 @@ import { createStyles, makeStyles } from '@material-ui/core';
 import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CARDS } from '../../../shared/Characters';
-import { IBoardCard } from '../../../shared/types';
+import { IBoardCard } from '../../../shared/types/types';
 import { setActiveCard } from '../../../store/slices/active-card-slice';
 import { ActiveCardLocation } from '../../../store/slices/types';
 import { IAppState } from '../../../store/store';
