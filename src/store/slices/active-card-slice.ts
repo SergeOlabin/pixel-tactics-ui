@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IActiveCardState } from './types';
+import { IActiveCardState } from '../types';
 
 const initialState: IActiveCardState = null;
 

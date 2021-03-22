@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CARDS } from '../../../shared/Characters';
 import { IBoardCard } from '../../../shared/types/types';
 import { setActiveCard } from '../../../store/slices/active-card-slice';
-import { ActiveCardLocation } from '../../../store/slices/types';
+import { ActiveCardLocation } from '../../../store/types';
 import { IAppState } from '../../../store/store';
 import { PlayerContext } from './Board';
 import CardHeader from './card-parts/CardHeader';

@@ -20,9 +20,10 @@ declare module '@material-ui/core/styles/createPalette' {
 // A custom theme for this app
 const theme = createMuiTheme({
   palette: {
-    primary: {
-      main: '#af55d6',
-    },
+    // primary: {
+    //   // main: '#af55d6',
+    //   m,
+    // },
     error: {
       main: red.A400,
     },

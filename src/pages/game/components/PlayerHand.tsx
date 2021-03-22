@@ -6,7 +6,7 @@ import { CARD_DIMENSIONS } from '../../../shared/constants/CardGeometry';
 import { CharacterList } from '../../../shared/types/types';
 import { IAppState } from '../../../store/store';
 import { setActiveCard } from '../../../store/slices/active-card-slice';
-import { ActiveCardLocation } from '../../../store/slices/types';
+import { ActiveCardLocation } from '../../../store/types';
 
 const useStyles = makeStyles(theme => createStyles({
   root: {

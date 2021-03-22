@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TRANSITION_TIMEOUT } from '../../../shared/constants/CardGeometry';
 import { IPlace } from '../../../shared/types/types';
 import { setActiveCard } from '../../../store/slices/active-card-slice';
-import { ActiveCardLocation } from '../../../store/slices/types';
+import { ActiveCardLocation } from '../../../store/types';
 import { IAppState } from '../../../store/store';
 import { PlayerContext } from './Board';
 import { EmptyCardTemplate } from './CardTemplate';
