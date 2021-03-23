@@ -8,7 +8,9 @@ import Typography from '@material-ui/core/Typography';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuIcon from '@material-ui/icons/Menu';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
+import { clearUserData } from '../../../store/slices/user.slice';
 import { AUTH_TOKEN_LOCAL_STORAGE_KEY } from '../../login/constants/auth-token.constant';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -28,6 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function MenuAppBar() {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -41,7 +44,10 @@ export default function MenuAppBar() {
 
   const logout = () => {
     localStorage.removeItem(AUTH_TOKEN_LOCAL_STORAGE_KEY);
+    dispatch(clearUserData());
     history.push('/login');
+    // TODO: fix HTTP PROVIDER get localStorage change
+    window.location.reload();
   };
 
   return (

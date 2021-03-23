@@ -1,14 +1,8 @@
-export function emtpy() {
+import { io } from 'socket.io-client';
 
-}
-// import { io } from 'socket.io-client';
+const socketUrl = 'ws://localhost:3002/chat';
 
-// export const socket = io('ws://localhost:3002/chat', {
-//   transports: ['websocket'],
-//   // timeout: undefined,
-// });
-
-
-// // socket.on('msgToClient', msg => {
-// //   console.log('!msgToClient!', msg);
-// // });
+export const socket = io(socketUrl, {
+  transports: ['websocket'],
+  autoConnect: false,
+});

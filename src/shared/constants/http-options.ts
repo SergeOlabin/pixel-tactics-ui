@@ -3,7 +3,6 @@ import { AUTH_TOKEN_LOCAL_STORAGE_KEY } from '../../pages/login/constants/auth-t
 
 export const BASE_URL = 'http://localhost:3001';
 export const HTTP_OPTIONS: Partial<Options> = {
-  // mode: 'no-cors',
   interceptors: {
     request: async ({ options, url, path, route }) => {
       const token = localStorage.getItem(AUTH_TOKEN_LOCAL_STORAGE_KEY);

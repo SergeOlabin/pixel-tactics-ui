@@ -7,7 +7,9 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import SendIcon from '@material-ui/icons/Send';
 import React, { useEffect, useRef, useState } from 'react';
-import { io } from 'socket.io-client';
+import { useSelector } from 'react-redux';
+import { socket } from '../../../../shared/service/socket';
+import { RootStateType } from '../../../../store/store';
 import ActiveUserInfo from './components/ActiveUserInfo';
 import FriendsInfo from './components/FriendsInfo';
 import Messages from './components/Messages';
@@ -44,27 +46,20 @@ const initMessages: IMessage[] = [
   },
 ];
 
-const socket = io('ws://localhost:3002/chat', {
-  transports: ['websocket'],
-});
-socket.connect();
-
-socket.on('connect', function() {
-  console.log('Connected to WS server');
-
-  console.log(socket.connected);
-
-});
-
-const Chat = () => {
+const ChatView: React.FC = () => {
   console.log('chat render');
+  const username = useSelector((state: RootStateType) => state.userInfo?.username);
   const classes = useStyles();
 
   useEffect(() => {
+    if (!username) return;
+
+    (socket as any)['auth'] = { username };
+    socket.connect();
     socket.on('msgToClient', (message) => {
       console.log('MSG RECEIVED on CLIENT', message);
     });
-  }, []);
+  }, [username]);
 
   const inputRef = useRef(null);
   const onSend = () => {
@@ -108,4 +103,4 @@ const Chat = () => {
   );
 };
 
-export default Chat;
+export default ChatView;

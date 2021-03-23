@@ -23,7 +23,7 @@ const ProfileView: React.FC<IProfileProps> = ({ user }) => {
       <ListItem button key={user.username}>
         <ListItemIcon>
           <Avatar alt={user.username}
-            src='https://material-ui.com/static/images/avatar/1.jpg' />
+            src='https://pytorch.org/tutorials/_images/cat_superres_with_ort.jpg' />
         </ListItemIcon>
         <ListItemText primary={user.username} />
         <ListItemText secondary='online WIP' />

@@ -13,9 +13,10 @@ export const userInfoSlice = createSlice({
   initialState: initialState as IUserState,
   reducers: {
     setUser: (state, action: PayloadAction<IUserState>) => action.payload,
+    clearUserData: (state) => null,
   },
 });
 
-export const { setUser } = userInfoSlice.actions;
+export const { setUser, clearUserData } = userInfoSlice.actions;
 
 export default userInfoSlice.reducer;

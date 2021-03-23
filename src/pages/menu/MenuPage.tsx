@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import useFetch from 'use-http';
 import { IUserState, setUser } from '../../store/slices/user.slice';
 import MenuAppBar from './components/MenuAppBar';
-import Chat from './features/chat/ChatView';
+import ChatView from './features/chat/ChatView';
 
 const useStyles = makeStyles(theme => createStyles({
 
@@ -34,7 +34,7 @@ const MenuPage: React.FC<IMenuPageProps> = () => {
   return (
     <>
       <MenuAppBar/>
-      <Chat />
+      <ChatView />
     </>
   );
 };
