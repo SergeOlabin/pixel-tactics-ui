@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { makeStyles, createStyles, Grid, List, ListItem, ListItemText } from '@material-ui/core';
 import { IMessage } from '../types';
+import { useSelector } from 'react-redux';
+import { RootStateType } from '../../../../../store/store';
+import { IMessagePayload } from '../types/chat-events';
 
 const useStyles = makeStyles(theme => createStyles({
   messageArea: {
@@ -10,13 +13,15 @@ const useStyles = makeStyles(theme => createStyles({
 }), { name: 'Chat' });
 
 export interface IChatProps {
-  messages?: IMessage[],
+  messages?: IMessagePayload[],
 }
 
 
 
 const Messages: React.FC<IChatProps> = ({ messages }) => {
   const classes = useStyles();
+  const username = useSelector((state: RootStateType) => state.userInfo?.username);
+
   return (
     <>
       <List className={classes.messageArea}>
@@ -25,10 +30,19 @@ const Messages: React.FC<IChatProps> = ({ messages }) => {
             <ListItem key='1'>
               <Grid container>
                 <Grid item xs={12}>
-                  <ListItemText primary={m.content} />
+                  <ListItemText primary={m.author}  style={{
+                    float: m.author === username ? 'right' : 'left',
+                  }}/>
                 </Grid>
                 <Grid item xs={12}>
-                  <ListItemText secondary={m.time} />
+                  <ListItemText primary={m.content} style={{
+                    float: m.author === username ? 'right' : 'left',
+                  }}/>
+                </Grid>
+                <Grid item xs={12}>
+                  <ListItemText secondary={m.date} style={{
+                    float: m.author === username ? 'right' : 'left',
+                  }}/>
                 </Grid>
               </Grid>
             </ListItem>

@@ -8,12 +8,19 @@ import Typography from '@material-ui/core/Typography';
 import SendIcon from '@material-ui/icons/Send';
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Socket } from 'socket.io-client';
+import usePrevious from '../../../../shared/hooks/use-previous';
 import { socket } from '../../../../shared/service/socket';
 import { RootStateType } from '../../../../store/store';
 import ActiveUserInfo from './components/ActiveUserInfo';
 import FriendsInfo from './components/FriendsInfo';
 import Messages from './components/Messages';
 import { IMessage } from './types';
+import { ChatEventsToClient,
+  ChatEventsToServer,
+  IMessagePayload,
+  IOpenChatPayload,
+} from './types/chat-events';
 
 const useStyles = makeStyles({
   table: {
@@ -35,40 +42,112 @@ const useStyles = makeStyles({
   },
 });
 
-const initMessages: IMessage[] = [
-  {
-    content: 'Test message',
-    author: {
-      id: '60552a2685fed51344213fe1',
-      username: 'Nusya',
-    },
-    time: '9:00',
-  },
+const initMessages: IMessagePayload[] = [
+  // {
+  //   content: 'Test message',
+  //   author: {
+  //     id: '60552a2685fed51344213fe1',
+  //     username: 'Nusya',
+  //   },
+  //   time: '9:00',
+  // },
+  // {
+  //   content: 'Test message',
+  //   author: {
+  //     id: '605516ee43cf612ad48ea78f',
+  //     username: 'SergeAdmin',
+  //   },
+  //   time: '9:00',
+  // },
 ];
 
 const ChatView: React.FC = () => {
-  console.log('chat render');
-  const username = useSelector((state: RootStateType) => state.userInfo?.username);
   const classes = useStyles();
 
+  const userInfo = useSelector((state: RootStateType) => state.userInfo);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [messages, setMessages] = useState(initMessages);
+  const [activeFriendId, setActiveFriend] = useState<string | undefined>(undefined);
+  // const [activeSocket, setActiveSocket] = useState<Socket | undefined>(undefined);
+  const previous = usePrevious({ activeFriendId });
+
   useEffect(() => {
-    if (!username) return;
+    const id = userInfo?._id;
+    if (!id) return;
 
-    (socket as any)['auth'] = { username };
+    (socket as any)['auth'] = { id };
     socket.connect();
-    socket.on('msgToClient', (message) => {
+    socket.on(ChatEventsToClient.SendToClient, (message: string) => {
       console.log('MSG RECEIVED on CLIENT', message);
-    });
-  }, [username]);
+      const data: IMessagePayload = JSON.parse(message);
 
-  const inputRef = useRef(null);
+      setMessages(state => {
+        return [...state, data];
+      });
+    });
+  }, [userInfo]);
+
+  useEffect(() => {
+    if (!activeFriendId || !userInfo) return;
+
+    if (previous?.activeFriendId) {
+      const payload: IOpenChatPayload = {
+        from: userInfo?._id,
+        to: previous?.activeFriendId,
+      };
+      socket.emit(ChatEventsToServer.CloseChat, JSON.stringify(payload));
+    }
+
+    const payload: IOpenChatPayload = {
+      from: userInfo?._id,
+      to: activeFriendId,
+    };
+    socket.emit(ChatEventsToServer.OpenChat, JSON.stringify(payload));
+
+  }, [activeFriendId]);
+
+  useEffect(() => {
+
+
+    return () => {
+      console.log('CLEAN UP');
+      const userId = userInfo?._id;
+
+      if (userId && activeFriendId) {
+        const payload: IOpenChatPayload = {
+          from: userId,
+          to: activeFriendId,
+        };
+        socket.emit(ChatEventsToServer.CloseChat, JSON.stringify(payload));
+      }
+    };
+  }, []);
+
   const onSend = () => {
-    const message = (inputRef.current as any)?.value;
-    socket.emit('msgToServer', message);
+    inputRef.current?.value;
+
+    if (!inputRef.current?.value) return;
+
+    const content = inputRef.current?.value;
+    const date = new Date();
+
+    const payload: IMessagePayload = {
+      from: userInfo?._id!,
+      author: userInfo?.username!,
+      to: activeFriendId!,
+      date: `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
+      content,
+    };
+    socket.emit(ChatEventsToServer.SendToServer, JSON.stringify(payload));
     console.log('socket', socket);
+    inputRef.current.value = '';
   };
 
-  const [messages, setMessages] = useState(initMessages);
+  const onInputKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      onSend();
+    }
+  };
 
   return (
     <>
@@ -81,16 +160,17 @@ const ChatView: React.FC = () => {
           </Grid>
           {/* <Divider /> */}
           <Typography variant='h4' >Friends</Typography>
-          <FriendsInfo />
+          <FriendsInfo onFriendSelection={setActiveFriend}/>
         </Grid>
         <Grid item xs={9}>
-          <Messages />
+          <Messages messages={messages}/>
           <Divider />
           <Grid container style={{ padding: '20px' }}>
             <Grid item xs={11}>
               <TextField id='outlined-basic-email'
                 label='Type Something'
                 inputRef={inputRef}
+                onKeyDown={onInputKeyDown}
                 fullWidth />
             </Grid>
             <Grid >

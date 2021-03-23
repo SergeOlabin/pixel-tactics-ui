@@ -6,3 +6,4 @@ export interface IMessage {
   },
   time: string,
 }
+

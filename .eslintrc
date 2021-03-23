@@ -63,6 +63,8 @@
     "@typescript-eslint/no-empty-function": "off",
     // disable the rule for all files
     "@typescript-eslint/explicit-member-accessibility": "off",
+    "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
 
   },
   "overrides": [

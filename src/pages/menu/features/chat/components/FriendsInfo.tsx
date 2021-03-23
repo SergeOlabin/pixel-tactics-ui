@@ -38,10 +38,10 @@ const useStyles = makeStyles(theme => createStyles({
 }), { name: 'FriendsInfo' });
 
 export interface IFriendsInfoProps {
-  onFriendSelection?: (...args: any[]) => any,
+  onFriendSelection: (...args: any[]) => any,
 }
 
-const FriendsInfo: React.FC<IFriendsInfoProps> = () => {
+const FriendsInfo: React.FC<IFriendsInfoProps> = ({ onFriendSelection }) => {
   const classes = useStyles();
   let dialogHandle: Handle<typeof FormDialog> | null;
   const [friends, setFriends] = useState<IUser[]>([]);
@@ -55,6 +55,10 @@ const FriendsInfo: React.FC<IFriendsInfoProps> = () => {
   useEffect(() => {
     fetchFriends();
   }, []);
+
+  useEffect(() => {
+    onFriendSelection(friends[0]?._id);
+  }, [friends]);
 
   const addFriend = async (email: string | undefined) => {
     if (!email) {
@@ -72,7 +76,10 @@ const FriendsInfo: React.FC<IFriendsInfoProps> = () => {
       <div className={classes.container}>
         <List className={classes.friendsList}>
           {
-            friends.map(friend => <ProfileView user={friend} key={friend.username} />)
+            friends.map(friend => <div onClick={() => onFriendSelection(friend._id)}
+              key={friend.username}>
+              <ProfileView user={friend} />
+            </div>)
           }
         </List>
         <FormDialog ref={c => dialogHandle = c}
