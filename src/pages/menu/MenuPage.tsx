@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import useFetch from 'use-http';
 import { IUserState, setUser } from '../../store/slices/user.slice';
 import MenuAppBar from './components/MenuAppBar';
+import Chat from './features/chat/ChatView';
 
 const useStyles = makeStyles(theme => createStyles({
 
@@ -13,17 +14,16 @@ export interface IMenuPageProps {
 
 }
 
-const MenuPage: React.FC<IMenuPageProps> = (props) => {
+const MenuPage: React.FC<IMenuPageProps> = () => {
   const dispatch = useDispatch();
 
-  const { get, loading, error } = useFetch();
+  const { get } = useFetch();
 
   const fetchUser = useCallback(async () => {
-    const userInfo: IUserState = await get('/auth/profile');
+    const userInfo: IUserState = await get('/profile');
     if (userInfo) {
       dispatch(setUser(userInfo));
     }
-    console.log('userInfo MENU PAGE', userInfo);
   }, []);
 
   useEffect(() => {
@@ -34,6 +34,7 @@ const MenuPage: React.FC<IMenuPageProps> = (props) => {
   return (
     <>
       <MenuAppBar/>
+      <Chat />
     </>
   );
 };

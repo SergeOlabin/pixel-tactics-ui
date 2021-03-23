@@ -14,7 +14,7 @@ const PrivateRoute: React.FC<IPrivateRouteProps> = ({ component: Component, ...r
 
   return (
       <Route {...rest} render={props => (
-        token ? <Component {...props} /> : <Redirect to='/signin' />
+        token ? <Component {...props} /> : <Redirect to='/login' />
       )} />
   );
 };

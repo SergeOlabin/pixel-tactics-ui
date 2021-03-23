@@ -14,7 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useForm } from 'react-hook-form';
 import useFetch from 'use-http';
-import { BASE_URL, HTTP_OPTIONS } from '../../../constants/http-options';
+import { BASE_URL, HTTP_OPTIONS } from '../../../shared/constants/http-options';
 import { AUTH_TOKEN_LOCAL_STORAGE_KEY } from '../constants/auth-token.constant';
 import { useHistory } from 'react-router';
 

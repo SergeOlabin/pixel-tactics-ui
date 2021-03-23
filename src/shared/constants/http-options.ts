@@ -1,5 +1,5 @@
 import { Options } from 'use-http';
-import { AUTH_TOKEN_LOCAL_STORAGE_KEY } from '../pages/login/constants/auth-token.constant';
+import { AUTH_TOKEN_LOCAL_STORAGE_KEY } from '../../pages/login/constants/auth-token.constant';
 
 export const BASE_URL = 'http://localhost:3001';
 export const HTTP_OPTIONS: Partial<Options> = {

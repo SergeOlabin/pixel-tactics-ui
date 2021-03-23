@@ -19,7 +19,7 @@ const ProtectedRoute: React.FC<IProtectedRouteProps> = ({
     userInfo && roles.some((role) => userInfo.roles.includes(role))
     : true;
 
-    return (
+  return (
     <Route {...rest} render={props => (
       allowed ? <Redirect to='/menu' /> : <Component {...props} />
     )} />

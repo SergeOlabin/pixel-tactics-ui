@@ -8,7 +8,7 @@ import Router from './router/Router';
 import store from './store/store';
 import theme from './theme/theme';
 import { Provider as HttpProvider } from 'use-http';
-import { BASE_URL, HTTP_OPTIONS } from './constants/http-options';
+import { BASE_URL, HTTP_OPTIONS } from './shared/constants/http-options';
 
 ReactDOM.render(
   <HttpProvider url={BASE_URL} options={HTTP_OPTIONS}>

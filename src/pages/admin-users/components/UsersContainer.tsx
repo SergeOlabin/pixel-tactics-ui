@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { makeStyles, createStyles } from '@material-ui/core';
 import useFetch from 'use-http';
-import { BASE_URL, HTTP_OPTIONS } from '../../../constants/http-options';
+import { BASE_URL, HTTP_OPTIONS } from '../../../shared/constants/http-options';
 import BasicTable from './Table';
 import { IUser } from '../../../shared/types/user-types';
 
@@ -41,7 +41,7 @@ const UsersContainer: React.FC<IUsersContainerProps> = (props) => {
 
   return (
     <>
-      <BasicTable data={users}></BasicTable>
+      <BasicTable data={users} />
     </>
   );
 };

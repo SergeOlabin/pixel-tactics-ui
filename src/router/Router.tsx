@@ -11,14 +11,12 @@ const Router: React.FC<unknown> = () => {
   return (
     <>
       <Switch>
-        <Redirect exact from='/' to='/login' />
+        <Redirect exact from='/' to='/menu' />
         <Route path='/game' exact component={GamePage} />
         <ProtectedRoute path='/users' roles={['admin']} exact component={UsersPage} />
         <Route path='/login' exact component={Login} />
         <PrivateRoute path='/menu' exact component={MenuPage} />
-        {/* <Route path='/test' component={TestComponent} /> */}
       </Switch>
-
     </>
   );
 };
