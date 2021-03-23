@@ -1,17 +1,14 @@
-import { io } from 'socket.io-client';
+export function emtpy() {
 
-export const socket = io('ws://localhost:80/chat', {
-  transports: ['websocket'],
-});
+}
+// import { io } from 'socket.io-client';
 
-socket.connect();
+// export const socket = io('ws://localhost:3002/chat', {
+//   transports: ['websocket'],
+//   // timeout: undefined,
+// });
 
-socket.on('connect', () => {
-  // either with send()
-  socket.send('Hello!');
 
-  // or with emit() and custom event names
-  socket.emit('msgToServer', 'Hello!',
-  //{ 'mr': 'john' }, Uint8Array.from([1, 2, 3, 4])
-  );
-});
+// // socket.on('msgToClient', msg => {
+// //   console.log('!msgToClient!', msg);
+// // });

@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import SendIcon from '@material-ui/icons/Send';
 import React, { useEffect, useRef, useState } from 'react';
-import { socket } from '../../../../shared/service/socket';
+import { io } from 'socket.io-client';
 import ActiveUserInfo from './components/ActiveUserInfo';
 import FriendsInfo from './components/FriendsInfo';
 import Messages from './components/Messages';
@@ -44,6 +44,17 @@ const initMessages: IMessage[] = [
   },
 ];
 
+const socket = io('ws://localhost:3002/chat', {
+  transports: ['websocket'],
+});
+socket.connect();
+
+socket.on('connect', function() {
+  console.log('Connected to WS server');
+
+  console.log(socket.connected);
+
+});
 
 const Chat = () => {
   console.log('chat render');
@@ -51,15 +62,15 @@ const Chat = () => {
 
   useEffect(() => {
     socket.on('msgToClient', (message) => {
-
-      console.log('SOCEKT msg received!', message);
+      console.log('MSG RECEIVED on CLIENT', message);
     });
   }, []);
 
   const inputRef = useRef(null);
   const onSend = () => {
+    const message = (inputRef.current as any)?.value;
+    socket.emit('msgToServer', message);
     console.log('socket', socket);
-    socket.emit('msgToServer', (inputRef.current as any)?.value);
   };
 
   const [messages, setMessages] = useState(initMessages);
