@@ -5,6 +5,7 @@ import useFetch from 'use-http';
 import { IUserState, setUser } from '../../store/slices/user.slice';
 import MenuAppBar from './components/MenuAppBar';
 import ChatView from './features/chat/ChatView';
+import GameConnection from './providers/GameConnection';
 
 const useStyles = makeStyles(theme => createStyles({
 
@@ -33,8 +34,10 @@ const MenuPage: React.FC<IMenuPageProps> = () => {
   const classes = useStyles();
   return (
     <>
-      <MenuAppBar/>
-      <ChatView />
+      <GameConnection>
+        <MenuAppBar />
+        <ChatView />
+      </GameConnection>
     </>
   );
 };

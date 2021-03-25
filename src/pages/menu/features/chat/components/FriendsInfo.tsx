@@ -17,6 +17,8 @@ import ProfileView from './ProfileView';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Fab from '@material-ui/core/Fab';
 import FormDialog from './AddFriendDialog';
+import { useHistory } from 'react-router';
+import SportsKabaddiIcon from '@material-ui/icons/SportsKabaddi';
 
 export type Handle<T> = T extends ForwardRefExoticComponent<RefAttributes<infer T2>> ? T2 : never;
 
@@ -38,18 +40,25 @@ const useStyles = makeStyles(theme => createStyles({
 }), { name: 'FriendsInfo' });
 
 export interface IFriendsInfoProps {
-  onFriendSelection: (...args: any[]) => any,
+  onFriendSelection: (username: string) => any,
+  onFriendChallenge: (username: string) => any,
 }
 
-const FriendsInfo: React.FC<IFriendsInfoProps> = ({ onFriendSelection }) => {
+const FriendsInfo: React.FC<IFriendsInfoProps> = ({ onFriendSelection, onFriendChallenge }) => {
   const classes = useStyles();
+  const history = useHistory();
   let dialogHandle: Handle<typeof FormDialog> | null;
   const [friends, setFriends] = useState<IUser[]>([]);
   const { get: getFriends } = useFetch('profile/friends');
   const { post: addFriendReq } = useFetch('profile/add-friend');
 
   const fetchFriends = useCallback(async () => {
-    setFriends(await getFriends());
+    const friends = await getFriends();
+    if (friends?.statusCode === 401) {
+      history.push('/login');
+    }
+    console.log('friends', friends);
+    setFriends(friends);
   }, [getFriends]);
 
   useEffect(() => {
@@ -71,14 +80,28 @@ const FriendsInfo: React.FC<IFriendsInfoProps> = ({ onFriendSelection }) => {
     fetchFriends();
   };
 
+  const onFriendChallengeLocal = (
+    friendId: string,
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    onFriendChallenge(friendId);
+    e.stopPropagation();
+  };
+
   return (
     <>
       <div className={classes.container}>
         <List className={classes.friendsList}>
           {
-            friends.map(friend => <div onClick={() => onFriendSelection(friend._id)}
+            friends?.map(friend => <div onClick={() => onFriendSelection(friend._id)}
               key={friend.username}>
-              <ProfileView user={friend} />
+              <ProfileView user={friend}>
+                <Fab
+                  color='primary'
+                  aria-label='add'
+                  onClick={(e) => onFriendChallengeLocal(friend._id, e)}
+                ><SportsKabaddiIcon /></Fab>
+              </ProfileView>
             </div>)
           }
         </List>

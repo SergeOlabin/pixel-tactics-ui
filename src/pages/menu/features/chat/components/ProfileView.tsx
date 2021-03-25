@@ -16,7 +16,7 @@ export interface IProfileProps {
   user: IUser,
 }
 
-const ProfileView: React.FC<IProfileProps> = ({ user }) => {
+const ProfileView: React.FC<IProfileProps> = ({ user, children }) => {
   const classes = useStyles();
   return (
     <>
@@ -27,6 +27,7 @@ const ProfileView: React.FC<IProfileProps> = ({ user }) => {
         </ListItemIcon>
         <ListItemText primary={user.username} />
         <ListItemText secondary='online WIP' />
+        {children}
       </ListItem>
     </>
   );

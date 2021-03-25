@@ -6,17 +6,18 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import SendIcon from '@material-ui/icons/Send';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Socket } from 'socket.io-client';
 import usePrevious from '../../../../shared/hooks/use-previous';
-import { socket } from '../../../../shared/service/socket';
+import { chatSocket } from '../../../../shared/service/socket';
 import { RootStateType } from '../../../../store/store';
+import { GameConnectionContext } from '../../providers/GameConnection';
 import ActiveUserInfo from './components/ActiveUserInfo';
+import ChallengeUserDialog from './components/ChallengeUserDialog';
 import FriendsInfo from './components/FriendsInfo';
 import Messages from './components/Messages';
-import { IMessage } from './types';
-import { ChatEventsToClient,
+import {
+  ChatEventsToClient,
   ChatEventsToServer,
   IMessagePayload,
   IOpenChatPayload,
@@ -70,14 +71,29 @@ const ChatView: React.FC = () => {
   const [activeFriendId, setActiveFriend] = useState<string | undefined>(undefined);
   // const [activeSocket, setActiveSocket] = useState<Socket | undefined>(undefined);
   const previous = usePrevious({ activeFriendId });
+  const gameConnection = useContext(GameConnectionContext);
+
+  useEffect(() => {
+    return () => {
+      const userId = userInfo?._id;
+
+      if (userId && activeFriendId) {
+        const payload: IOpenChatPayload = {
+          from: userId,
+          to: activeFriendId,
+        };
+        chatSocket.emit(ChatEventsToServer.CloseChat, JSON.stringify(payload));
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const id = userInfo?._id;
     if (!id) return;
 
-    (socket as any)['auth'] = { id };
-    socket.connect();
-    socket.on(ChatEventsToClient.SendToClient, (message: string) => {
+    (chatSocket as any)['auth'] = { id };
+    chatSocket.connect();
+    chatSocket.on(ChatEventsToClient.SendToClient, (message: string) => {
       console.log('MSG RECEIVED on CLIENT', message);
       const data: IMessagePayload = JSON.parse(message);
 
@@ -95,33 +111,16 @@ const ChatView: React.FC = () => {
         from: userInfo?._id,
         to: previous?.activeFriendId,
       };
-      socket.emit(ChatEventsToServer.CloseChat, JSON.stringify(payload));
+      chatSocket.emit(ChatEventsToServer.CloseChat, JSON.stringify(payload));
     }
 
     const payload: IOpenChatPayload = {
       from: userInfo?._id,
       to: activeFriendId,
     };
-    socket.emit(ChatEventsToServer.OpenChat, JSON.stringify(payload));
+    chatSocket.emit(ChatEventsToServer.OpenChat, JSON.stringify(payload));
 
   }, [activeFriendId]);
-
-  useEffect(() => {
-
-
-    return () => {
-      console.log('CLEAN UP');
-      const userId = userInfo?._id;
-
-      if (userId && activeFriendId) {
-        const payload: IOpenChatPayload = {
-          from: userId,
-          to: activeFriendId,
-        };
-        socket.emit(ChatEventsToServer.CloseChat, JSON.stringify(payload));
-      }
-    };
-  }, []);
 
   const onSend = () => {
     inputRef.current?.value;
@@ -138,8 +137,8 @@ const ChatView: React.FC = () => {
       date: `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
       content,
     };
-    socket.emit(ChatEventsToServer.SendToServer, JSON.stringify(payload));
-    console.log('socket', socket);
+    chatSocket.emit(ChatEventsToServer.SendToServer, JSON.stringify(payload));
+    console.log('socket', chatSocket);
     inputRef.current.value = '';
   };
 
@@ -147,6 +146,10 @@ const ChatView: React.FC = () => {
     if (event.key === 'Enter') {
       onSend();
     }
+  };
+
+  const onFriendChallenge = (friendId: string) => {
+    gameConnection?.challengeGame(userInfo?._id!, friendId);
   };
 
   return (
@@ -160,7 +163,7 @@ const ChatView: React.FC = () => {
           </Grid>
           {/* <Divider /> */}
           <Typography variant='h4' >Friends</Typography>
-          <FriendsInfo onFriendSelection={setActiveFriend}/>
+          <FriendsInfo onFriendSelection={setActiveFriend} onFriendChallenge={onFriendChallenge}/>
         </Grid>
         <Grid item xs={9}>
           <Messages messages={messages}/>
@@ -179,6 +182,7 @@ const ChatView: React.FC = () => {
           </Grid>
         </Grid>
       </Grid>
+      <ChallengeUserDialog />
     </>
   );
 };
