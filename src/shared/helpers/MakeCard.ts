@@ -2,8 +2,8 @@ import { IHero, ILeader, ICard, ICardHero, ICardLeader } from '../types/types';
 import { Character } from '../Characters';
 
 export const makeCardFromCharacter = (Character: Character): ICard => ({
-  hero: heroToCard(new Character.Hero),
-  leader: leaderToCard(new Character.Leader),
+  hero: heroToCard(new Character.Hero()),
+  leader: leaderToCard(new Character.Leader()),
 });
 
 const heroToCard = (hero: IHero): ICardHero => {
@@ -32,7 +32,6 @@ const heroToCard = (hero: IHero): ICardHero => {
       },
     },
   };
-
 };
 
 const leaderToCard = (leader: ILeader): ICardLeader => {

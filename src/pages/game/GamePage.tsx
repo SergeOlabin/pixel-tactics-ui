@@ -6,27 +6,31 @@ import { setActiveCard } from '../../store/slices/active-card-slice';
 import Board from './components/Board';
 import PlayerHand from './components/PlayerHand';
 
-const useStyles = makeStyles(theme => createStyles({
-  root: {
-    textAlign: 'center',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    height: '100vh',
-  },
-  boardContainer: {
-    zIndex: 0,
-    flexGrow: 1,
-  },
-  playerHandContainer: {
-    height: 120,
-    paddingBottom: theme.spacing(1),
-    // position: 'absolute',
-    // bottom: 0,
-    zIndex: 10,
-  },
-}), { name: 'Home' });
+const useStyles = makeStyles(
+  (theme) =>
+    createStyles({
+      root: {
+        textAlign: 'center',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        height: '100vh',
+      },
+      boardContainer: {
+        zIndex: 0,
+        flexGrow: 1,
+      },
+      playerHandContainer: {
+        height: 120,
+        paddingBottom: theme.spacing(1),
+        // position: 'absolute',
+        // bottom: 0,
+        zIndex: 10,
+      },
+    }),
+  { name: 'Home' },
+);
 
 const GamePage = () => {
   const classes = useStyles();

@@ -3,17 +3,17 @@ import red from '@material-ui/core/colors/red';
 import { createMuiTheme } from '@material-ui/core/styles';
 
 interface ICardShadows {
-  hover?: string,
-  active?: string,
+  hover?: string;
+  active?: string;
 }
 
 declare module '@material-ui/core/styles/createPalette' {
   interface PaletteOptions {
-    cardShadows?: ICardShadows,
+    cardShadows?: ICardShadows;
   }
 
   interface Palette {
-    cardShadows?: ICardShadows,
+    cardShadows?: ICardShadows;
   }
 }
 

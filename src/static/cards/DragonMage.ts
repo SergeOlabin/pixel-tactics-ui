@@ -8,21 +8,21 @@ export class DragonMageHero implements IHero {
 
   public vanguardDescription = `
     Attack: Defeat a hero in melee.
-  `
+  `;
   public flankDescription = `
     Supporter has +3 attack strength.
-  `
+  `;
   public rearDescription = `
     Ranged Attack
-  `
+  `;
   public orderDescription = `
     Give a hero +5 attack strength until the end of this wave.
-  `
+  `;
 
-  public vanguardPower() { }
-  public flankPower() { }
-  public rearPower() { }
-  public order() { }
+  public vanguardPower() {}
+  public flankPower() {}
+  public rearPower() {}
+  public order() {}
 }
 
 export class DragonMageLeader implements ILeader {
@@ -36,8 +36,7 @@ export class DragonMageLeader implements ILeader {
     (They can still clear corpses by other effects, like Orders and Attack Powers.)
   `;
 
-  public power() {
-  }
+  public power() {}
 }
 
 export const DragonMage: Character = {

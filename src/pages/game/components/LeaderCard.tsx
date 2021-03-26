@@ -13,31 +13,39 @@ import CardTemplate, { EmptyCardTemplate } from './CardTemplate';
 import WithPopperPreview from './WithPopperPreview';
 
 export interface ILeaderCardProps {
-  card?: IBoardCard,
+  card?: IBoardCard;
 }
 
-const useStyles = makeStyles(theme => createStyles({
-  card: {
-    width: '100%',
-    height: '100%',
-    '&:hover': {
-      boxShadow: theme.palette.cardShadows?.hover,
-    },
-  },
-  active: {
-    boxShadow: theme.palette.cardShadows?.active,
-    '&:hover': {
-      boxShadow: theme.palette.cardShadows?.active,
-    },
-  },
-}), { name: 'LeaderCard' });
+const useStyles = makeStyles(
+  (theme) =>
+    createStyles({
+      card: {
+        width: '100%',
+        height: '100%',
+        '&:hover': {
+          boxShadow: theme.palette.cardShadows?.hover,
+        },
+      },
+      active: {
+        boxShadow: theme.palette.cardShadows?.active,
+        '&:hover': {
+          boxShadow: theme.palette.cardShadows?.active,
+        },
+      },
+    }),
+  { name: 'LeaderCard' },
+);
 
 const LeaderCard: React.FC<ILeaderCardProps> = () => {
   const dispatch = useDispatch();
   const ownerPlayer = useContext(PlayerContext);
 
-  const currentPlayer = useSelector((state: IAppState) => state.game.activePlayer);
-  const card = useSelector((state: IAppState) => state.game.leaders?.[ownerPlayer]);
+  const currentPlayer = useSelector(
+    (state: IAppState) => state.game.activePlayer,
+  );
+  const card = useSelector(
+    (state: IAppState) => state.game.leaders?.[ownerPlayer],
+  );
   const activeCard = useSelector((state: IAppState) => state.activeCard);
 
   const classes = useStyles();
@@ -49,8 +57,9 @@ const LeaderCard: React.FC<ILeaderCardProps> = () => {
     attack: cardData.attack,
     health: cardData.health,
   };
-  const isActive = activeCard?.location === ActiveCardLocation.Leader
-    && ownerPlayer === currentPlayer;
+  const isActive =
+    activeCard?.location === ActiveCardLocation.Leader &&
+    ownerPlayer === currentPlayer;
 
   const onCardClick = (event: React.MouseEvent) => {
     event.stopPropagation();
@@ -63,28 +72,28 @@ const LeaderCard: React.FC<ILeaderCardProps> = () => {
   };
 
   const toggleCardSelection = () => {
-    const payload = isActive ? null : {
-      card,
-      location: ActiveCardLocation.Leader,
-    };
+    const payload = isActive
+      ? null
+      : {
+          card,
+          location: ActiveCardLocation.Leader,
+        };
     dispatch(setActiveCard(payload));
   };
 
   return (
     <>
-      <div className={[
-        classes.card,
-        isActive ? classes.active : '',
-      ].join(' ')}
+      <div
+        className={[classes.card, isActive ? classes.active : ''].join(' ')}
         onClick={onCardClick}
       >
         <CardTemplate singleDescription>
           {{
-            header: <CardHeader stats={stats} name={cardData.name}></CardHeader>,
+            header: (
+              <CardHeader stats={stats} name={cardData.name}></CardHeader>
+            ),
             content: (
-              <PowerDescription>
-                {cardData.power.description}
-              </PowerDescription>
+              <PowerDescription>{cardData.power.description}</PowerDescription>
             ),
           }}
         </CardTemplate>
@@ -95,6 +104,8 @@ const LeaderCard: React.FC<ILeaderCardProps> = () => {
 
 LeaderCard.displayName = 'LeaderCard';
 
-export const LeaderCardWithPopperPreview = WithPopperPreview<ILeaderCardProps>(LeaderCard);
+export const LeaderCardWithPopperPreview = WithPopperPreview<ILeaderCardProps>(
+  LeaderCard,
+);
 
 export default LeaderCard;

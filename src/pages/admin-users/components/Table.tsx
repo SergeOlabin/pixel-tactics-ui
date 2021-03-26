@@ -15,8 +15,8 @@ const useStyles = makeStyles({
 });
 
 interface IBasicTableProps {
-  data: Array<Record<string, any>>,
-  idField?: string,
+  data: Array<Record<string, any>>;
+  idField?: string;
 }
 
 const BasicTable: React.FC<IBasicTableProps> = ({ data, idField }) => {
@@ -32,20 +32,22 @@ const BasicTable: React.FC<IBasicTableProps> = ({ data, idField }) => {
       <Table className={classes.table} aria-label='simple table'>
         <TableHead>
           <TableRow>
-            {
-              data[0] && Object.keys(data[0])
-                .map(colName => <TableCell align='right' key={colName}>{colName}</TableCell>)
-            }
+            {data[0] &&
+              Object.keys(data[0]).map((colName) => (
+                <TableCell align='right' key={colName}>
+                  {colName}
+                </TableCell>
+              ))}
           </TableRow>
         </TableHead>
         <TableBody>
           {data.map((row) => (
             <TableRow key={row[id]}>
-              {
-                Object.keys(row)
-                  .map(col => <TableCell align='right' key={col}>{row[col]}</TableCell>)
-              }
-
+              {Object.keys(row).map((col) => (
+                <TableCell align='right' key={col}>
+                  {row[col]}
+                </TableCell>
+              ))}
             </TableRow>
           ))}
         </TableBody>

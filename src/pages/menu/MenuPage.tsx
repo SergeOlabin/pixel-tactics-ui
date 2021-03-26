@@ -7,13 +7,9 @@ import MenuAppBar from './components/MenuAppBar';
 import ChatView from './features/chat/ChatView';
 import GameConnection from './providers/GameConnection';
 
-const useStyles = makeStyles(theme => createStyles({
+const useStyles = makeStyles((theme) => createStyles({}), { name: 'MenuPage' });
 
-}), { name: 'MenuPage' });
-
-export interface IMenuPageProps {
-
-}
+export interface IMenuPageProps {}
 
 const MenuPage: React.FC<IMenuPageProps> = () => {
   const dispatch = useDispatch();

@@ -2,18 +2,16 @@ import React from 'react';
 import { makeStyles, createStyles } from '@material-ui/core';
 import SignIn from './components/SignIn';
 
-const useStyles = makeStyles(theme => createStyles({
+const useStyles = makeStyles((theme) => createStyles({}), { name: 'Login' });
 
-}), { name: 'Login' });
-
-export interface ILoginProps {
-
-}
+export interface ILoginProps {}
 
 const Login: React.FC<ILoginProps> = (props) => {
   const classes = useStyles();
   return (
-    <><SignIn /></>
+    <>
+      <SignIn />
+    </>
   );
 };
 

@@ -1,30 +1,34 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import React from 'react';
-import { ICardDimensions, CARD_DIMENSIONS } from '../../../shared/constants/CardGeometry';
+import {
+  ICardDimensions,
+  CARD_DIMENSIONS,
+} from '../../../shared/constants/CardGeometry';
 import { Players, Waves, Positions } from '../../../shared/types/types';
 import BoardCard from './BoardCard';
 import { LeaderCardWithPopperPreview } from './LeaderCard';
 
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: (cardDimensions: ICardDimensions) => ({
-      display: 'grid',
-      gridTemplateColumns: `repeat(3, ${cardDimensions.width}px)`,
-      gridTemplateRows: `repeat(3, ${cardDimensions.height}px)`,
-      gap: `${theme.spacing(2)}px`,
+const useStyles = makeStyles(
+  (theme: Theme) =>
+    createStyles({
+      root: (cardDimensions: ICardDimensions) => ({
+        display: 'grid',
+        gridTemplateColumns: `repeat(3, ${cardDimensions.width}px)`,
+        gridTemplateRows: `repeat(3, ${cardDimensions.height}px)`,
+        gap: `${theme.spacing(2)}px`,
+      }),
+      paper: {
+        padding: theme.spacing(1),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+      },
     }),
-    paper: {
-      padding: theme.spacing(1),
-      textAlign: 'center',
-      color: theme.palette.text.secondary,
-    },
-  }),
- { name: 'Unit' });
+  { name: 'Unit' },
+);
 
 export interface IUnitProps {
-  player: Players,
-  mirrored?: boolean,
+  player: Players;
+  mirrored?: boolean;
 }
 
 const getUnitMap = () => [
@@ -52,27 +56,23 @@ const Unit: React.FC<IUnitProps> = (props) => {
 
   const unitMap = getUnitMap();
   if (props.mirrored) {
-    unitMap.map(wave => wave.reverse());
+    unitMap.map((wave) => wave.reverse());
     unitMap.reverse();
   }
 
-  const cards = unitMap.map(waves =>
-    waves.map(place => place && <BoardCard place={place} key={getKey(place)} />));
+  const cards = unitMap.map((waves) =>
+    waves.map(
+      (place) => place && <BoardCard place={place} key={getKey(place)} />,
+    ),
+  );
 
   // setLeader
   cards[1][1] = <LeaderCardWithPopperPreview key='leader' />;
 
-  return (
-    <div className={classes.root}>
-      {[...cards]}
-    </div>
-  );
+  return <div className={classes.root}>{[...cards]}</div>;
 };
 
-const getKey = (place: {
-  wave: Waves,
-  position: Positions,
-}) => `${place.wave}-${place.position}`;
+const getKey = (place: { wave: Waves; position: Positions }) =>
+  `${place.wave}-${place.position}`;
 
 export default Unit;
-

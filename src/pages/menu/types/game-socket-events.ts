@@ -10,24 +10,22 @@ export enum GameStartEventsToClient {
 }
 
 export interface IChallengeGamePayload {
-  from: string,
-  to: string,
+  from: string;
+  to: string;
 }
 
 export interface IAskAcceptPayload {
-  from: string,
-  gameId: string,
+  from: string;
+  gameId: string;
 }
 
 export interface IAcceptGamePayload {
-  gameId: string,
+  gameId: string;
 }
 
-export interface IUpdateGameStatePayload {
-
-}
+export interface IUpdateGameStatePayload {}
 
 export interface IEvent<T = Record<string, any>> {
-  name: string,
-  payload: T,
+  name: string;
+  payload: T;
 }

@@ -8,21 +8,21 @@ export class IllusionistHero implements IHero {
 
   public vanguardDescription = `
     Attack: Return an allied hero to your hand.
-  `
+  `;
   public flankDescription = `
     Attack: The opponent must choose and reveal a card from his had. You activate its order.
-  `
+  `;
   public rearDescription = `
     Attack: Recruit a hero from your hand, perform an attack with it, then discard it.
-  `
+  `;
   public orderDescription = `
     Randomly take a card from your opponent's hand, use its order effect, then discard it.
-  `
+  `;
 
-  public vanguardPower() { }
-  public flankPower() { }
-  public rearPower() { }
-  public order() { }
+  public vanguardPower() {}
+  public flankPower() {}
+  public rearPower() {}
+  public order() {}
 }
 
 export class IllusionistLeader implements ILeader {
@@ -35,8 +35,7 @@ export class IllusionistLeader implements ILeader {
     When an opponent uses a melee attack, you decide which legal target he attacks.
   `;
 
-  public power() {
-  }
+  public power() {}
 }
 
 export const Illusionist: Character = {

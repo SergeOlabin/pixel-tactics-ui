@@ -30,13 +30,13 @@ const options = [
 ];
 
 export interface ConfirmationDialogRawProps {
-  open: boolean,
-  onConfirm: (...args: any[]) => any,
-  onClose: (...args: any[]) => any,
-  title: string,
-  id?: string,
-  classes?: Record<'paper', string>,
-  keepMounted?: boolean,
+  open: boolean;
+  onConfirm: (...args: any[]) => any;
+  onClose: (...args: any[]) => any;
+  title: string;
+  id?: string;
+  classes?: Record<'paper', string>;
+  keepMounted?: boolean;
 }
 
 function ConfirmationDialog(props: ConfirmationDialogRawProps) {
@@ -60,9 +60,7 @@ function ConfirmationDialog(props: ConfirmationDialogRawProps) {
       {...other}
     >
       <DialogTitle id='confirmation-dialog-title'>{title}</DialogTitle>
-      <DialogContent dividers>
-        Accept the challenge?
-      </DialogContent>
+      <DialogContent dividers>Accept the challenge?</DialogContent>
       <DialogActions>
         <Button autoFocus onClick={onClose} color='primary'>
           Cancel

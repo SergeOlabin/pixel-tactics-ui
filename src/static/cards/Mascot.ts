@@ -8,21 +8,21 @@ export class MascotHero implements IHero {
 
   public vanguardDescription = `
     Attack: Another Vanguard hero makes a melee attack.
-  `
+  `;
   public flankDescription = `
     Attack: Another Flank hero makes a ranged attack.
-  `
+  `;
   public rearDescription = `
     Attack: Another Rear hero makes a ranged attack.
-  `
+  `;
   public orderDescription = `
     Activate your leader's order effect.
-  `
+  `;
 
-  public vanguardPower() { }
-  public flankPower() { }
-  public rearPower() { }
-  public order() { }
+  public vanguardPower() {}
+  public flankPower() {}
+  public rearPower() {}
+  public order() {}
 }
 
 export class MascotLeader implements ILeader {
@@ -36,8 +36,7 @@ export class MascotLeader implements ILeader {
     that hero may immediately make an attack as a free action.
   `;
 
-  public power() {
-  }
+  public power() {}
 }
 
 export const Mascot: Character = {

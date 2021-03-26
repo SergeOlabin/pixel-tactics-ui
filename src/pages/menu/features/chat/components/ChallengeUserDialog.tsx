@@ -3,13 +3,11 @@ import { makeStyles, createStyles } from '@material-ui/core';
 import { GameConnectionContext } from '../../../providers/GameConnection';
 import ConfirmationDialog from './ConfigrmationDialog';
 
-const useStyles = makeStyles(theme => createStyles({
+const useStyles = makeStyles((theme) => createStyles({}), {
+  name: 'ChallengeUserDialog',
+});
 
-}), { name: 'ChallengeUserDialog' });
-
-export interface IChallengeUserDialogProps {
-
-}
+export interface IChallengeUserDialogProps {}
 
 const DEFAULT_TITLE_PART = 'challenged you to a game.';
 

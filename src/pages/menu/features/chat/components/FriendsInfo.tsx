@@ -1,8 +1,4 @@
-import {
-  Button,
-  createStyles,
-  List, makeStyles,
-} from '@material-ui/core';
+import { Button, createStyles, List, makeStyles } from '@material-ui/core';
 import React, {
   ForwardRefExoticComponent,
   RefAttributes,
@@ -20,31 +16,40 @@ import FormDialog from './AddFriendDialog';
 import { useHistory } from 'react-router';
 import SportsKabaddiIcon from '@material-ui/icons/SportsKabaddi';
 
-export type Handle<T> = T extends ForwardRefExoticComponent<RefAttributes<infer T2>> ? T2 : never;
+export type Handle<T> = T extends ForwardRefExoticComponent<
+  RefAttributes<infer T2>
+>
+  ? T2
+  : never;
 
-const useStyles = makeStyles(theme => createStyles({
-  container: {
-    // display: 'flex',
-    // flexDirection: 'column',
-    // justifyContent: 'space-between',
-  },
-  friendsList: {
-  },
-  // TODO: FIX
-  addFriend: {
-    position: 'absolute',
-    bottom: 151,
-    left: 175,
-  },
-
-}), { name: 'FriendsInfo' });
+const useStyles = makeStyles(
+  (theme) =>
+    createStyles({
+      container: {
+        // display: 'flex',
+        // flexDirection: 'column',
+        // justifyContent: 'space-between',
+      },
+      friendsList: {},
+      // TODO: FIX
+      addFriend: {
+        position: 'absolute',
+        bottom: 151,
+        left: 175,
+      },
+    }),
+  { name: 'FriendsInfo' },
+);
 
 export interface IFriendsInfoProps {
-  onFriendSelection: (username: string) => any,
-  onFriendChallenge: (username: string) => any,
+  onFriendSelection: (username: string) => any;
+  onFriendChallenge: (username: string) => any;
 }
 
-const FriendsInfo: React.FC<IFriendsInfoProps> = ({ onFriendSelection, onFriendChallenge }) => {
+const FriendsInfo: React.FC<IFriendsInfoProps> = ({
+  onFriendSelection,
+  onFriendChallenge,
+}) => {
   const classes = useStyles();
   const history = useHistory();
   let dialogHandle: Handle<typeof FormDialog> | null;
@@ -92,27 +97,33 @@ const FriendsInfo: React.FC<IFriendsInfoProps> = ({ onFriendSelection, onFriendC
     <>
       <div className={classes.container}>
         <List className={classes.friendsList}>
-          {
-            friends?.map(friend => <div onClick={() => onFriendSelection(friend._id)}
-              key={friend.username}>
+          {friends?.map((friend) => (
+            <div
+              onClick={() => onFriendSelection(friend._id)}
+              key={friend.username}
+            >
               <ProfileView user={friend}>
                 <Fab
                   color='primary'
                   aria-label='add'
                   onClick={(e) => onFriendChallengeLocal(friend._id, e)}
-                ><SportsKabaddiIcon /></Fab>
+                >
+                  <SportsKabaddiIcon />
+                </Fab>
               </ProfileView>
-            </div>)
-          }
+            </div>
+          ))}
         </List>
-        <FormDialog ref={c => dialogHandle = c}
-          onSuccess={addFriend}>
-          <Fab className={classes.addFriend}
+        <FormDialog ref={(c) => (dialogHandle = c)} onSuccess={addFriend}>
+          <Fab
+            className={classes.addFriend}
             color='primary'
             aria-label='add'
-            onClick={() => dialogHandle?.toggle()}><PersonAddIcon /></Fab>
+            onClick={() => dialogHandle?.toggle()}
+          >
+            <PersonAddIcon />
+          </Fab>
         </FormDialog>
-
       </div>
     </>
   );

@@ -7,8 +7,7 @@ export enum ActiveCardLocation {
 }
 
 export type IActiveCardState = {
-  card: IBoardCard,
-  location: ActiveCardLocation,
-  place?: IPlace,
+  card: IBoardCard;
+  location: ActiveCardLocation;
+  place?: IPlace;
 } | null;
-

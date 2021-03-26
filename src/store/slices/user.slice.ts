@@ -1,11 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export type IUserState = {
-  username: string,
-  roles: string[],
-  email: string,
-  _id: string,
-} | null | undefined;
+export type IUserState =
+  | {
+      username: string;
+      roles: string[];
+      email: string;
+      _id: string;
+    }
+  | null
+  | undefined;
 
 const initialState: IUserState = null;
 

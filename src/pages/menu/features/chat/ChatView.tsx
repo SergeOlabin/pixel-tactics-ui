@@ -68,7 +68,9 @@ const ChatView: React.FC = () => {
   const userInfo = useSelector((state: RootStateType) => state.userInfo);
   const inputRef = useRef<HTMLInputElement>(null);
   const [messages, setMessages] = useState(initMessages);
-  const [activeFriendId, setActiveFriend] = useState<string | undefined>(undefined);
+  const [activeFriendId, setActiveFriend] = useState<string | undefined>(
+    undefined,
+  );
   // const [activeSocket, setActiveSocket] = useState<Socket | undefined>(undefined);
   const previous = usePrevious({ activeFriendId });
   const gameConnection = useContext(GameConnectionContext);
@@ -97,7 +99,7 @@ const ChatView: React.FC = () => {
       console.log('MSG RECEIVED on CLIENT', message);
       const data: IMessagePayload = JSON.parse(message);
 
-      setMessages(state => {
+      setMessages((state) => {
         return [...state, data];
       });
     });
@@ -119,7 +121,6 @@ const ChatView: React.FC = () => {
       to: activeFriendId,
     };
     chatSocket.emit(ChatEventsToServer.OpenChat, JSON.stringify(payload));
-
   }, [activeFriendId]);
 
   const onSend = () => {
@@ -162,22 +163,29 @@ const ChatView: React.FC = () => {
             {/* <TextField id='outlined-basic-email' label='Search' variant='outlined' fullWidth /> */}
           </Grid>
           {/* <Divider /> */}
-          <Typography variant='h4' >Friends</Typography>
-          <FriendsInfo onFriendSelection={setActiveFriend} onFriendChallenge={onFriendChallenge}/>
+          <Typography variant='h4'>Friends</Typography>
+          <FriendsInfo
+            onFriendSelection={setActiveFriend}
+            onFriendChallenge={onFriendChallenge}
+          />
         </Grid>
         <Grid item xs={9}>
-          <Messages messages={messages}/>
+          <Messages messages={messages} />
           <Divider />
           <Grid container style={{ padding: '20px' }}>
             <Grid item xs={11}>
-              <TextField id='outlined-basic-email'
+              <TextField
+                id='outlined-basic-email'
                 label='Type Something'
                 inputRef={inputRef}
                 onKeyDown={onInputKeyDown}
-                fullWidth />
+                fullWidth
+              />
             </Grid>
-            <Grid >
-              <Fab color='primary' aria-label='add' onClick={onSend}><SendIcon /></Fab>
+            <Grid>
+              <Fab color='primary' aria-label='add' onClick={onSend}>
+                <SendIcon />
+              </Fab>
             </Grid>
           </Grid>
         </Grid>

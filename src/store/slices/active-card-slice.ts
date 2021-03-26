@@ -7,7 +7,8 @@ export const activeCardSlice = createSlice({
   name: 'activeCard',
   initialState: initialState as IActiveCardState,
   reducers: {
-    setActiveCard: (state, action: PayloadAction<IActiveCardState>) => state = action.payload,
+    setActiveCard: (state, action: PayloadAction<IActiveCardState>) =>
+      (state = action.payload),
   },
 });
 

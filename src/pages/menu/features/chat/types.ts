@@ -1,9 +1,8 @@
 export interface IMessage {
-  content: string,
+  content: string;
   author: {
-    id: string,
-    username: string,
-  },
-  time: string,
+    id: string;
+    username: string;
+  };
+  time: string;
 }
-

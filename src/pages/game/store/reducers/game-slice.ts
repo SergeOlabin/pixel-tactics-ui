@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { CharacterList, Players, Positions, Waves } from '../../../../shared/types/types';
+import {
+  CharacterList,
+  Players,
+  Positions,
+  Waves,
+} from '../../../../shared/types/types';
 import { IGameState } from './types';
 
 const initialState: IGameState = {
@@ -58,10 +63,7 @@ const initialState: IGameState = {
 const gameSlice = createSlice({
   name: 'game',
   initialState,
-  reducers: {
-
-  },
-
+  reducers: {},
 });
 
 export default gameSlice.reducer;

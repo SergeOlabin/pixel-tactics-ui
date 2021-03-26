@@ -13,16 +13,15 @@
     }
   },
   "extends": [
-    "eslint:recommended",
+    // "eslint:recommended",
     "plugin:react/recommended", // Uses the recommended rules from @eslint-plugin-react
     "plugin:@typescript-eslint/recommended", // Uses the recommended rules from @typescript-eslint/eslint-plugin
+    "plugin:prettier/recommended",
   ],
   "rules": {
-    // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
-    // e.g. "@typescript-eslint/explicit-function-return-type": "off",
     "semi": ["error", "always"],
-    "quotes": ["error", "single"],
-    "jsx-quotes": ["error", "prefer-single"],
+    // "quotes": ["error", "single"],
+    // "jsx-quotes": ["error", "prefer-single"],
     "comma-dangle": ["error", {
       "arrays": "always-multiline",
       "objects": "always-multiline",
@@ -31,58 +30,62 @@
       "functions": "always-multiline"
     }],
     "object-curly-spacing": ["error", "always"],
-    "max-len": ["error", {
-      "code": 100,
-      "tabWidth": 2,
-      "ignoreComments": true
-    }],
+    // "max-len": ["error", {
+    //   "code": 100,
+    //   "tabWidth": 2,
+    //   "ignoreComments": true
+    // }],
 
     "react/self-closing-comp": "warn",
-
     "react/prop-types": "off",
 
     // ts
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/no-empty-interface": [
-      "warn",
-      {
-        "allowSingleExtends": true
-      }
-    ],
+    "@typescript-eslint/no-empty-interface": "off",
     "@typescript-eslint/member-delimiter-style": ["error", {
       "multiline": {
-        "delimiter": "comma",
+        "delimiter": "semi",
         "requireLast": true
       },
       "singleline": {
-        "delimiter": "comma",
+        "delimiter": "semi",
         "requireLast": false
       }
     }],
     "@typescript-eslint/no-empty-function": "off",
-    // disable the rule for all files
     "@typescript-eslint/explicit-member-accessibility": "off",
     "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
-
-  },
-  "overrides": [
-    {
-      // enable the rule specifically for TypeScript files
-      "files": ["*.ts", "*.tsx"],
-      "rules": {
-        "@typescript-eslint/explicit-member-accessibility": ["error", {
-          "accessibility": "explicit",
-          "overrides": {
-            "accessors": "explicit",
-            "constructors": "no-public",
-            "methods": "explicit",
-            "properties": "off",
-            "parameterProperties": "explicit"
-          }
-        }]
+    "prettier/prettier": [
+      "error",
+      {
+        "trailingComma": "all",
+        "printWidth": 80,
+        "tabWidth": 2,
+        "semi": true,
+        "singleQuote": true,
+        "endOfLine": "auto",
+        "jsxSingleQuote": true
       }
-    }
-  ]
+    ],
+  },
+  // "overrides": [
+  //   {
+  //     // enable the rule specifically for TypeScript files
+  //     "files": ["*.ts", "*.tsx"],
+  //     "rules": {
+  //       "@typescript-eslint/explicit-member-accessibility": ["error", {
+  //         "accessibility": "explicit",
+  //         "overrides": {
+  //           "accessors": "explicit",
+  //           "constructors": "no-public",
+  //           "methods": "explicit",
+  //           "properties": "off",
+  //           "parameterProperties": "explicit"
+  //         }
+  //       }]
+  //     }
+  //   }
+  // ]
 }

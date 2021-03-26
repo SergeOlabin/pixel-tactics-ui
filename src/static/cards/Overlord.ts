@@ -8,21 +8,21 @@ export class OverlordHero implements IHero {
 
   public vanguardDescription = `
     Intercept
-  `
+  `;
   public flankDescription = `
     Attack: Your leader makes a melee attack.
-  `
+  `;
   public rearDescription = `
     Attack: Any hero in your unit makes a melee attack.
-  `
+  `;
   public orderDescription = `
     Recruit as many heroes as you wish to any single wave in your unit.
-  `
+  `;
 
-  public vanguardPower() { }
-  public flankPower() { }
-  public rearPower() { }
-  public order() { }
+  public vanguardPower() {}
+  public flankPower() {}
+  public rearPower() {}
+  public order() {}
 }
 
 export class OverlordLeader implements ILeader {
@@ -37,8 +37,7 @@ export class OverlordLeader implements ILeader {
     Heroes revived this way have only 1 life, and are discarded as soon as they are killed.
   `;
 
-  public power() {
-  }
+  public power() {}
 }
 
 export const Overlord: Character = {

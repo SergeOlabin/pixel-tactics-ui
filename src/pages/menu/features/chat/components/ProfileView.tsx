@@ -1,5 +1,6 @@
 import React from 'react';
-import { makeStyles,
+import {
+  makeStyles,
   createStyles,
   ListItem,
   ListItemIcon,
@@ -8,12 +9,10 @@ import { makeStyles,
 } from '@material-ui/core';
 import { IUser } from '../../../../../shared/types/user-types';
 
-const useStyles = makeStyles(theme => createStyles({
-
-}), { name: 'Profile' });
+const useStyles = makeStyles((theme) => createStyles({}), { name: 'Profile' });
 
 export interface IProfileProps {
-  user: IUser,
+  user: IUser;
 }
 
 const ProfileView: React.FC<IProfileProps> = ({ user, children }) => {
@@ -22,8 +21,10 @@ const ProfileView: React.FC<IProfileProps> = ({ user, children }) => {
     <>
       <ListItem button key={user.username}>
         <ListItemIcon>
-          <Avatar alt={user.username}
-            src='https://pytorch.org/tutorials/_images/cat_superres_with_ort.jpg' />
+          <Avatar
+            alt={user.username}
+            src='https://pytorch.org/tutorials/_images/cat_superres_with_ort.jpg'
+          />
         </ListItemIcon>
         <ListItemText primary={user.username} />
         <ListItemText secondary='online WIP' />

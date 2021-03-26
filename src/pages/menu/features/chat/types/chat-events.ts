@@ -9,14 +9,14 @@ export enum ChatEventsToServer {
 }
 
 export interface IOpenChatPayload {
-  from: string,
-  to: string,
+  from: string;
+  to: string;
 }
 
 export interface IMessagePayload {
-  from: string,
-  author: string,
-  to: string,
-  content: string,
-  date: string,
+  from: string;
+  author: string;
+  to: string;
+  content: string;
+  date: string;
 }

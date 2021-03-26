@@ -22,10 +22,7 @@ function Copyright() {
   return (
     <Typography variant='body2' color='textSecondary' align='center'>
       {'Copyright © '}
-      <Link color='inherit'>
-        Serge
-      </Link>{' '}
-      {new Date().getFullYear()}
+      <Link color='inherit'>Serge</Link> {new Date().getFullYear()}
       {'.'}
     </Typography>
   );
@@ -58,12 +55,10 @@ export default function SignIn() {
   const { post } = useFetch('/auth/login');
   const history = useHistory();
 
-
-
   const onSubmit = async () => {
     console.log('form submitted!', watch());
 
-    const res = await post( watch());
+    const res = await post(watch());
     const token = res?.access_token;
 
     if (token) {

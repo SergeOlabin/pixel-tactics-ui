@@ -9,16 +9,16 @@ export class AlchemistHero implements IHero {
   public vanguardDescription = `
     Intercept
     Takes 2 less damage from attacks.
-  `
+  `;
   public flankDescription = `
     Your leader takes 2 less damage from attacks.
-  `
+  `;
   public rearDescription = `
     Attack: Apply 1 damage to up to 5 different heroes.
-  `
+  `;
   public orderDescription = `
     Apply 7 damage to heroes. You may divide this damage as you wish
-  `
+  `;
 
   public vanguardPower() {}
   public flankPower() {}
@@ -36,8 +36,7 @@ export class AlchemistLeader implements ILeader {
     All opposing heroes take 1 damage at the end of each wave (before casualties are checked.)
   `;
 
-  public power() {
-  }
+  public power() {}
 }
 
 export const Alchemist: Character = {

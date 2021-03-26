@@ -8,9 +8,9 @@ import { IActiveCardState } from './types';
 import userInfoReducer, { IUserState } from './slices/user.slice';
 
 export interface IAppState {
-  game: IGameState,
-  activeCard: IActiveCardState,
-  userInfo: IUserState,
+  game: IGameState;
+  activeCard: IActiveCardState;
+  userInfo: IUserState;
 }
 
 const rootReducer = combineReducers<IAppState>({

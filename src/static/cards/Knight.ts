@@ -8,21 +8,21 @@ export class KnightHero implements IHero {
 
   public vanguardDescription = `
     Intercept. A hero who attacks this hero takes 2 damage.
-  `
+  `;
   public flankDescription = `
     Your leader takes no damage from ranged attacks.
-  `
+  `;
   public rearDescription = `
     All heroes in your unit can apply damage freely to this hero.
-  `
+  `;
   public orderDescription = `
     Do 4 damage to every enemy hero or leader in melee.
-  `
+  `;
 
-  public vanguardPower() { }
-  public flankPower() { }
-  public rearPower() { }
-  public order() { }
+  public vanguardPower() {}
+  public flankPower() {}
+  public rearPower() {}
+  public order() {}
 }
 
 export class KnightLeader implements ILeader {
@@ -35,8 +35,7 @@ export class KnightLeader implements ILeader {
     Your heroes and leader take 1 less damage from attacks.
   `;
 
-  public power() {
-  }
+  public power() {}
 }
 
 export const Knight: Character = {

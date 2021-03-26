@@ -5,13 +5,11 @@ import { BASE_URL, HTTP_OPTIONS } from '../../../shared/constants/http-options';
 import BasicTable from './Table';
 import { IUser } from '../../../shared/types/user-types';
 
-const useStyles = makeStyles(theme => createStyles({
+const useStyles = makeStyles((theme) => createStyles({}), {
+  name: 'UsersContainer',
+});
 
-}), { name: 'UsersContainer' });
-
-export interface IUsersContainerProps {
-
-}
+export interface IUsersContainerProps {}
 
 const UsersContainer: React.FC<IUsersContainerProps> = (props) => {
   const classes = useStyles();
@@ -19,8 +17,6 @@ const UsersContainer: React.FC<IUsersContainerProps> = (props) => {
   const [users, setUsers] = useState<IUser[]>([]);
 
   // const { get, post, response, loading, error } = useFetch(`${BASE_URL}/users`, HTTP_OPTIONS);
-
-
 
   const loadUsers = useCallback(async () => {
     const response = await fetch(`${BASE_URL}/users`, {
@@ -30,12 +26,13 @@ const UsersContainer: React.FC<IUsersContainerProps> = (props) => {
 
     const loadedUsers = await response.json();
 
-
     console.log('loadedUsers', loadedUsers);
     if (response.ok) setUsers(loadedUsers);
   }, []);
 
-  useEffect(() => { loadUsers(); }, [loadUsers]);
+  useEffect(() => {
+    loadUsers();
+  }, [loadUsers]);
 
   console.log('users', users);
 

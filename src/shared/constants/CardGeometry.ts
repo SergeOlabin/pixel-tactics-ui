@@ -1,11 +1,11 @@
 export interface ICardDimensions {
-  width: number,
-  height: number,
+  width: number;
+  height: number;
 
   magnifyMultipliers: {
-    width: number,
-    height: number,
-  },
+    width: number;
+    height: number;
+  };
 }
 
 export const CARD_DIMENSIONS: ICardDimensions = {

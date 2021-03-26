@@ -11,8 +11,8 @@ type HeroClassType = new (...args: any[]) => IHero;
 type LeaderClassType = new (...args: any[]) => ILeader;
 
 export interface Character {
-  Hero: HeroClassType,
-  Leader: LeaderClassType,
+  Hero: HeroClassType;
+  Leader: LeaderClassType;
 }
 
 export const CARDS: { [key: string]: ICard } = {
@@ -23,4 +23,3 @@ export const CARDS: { [key: string]: ICard } = {
   [CharacterList.Mascot]: makeCardFromCharacter(Mascot),
   [CharacterList.Overlord]: makeCardFromCharacter(Overlord),
 };
-

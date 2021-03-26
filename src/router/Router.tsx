@@ -13,7 +13,12 @@ const Router: React.FC<unknown> = () => {
       <Switch>
         <Redirect exact from='/' to='/menu' />
         <Route path='/game' exact component={GamePage} />
-        <ProtectedRoute path='/users' roles={['admin']} exact component={UsersPage} />
+        <ProtectedRoute
+          path='/users'
+          roles={['admin']}
+          exact
+          component={UsersPage}
+        />
         <Route path='/login' exact component={Login} />
         <PrivateRoute path='/menu' exact component={MenuPage} />
       </Switch>

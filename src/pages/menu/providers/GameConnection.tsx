@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { io } from 'socket.io-client';
 import { RootStateType } from '../../../store/store';
-import { GameStartEventsToClient,
+import {
+  GameStartEventsToClient,
   GameStartEventsToServer,
   IAcceptGamePayload,
   IAskAcceptPayload,
@@ -19,28 +20,34 @@ export const gameSocket = io(socketUrl, {
   autoConnect: false,
 });
 
-export const GameConnectionContext = React.createContext<{
-  challengeGame: (from: string, to: string) => void,
-  acceptGame: () => void,
-  onAskAccept: (handler: (payload: IAskAcceptPayload) => any) => void,
-  onGameStateUpdate: (handler: (payload: IUpdateGameStatePayload) => any) => void,
-} | undefined>(undefined); // 'Blue' for default, default can be removed
+export const GameConnectionContext = React.createContext<
+  | {
+      challengeGame: (from: string, to: string) => void;
+      acceptGame: () => void;
+      onAskAccept: (handler: (payload: IAskAcceptPayload) => any) => void;
+      onGameStateUpdate: (
+        handler: (payload: IUpdateGameStatePayload) => any,
+      ) => void;
+    }
+  | undefined
+>(undefined); // 'Blue' for default, default can be removed
 
-export interface IGameConnectionProps {
-
-}
+export interface IGameConnectionProps {}
 
 const askAcceptHandlers: Array<(payload: IAskAcceptPayload) => any> = [];
-const updateGameStateHandlers: Array<(payload: IUpdateGameStatePayload) => any> = [];
+const updateGameStateHandlers: Array<
+  (payload: IUpdateGameStatePayload) => any
+> = [];
 
 const GameConnection: React.FC<IGameConnectionProps> = ({ children }) => {
   const userInfo = useSelector((state: RootStateType) => state.userInfo);
-  const [currentGameId, setCurrentGameId] = useState<string | undefined>(undefined);
+  const [currentGameId, setCurrentGameId] = useState<string | undefined>(
+    undefined,
+  );
   const history = useHistory();
 
   // let askAcceptHandlers: Array<(payload: IAskAcceptPayload) => any>;
   // let updateGameStateHandlers: Array<(payload: IUpdateGameStatePayload) => any>;
-
 
   useEffect(() => {
     if (!userInfo) {
@@ -51,16 +58,26 @@ const GameConnection: React.FC<IGameConnectionProps> = ({ children }) => {
     (gameSocket as any)['auth'] = { id: userInfo._id };
     gameSocket.connect();
 
-    gameSocket.on(GameStartEventsToClient.AskAccept, (payload: IAskAcceptPayload) => {
-      console.log('GameStartEventsToClient.AskAccept', GameStartEventsToClient.AskAccept, payload);
+    gameSocket.on(
+      GameStartEventsToClient.AskAccept,
+      (payload: IAskAcceptPayload) => {
+        console.log(
+          'GameStartEventsToClient.AskAccept',
+          GameStartEventsToClient.AskAccept,
+          payload,
+        );
 
-      setCurrentGameId(payload.gameId);
-      askAcceptHandlers.forEach(handler => handler(payload));
-    });
+        setCurrentGameId(payload.gameId);
+        askAcceptHandlers.forEach((handler) => handler(payload));
+      },
+    );
 
-    gameSocket.on(GameStartEventsToClient.SendGameState, (payload: IUpdateGameStatePayload) => {
-      updateGameStateHandlers.forEach(handler => handler(payload));
-    });
+    gameSocket.on(
+      GameStartEventsToClient.SendGameState,
+      (payload: IUpdateGameStatePayload) => {
+        updateGameStateHandlers.forEach((handler) => handler(payload));
+      },
+    );
 
     gameSocket.on(GameStartEventsToClient.StartGame, () => {
       console.log('GameStartEventsToClient.StartGame');
@@ -91,20 +108,23 @@ const GameConnection: React.FC<IGameConnectionProps> = ({ children }) => {
     askAcceptHandlers.push(handler);
   };
 
-  const onGameStateUpdate = (handler: (payload: IUpdateGameStatePayload) => any) => {
+  const onGameStateUpdate = (
+    handler: (payload: IUpdateGameStatePayload) => any,
+  ) => {
     updateGameStateHandlers.push(handler);
   };
 
   return (
-    <GameConnectionContext.Provider value={{
-      challengeGame,
-      acceptGame,
-      onAskAccept,
-      onGameStateUpdate,
-    }}>
+    <GameConnectionContext.Provider
+      value={{
+        challengeGame,
+        acceptGame,
+        onAskAccept,
+        onGameStateUpdate,
+      }}
+    >
       {children}
     </GameConnectionContext.Provider>
-
   );
 };
 
