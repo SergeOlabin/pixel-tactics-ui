@@ -3,6 +3,7 @@ import React, {
   ForwardRefExoticComponent,
   RefAttributes,
   useCallback,
+  useContext,
   useEffect,
   useRef,
   useState,
@@ -15,6 +16,10 @@ import Fab from '@material-ui/core/Fab';
 import FormDialog from './AddFriendDialog';
 import { useHistory } from 'react-router';
 import SportsKabaddiIcon from '@material-ui/icons/SportsKabaddi';
+import { useDispatch, useSelector } from 'react-redux';
+import { setActiveFriendById, setFriends } from '../store/friends-info.slice';
+import { RootStateType } from '../../../../../store/store';
+import { GameConnectionContext } from '../../../providers/GameConnection';
 
 export type Handle<T> = T extends ForwardRefExoticComponent<
   RefAttributes<infer T2>
@@ -37,23 +42,37 @@ const useStyles = makeStyles(
         bottom: 151,
         left: 175,
       },
+      activeFriend: {
+        backgroundColor: theme.palette.info.light,
+      },
     }),
   { name: 'FriendsInfo' },
 );
 
 export interface IFriendsInfoProps {
-  onFriendSelection: (username: string) => any;
-  onFriendChallenge: (username: string) => any;
+  // onFriendSelection: (username: string) => any;
+  // onFriendChallenge: (username: string) => any;
 }
 
-const FriendsInfo: React.FC<IFriendsInfoProps> = ({
-  onFriendSelection,
-  onFriendChallenge,
-}) => {
+const FriendsInfo: React.FC<IFriendsInfoProps> = (
+  {
+    // onFriendSelection,
+    // onFriendChallenge,
+  },
+) => {
   const classes = useStyles();
   const history = useHistory();
-  let dialogHandle: Handle<typeof FormDialog> | null;
-  const [friends, setFriends] = useState<IUser[]>([]);
+  const dispatch = useDispatch();
+  const gameConnection = useContext(GameConnectionContext);
+
+  const { friends, activeFriend } = useSelector(
+    (state: RootStateType) => state.friendsInfo,
+  );
+  const { userInfo } = useSelector((state: RootStateType) => state);
+
+  let addFriendDialogHandle: Handle<typeof FormDialog> | null;
+  // const [friends, setFriends] = useState<IUser[]>([]);
+
   const { get: getFriends } = useFetch('profile/friends');
   const { post: addFriendReq } = useFetch('profile/add-friend');
 
@@ -63,7 +82,7 @@ const FriendsInfo: React.FC<IFriendsInfoProps> = ({
       history.push('/login');
     }
     console.log('friends', friends);
-    setFriends(friends);
+    dispatch(setFriends(friends));
   }, [getFriends]);
 
   useEffect(() => {
@@ -71,7 +90,7 @@ const FriendsInfo: React.FC<IFriendsInfoProps> = ({
   }, []);
 
   useEffect(() => {
-    onFriendSelection(friends?.[0]?._id);
+    dispatch(setActiveFriendById(friends?.[0]?._id));
   }, [friends]);
 
   const addFriend = async (email: string | undefined) => {
@@ -85,12 +104,16 @@ const FriendsInfo: React.FC<IFriendsInfoProps> = ({
     fetchFriends();
   };
 
-  const onFriendChallengeLocal = (
+  const onFriendChallenge = (
     friendId: string,
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
-    onFriendChallenge(friendId);
+    gameConnection?.challengeGame(userInfo?._id!, friendId);
     e.stopPropagation();
+  };
+
+  const onFriendSelection = (friendId: string) => {
+    dispatch(setActiveFriendById(friendId));
   };
 
   return (
@@ -100,13 +123,16 @@ const FriendsInfo: React.FC<IFriendsInfoProps> = ({
           {friends?.map((friend) => (
             <div
               onClick={() => onFriendSelection(friend._id)}
+              className={
+                activeFriend?._id === friend._id ? classes.activeFriend : ''
+              }
               key={friend.username}
             >
               <ProfileView user={friend}>
                 <Fab
                   color='primary'
                   aria-label='add'
-                  onClick={(e) => onFriendChallengeLocal(friend._id, e)}
+                  onClick={(e) => onFriendChallenge(friend._id, e)}
                 >
                   <SportsKabaddiIcon />
                 </Fab>
@@ -114,12 +140,15 @@ const FriendsInfo: React.FC<IFriendsInfoProps> = ({
             </div>
           ))}
         </List>
-        <FormDialog ref={(c) => (dialogHandle = c)} onSuccess={addFriend}>
+        <FormDialog
+          ref={(c) => (addFriendDialogHandle = c)}
+          onSuccess={addFriend}
+        >
           <Fab
             className={classes.addFriend}
             color='primary'
             aria-label='add'
-            onClick={() => dialogHandle?.toggle()}
+            onClick={() => addFriendDialogHandle?.toggle()}
           >
             <PersonAddIcon />
           </Fab>

@@ -13,10 +13,10 @@ import usePrevious from '../../../../shared/hooks/use-previous';
 import { socket } from '../../../../shared/service/socket';
 import { RootStateType } from '../../../../store/store';
 import { GameConnectionContext } from '../../providers/GameConnection';
-import ActiveUserInfo from './components/ActiveUserInfo';
-import ChallengeUserDialog from './components/ChallengeUserDialog';
+import ActiveUserInfo from '../sidebar/components/ActiveUserInfo';
+import ChallengeUserDialog from '../sidebar/components/ChallengeUserDialog';
 // import ChallengeUserDialog from './components/ChallengeUserDialog';
-import FriendsInfo from './components/FriendsInfo';
+import FriendsInfo from '../sidebar/components/FriendsInfo';
 import Messages from './components/Messages';
 import {
   ChatEventsToClient,
@@ -51,20 +51,20 @@ const ChatView: React.FC = () => {
   const userInfo = useSelector((state: RootStateType) => state.userInfo);
   const inputRef = useRef<HTMLInputElement>(null);
   const [messages, setMessages] = useState<IMessagePayload[]>([]);
-  const [activeFriendId, setActiveFriend] = useState<string | undefined>(
-    undefined,
+  const { activeFriend } = useSelector(
+    (state: RootStateType) => state.friendsInfo,
   );
-  const previous = usePrevious({ activeFriendId });
-  const gameConnection = useContext(GameConnectionContext);
+
+  const previous = usePrevious({ activeFriend });
 
   useEffect(() => {
     return () => {
       const userId = userInfo?._id;
 
-      if (userId && activeFriendId) {
+      if (userId && activeFriend) {
         const payload: IOpenChatPayload = {
           from: userId,
-          to: activeFriendId,
+          to: activeFriend._id,
         };
         socket.emit(ChatEventsToServer.CloseChat, payload);
       }
@@ -82,22 +82,22 @@ const ChatView: React.FC = () => {
   }, [userInfo]);
 
   useEffect(() => {
-    if (!activeFriendId || !userInfo) return;
+    if (!activeFriend || !userInfo) return;
 
-    if (previous?.activeFriendId) {
+    if (previous?.activeFriend) {
       const payload: IOpenChatPayload = {
         from: userInfo?._id,
-        to: previous?.activeFriendId,
+        to: previous?.activeFriend._id,
       };
       socket.emit(ChatEventsToServer.CloseChat, payload);
     }
 
     const payload: IOpenChatPayload = {
       from: userInfo?._id,
-      to: activeFriendId,
+      to: activeFriend._id,
     };
     socket.emit(ChatEventsToServer.OpenChat, payload);
-  }, [activeFriendId]);
+  }, [activeFriend]);
 
   const onSend = () => {
     inputRef.current?.value;
@@ -110,7 +110,7 @@ const ChatView: React.FC = () => {
     const payload: IMessagePayload = {
       from: userInfo?._id!,
       author: userInfo?.username!,
-      to: activeFriendId!,
+      to: activeFriend?._id!,
       date: `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
       content,
     };
@@ -125,48 +125,28 @@ const ChatView: React.FC = () => {
     }
   };
 
-  const onFriendChallenge = (friendId: string) => {
-    gameConnection?.challengeGame(userInfo?._id!, friendId);
-  };
-
   return (
     <>
-      <Grid container component={Paper} className={classes.chatSection}>
-        <Grid item xs={3} className={classes.borderRight500}>
-          <ActiveUserInfo />
-          <Divider />
-          <Grid item xs={12} style={{ padding: '10px' }}>
-            {/* <TextField id='outlined-basic-email' label='Search' variant='outlined' fullWidth /> */}
+      <Grid item xs={9}>
+        <Messages messages={messages} />
+        <Divider />
+        <Grid container style={{ padding: '20px' }}>
+          <Grid item xs={11}>
+            <TextField
+              id='outlined-basic-email'
+              label='Type Something'
+              inputRef={inputRef}
+              onKeyDown={onInputKeyDown}
+              fullWidth
+            />
           </Grid>
-          {/* <Divider /> */}
-          <Typography variant='h4'>Friends</Typography>
-          <FriendsInfo
-            onFriendSelection={setActiveFriend}
-            onFriendChallenge={onFriendChallenge}
-          />
-        </Grid>
-        <Grid item xs={9}>
-          <Messages messages={messages} />
-          <Divider />
-          <Grid container style={{ padding: '20px' }}>
-            <Grid item xs={11}>
-              <TextField
-                id='outlined-basic-email'
-                label='Type Something'
-                inputRef={inputRef}
-                onKeyDown={onInputKeyDown}
-                fullWidth
-              />
-            </Grid>
-            <Grid>
-              <Fab color='primary' aria-label='add' onClick={onSend}>
-                <SendIcon />
-              </Fab>
-            </Grid>
+          <Grid>
+            <Fab color='primary' aria-label='add' onClick={onSend}>
+              <SendIcon />
+            </Fab>
           </Grid>
         </Grid>
       </Grid>
-      <ChallengeUserDialog />
     </>
   );
 };

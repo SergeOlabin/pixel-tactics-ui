@@ -16,6 +16,7 @@ export const GameConnectionContext = React.createContext<
   | {
       challengeGame: (from: string, to: string) => void;
       acceptGame: () => void;
+      declineGame: () => void;
       onAskAccept: (handler: (payload: IAskAcceptPayload) => any) => void;
       onGameStateUpdate: (
         handler: (payload: IUpdateGameStatePayload) => any,
@@ -31,6 +32,14 @@ const updateGameStateHandlers: Array<
   (payload: IUpdateGameStatePayload) => any
 > = [];
 
+/**
+ * Having as a wrapper doesn't make any sense..
+ * It's also possible to import socket in the component where is necessary
+ * and not to waste time on writing the wrapper to have
+ * feature-specific socket actions in one place.
+ *
+ *
+ */
 const GameConnection: React.FC<IGameConnectionProps> = ({ children }) => {
   const userInfo = useSelector((state: RootStateType) => state.userInfo);
   const [currentGameId, setCurrentGameId] = useState<string | undefined>(
@@ -50,12 +59,6 @@ const GameConnection: React.FC<IGameConnectionProps> = ({ children }) => {
     socket.on(
       GameStartEventsToClient.AskAccept,
       (payload: IAskAcceptPayload) => {
-        console.log(
-          'GameStartEventsToClient.AskAccept',
-          GameStartEventsToClient.AskAccept,
-          payload,
-        );
-
         setCurrentGameId(payload.gameId);
         askAcceptHandlers.forEach((handler) => handler(payload));
       },
@@ -93,6 +96,16 @@ const GameConnection: React.FC<IGameConnectionProps> = ({ children }) => {
     socket.emit(GameStartEventsToServer.AcceptGame, payload);
   };
 
+  const declineGame = () => {
+    if (!currentGameId) {
+      console.log(`NO GAME WITH SUCH ID: ${currentGameId}`);
+      return;
+    }
+    const payload: IAcceptGamePayload = { gameId: currentGameId };
+
+    socket.emit(GameStartEventsToServer.DeclineGame, payload);
+  };
+
   const onAskAccept = (handler: (payload: IAskAcceptPayload) => any) => {
     askAcceptHandlers.push(handler);
   };
@@ -108,6 +121,7 @@ const GameConnection: React.FC<IGameConnectionProps> = ({ children }) => {
       value={{
         challengeGame,
         acceptGame,
+        declineGame,
         onAskAccept,
         onGameStateUpdate,
       }}

@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles, createStyles } from '@material-ui/core';
 import { GameConnectionContext } from '../../../providers/GameConnection';
 import ConfirmationDialog from './ConfigrmationDialog';
+import { useSelector } from 'react-redux';
+import { RootStateType } from '../../../../../store/store';
 
 const useStyles = makeStyles((theme) => createStyles({}), {
   name: 'ChallengeUserDialog',
@@ -18,18 +20,20 @@ const ChallengeUserDialog: React.FC<IChallengeUserDialogProps> = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState('');
 
+  const { activeFriend } = useSelector(
+    (state: RootStateType) => state.friendsInfo,
+  );
+
   useEffect(() => {
     console.log('init dialog');
     gameConnection?.onAskAccept((payload) => {
-      // TODO: change to a username
-      const userId = payload.from;
-
-      setTitle(`${userId} ${DEFAULT_TITLE_PART}`);
+      setTitle(`${activeFriend?.username} ${DEFAULT_TITLE_PART}`);
       setIsOpen(true);
     });
-  }, []);
+  }, [activeFriend]);
 
   const onClose = () => {
+    gameConnection?.declineGame();
     setIsOpen(false);
   };
 

@@ -6,17 +6,22 @@ import { IGameState } from '../pages/game/store/reducers/types';
 import activeCardReducer from './slices/active-card-slice';
 import { IActiveCardState } from './types';
 import userInfoReducer, { IUserState } from './slices/user.slice';
+import friendsInfoReducer, {
+  IFriendsInfoState,
+} from '../pages/menu/features/sidebar/store/friends-info.slice';
 
 export interface IAppState {
   game: IGameState;
   activeCard: IActiveCardState;
   userInfo: IUserState;
+  friendsInfo: IFriendsInfoState;
 }
 
 const rootReducer = combineReducers<IAppState>({
   game: gameReducer,
   activeCard: activeCardReducer,
   userInfo: userInfoReducer,
+  friendsInfo: friendsInfoReducer,
 });
 
 export type RootStateType = ReturnType<typeof rootReducer>;

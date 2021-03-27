@@ -1,6 +1,7 @@
 export enum GameStartEventsToServer {
   ChallengeGame = 'challengeGame',
   AcceptGame = 'acceptGame',
+  DeclineGame = 'declineGame',
 }
 
 export enum GameStartEventsToClient {
