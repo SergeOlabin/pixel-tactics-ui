@@ -7,6 +7,7 @@ import { socket } from '../../../../../shared/service/socket';
 import { IUser } from '../../../../../shared/types/user-types';
 import { RootStateType } from '../../../../../store/store';
 import {
+  GameInitEventsToClient,
   GameInitEventsToServer,
   IChallengeGamePayload,
   IDeclineGamePayload,
@@ -37,6 +38,34 @@ const ChallengeFriend: React.FC<IChallengeFriendProps> = ({ friend }) => {
     initDialogState,
   );
 
+  React.useEffect(() => {
+    socket.on(
+      GameInitEventsToClient.GameDeclined,
+      (payload: IDeclineGamePayload) => {
+        closeDialog();
+        dispatch(dropGame());
+
+        const username =
+          payload.from === userInfo?.username ? 'You' : friend.username;
+
+        openUserCancelledDialog(username);
+      },
+    );
+  }, []);
+
+  const declineChallenge = () => {
+    console.log('declineChallenge', userInfo?._id, gameId);
+    if (!gameId) {
+      throw new Error(`Pending game not found`);
+    }
+    const payload: IDeclineGamePayload = {
+      from: userInfo?._id!,
+      gameId: gameId,
+    };
+    socket.emit(GameInitEventsToServer.DeclineGame, payload);
+    closeDialog();
+  };
+
   const onFriendChallenge = (
     friendId: string,
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -46,24 +75,7 @@ const ChallengeFriend: React.FC<IChallengeFriendProps> = ({ friend }) => {
       to: friendId,
     };
     socket.emit(GameInitEventsToServer.ChallengeGame, payload);
-    setDialogState({
-      open: true,
-      title: `You have challenged ${friend.username}`,
-      content: <div>Waiting for {friend.username}</div>,
-      actions: (
-        <Button
-          autoFocus
-          onClick={() => {
-            declineChallenge();
-            closeDialog();
-          }}
-          color='primary'
-        >
-          Cancel
-        </Button>
-      ),
-      onClose: closeDialog,
-    });
+    openWaitingDialog();
     e.stopPropagation();
   };
 
@@ -74,16 +86,31 @@ const ChallengeFriend: React.FC<IChallengeFriendProps> = ({ friend }) => {
     }));
   };
 
-  const declineChallenge = () => {
-    if (!gameId) {
-      throw new Error(`Pending game not found`);
-    }
-    const payload: IDeclineGamePayload = {
-      from: userInfo?._id!,
-      gameId,
-    };
-    socket.emit(GameInitEventsToServer.DeclineGame, payload);
-    dispatch(dropGame());
+  const openWaitingDialog = () => {
+    setDialogState({
+      open: true,
+      title: `You have challenged ${friend.username}`,
+      content: <div>Waiting for {friend.username}</div>,
+      actions: (
+        <Button autoFocus color='primary'>
+          Cancel
+        </Button>
+      ),
+      onClose: closeDialog,
+    });
+  };
+
+  const openUserCancelledDialog = (username: string) => {
+    setDialogState({
+      open: true,
+      title: `${username} cancelled challenge`,
+      actions: (
+        <Button autoFocus onClick={closeDialog} color='primary'>
+          Ok
+        </Button>
+      ),
+      onClose: closeDialog,
+    });
   };
 
   return (
@@ -95,6 +122,15 @@ const ChallengeFriend: React.FC<IChallengeFriendProps> = ({ friend }) => {
       >
         <SportsKabaddiIcon />
       </Fab>
+      {/* <Button
+        autoFocus
+        onClick={() => {
+          declineChallenge();
+        }}
+        color='primary'
+      >
+        DECLINE MANUALLY
+      </Button> */}
       <InfoDialog {...dialogState} />
     </>
   );

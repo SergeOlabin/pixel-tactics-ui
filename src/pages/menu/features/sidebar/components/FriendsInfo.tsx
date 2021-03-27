@@ -1,26 +1,20 @@
-import { Button, createStyles, List, makeStyles } from '@material-ui/core';
+import { createStyles, List, makeStyles } from '@material-ui/core';
+import Fab from '@material-ui/core/Fab';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import React, {
   ForwardRefExoticComponent,
   RefAttributes,
   useCallback,
-  useContext,
   useEffect,
-  useRef,
-  useState,
 } from 'react';
-import useFetch from 'use-http';
-import { IUser } from '../../../../../shared/types/user-types';
-import ProfileView from './ProfileView';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import Fab from '@material-ui/core/Fab';
-import FormDialog from './AddFriendDialog';
-import { useHistory } from 'react-router';
-import SportsKabaddiIcon from '@material-ui/icons/SportsKabaddi';
 import { useDispatch, useSelector } from 'react-redux';
-import { setActiveFriendById, setFriends } from '../store/friends-info.slice';
+import { useHistory } from 'react-router';
+import useFetch from 'use-http';
 import { RootStateType } from '../../../../../store/store';
-import { GameConnectionContext } from '../../../providers/GameConnection';
+import { setActiveFriendById, setFriends } from '../store/friends-info.slice';
+import FormDialog from './AddFriendDialog';
 import ChallengeFriend from './ChallengeFriend';
+import ProfileView from './ProfileView';
 
 export type Handle<T> = T extends ForwardRefExoticComponent<
   RefAttributes<infer T2>
@@ -50,26 +44,16 @@ const useStyles = makeStyles(
   { name: 'FriendsInfo' },
 );
 
-export interface IFriendsInfoProps {
-  // onFriendSelection: (username: string) => any;
-  // onFriendChallenge: (username: string) => any;
-}
+export interface IFriendsInfoProps {}
 
-const FriendsInfo: React.FC<IFriendsInfoProps> = (
-  {
-    // onFriendSelection,
-    // onFriendChallenge,
-  },
-) => {
+const FriendsInfo: React.FC<IFriendsInfoProps> = () => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-  const gameConnection = useContext(GameConnectionContext);
 
   const { friends, activeFriend } = useSelector(
     (state: RootStateType) => state.friendsInfo,
   );
-  const { userInfo } = useSelector((state: RootStateType) => state);
 
   let addFriendDialogHandle: Handle<typeof FormDialog> | null;
   // const [friends, setFriends] = useState<IUser[]>([]);
@@ -82,7 +66,6 @@ const FriendsInfo: React.FC<IFriendsInfoProps> = (
     if (friends?.statusCode === 401) {
       history.push('/login');
     }
-    console.log('friends', friends);
     dispatch(setFriends(friends));
   }, [getFriends]);
 
@@ -104,14 +87,6 @@ const FriendsInfo: React.FC<IFriendsInfoProps> = (
 
     fetchFriends();
   };
-
-  // const onFriendChallenge = (
-  //   friendId: string,
-  //   e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  // ) => {
-  //   gameConnection?.challengeGame(userInfo?._id!, friendId);
-  //   e.stopPropagation();
-  // };
 
   const onFriendSelection = (friendId: string) => {
     dispatch(setActiveFriendById(friendId));

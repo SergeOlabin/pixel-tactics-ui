@@ -10,6 +10,7 @@ import {
   GameInitEventsToServer,
   IAcceptGamePayload,
   IAskAcceptPayload,
+  IDeclineGamePayload,
 } from '../../../../types/game-socket-events';
 import { initGame } from '../../store/game-init.slice';
 
@@ -26,6 +27,7 @@ const ChallengeUserDialog: React.FC<IChallengeUserDialogProps> = () => {
   const gameConnection = useContext(GameConnectionContext);
   const dispatch = useDispatch();
   const gameId = useSelector((state: RootStateType) => state.gameInit?.gameId);
+  const { userInfo } = useSelector((state: RootStateType) => state);
 
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState('');
@@ -50,7 +52,7 @@ const ChallengeUserDialog: React.FC<IChallengeUserDialogProps> = () => {
       console.log(`NO GAME WITH SUCH ID: ${gameId}`);
       return;
     }
-    const payload: IAcceptGamePayload = { gameId };
+    const payload: IDeclineGamePayload = { gameId, from: userInfo?._id! };
 
     socket.emit(GameInitEventsToServer.DeclineGame, payload);
     setIsOpen(false);

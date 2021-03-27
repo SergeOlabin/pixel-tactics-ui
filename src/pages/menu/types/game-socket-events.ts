@@ -31,6 +31,11 @@ export interface IAcceptGamePayload {
   gameId: string;
 }
 
+export interface IDeclineGamePayload {
+  gameId: string;
+  from: string;
+}
+
 export interface IUpdateGameStatePayload {}
 
 export interface IDeclineGamePayload {

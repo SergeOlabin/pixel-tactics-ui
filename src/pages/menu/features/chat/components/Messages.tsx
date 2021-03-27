@@ -28,7 +28,6 @@ export interface IChatProps {
 }
 
 const Messages: React.FC<IChatProps> = ({ messages }) => {
-  console.log('messages', messages);
   const classes = useStyles();
   const username = useSelector(
     (state: RootStateType) => state.userInfo?.username,
@@ -67,17 +66,6 @@ const Messages: React.FC<IChatProps> = ({ messages }) => {
             </Grid>
           </ListItem>
         ))}
-
-        {/* <ListItem key='2'>
-          <Grid container>
-            <Grid item xs={12}>
-              <ListItemText primary='Hey, Iam Good! What about you ?' />
-            </Grid>
-            <Grid item xs={12}>
-              <ListItemText secondary='09:31' />
-            </Grid>
-          </Grid>
-        </ListItem> */}
       </List>
     </>
   );
