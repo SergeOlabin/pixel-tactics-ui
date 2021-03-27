@@ -1,13 +1,20 @@
-export enum GameStartEventsToServer {
+export enum GameInitEventsToServer {
   ChallengeGame = 'challengeGame',
   AcceptGame = 'acceptGame',
   DeclineGame = 'declineGame',
 }
 
-export enum GameStartEventsToClient {
+export enum GameInitEventsToClient {
   AskAccept = 'askAccept',
   SendGameState = 'sendGameState',
   StartGame = 'startGame',
+  GameDeclined = 'gameDeclined',
+  ChallengeGameResponse = 'challengeGameResponse',
+}
+
+export interface IEvent<T = Record<string, any>> {
+  name: string;
+  payload: T;
 }
 
 export interface IChallengeGamePayload {
@@ -26,7 +33,7 @@ export interface IAcceptGamePayload {
 
 export interface IUpdateGameStatePayload {}
 
-export interface IEvent<T = Record<string, any>> {
-  name: string;
-  payload: T;
+export interface IDeclineGamePayload {
+  gameId: string;
+  from: string;
 }

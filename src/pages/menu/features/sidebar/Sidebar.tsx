@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import ActiveUserInfo from './components/ActiveUserInfo';
-import ChallengeUserDialog from './components/ChallengeUserDialog';
+import ChallengeUserDialog from './components/dialogs/ChallengeUserDialog';
 import FriendsInfo from './components/FriendsInfo';
 
 const useStyles = makeStyles(

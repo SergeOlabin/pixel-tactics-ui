@@ -4,7 +4,7 @@ import {
   Players,
   Positions,
   Waves,
-} from '../../../../shared/types/types';
+} from '../../../shared/types/types';
 import { IGameState } from './types';
 
 const initialState: IGameState = {

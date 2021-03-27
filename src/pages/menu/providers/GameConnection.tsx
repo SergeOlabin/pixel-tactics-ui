@@ -1,36 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { socket } from '../../../shared/service/socket';
 import { RootStateType } from '../../../store/store';
+import { initGame, startGame } from '../features/sidebar/store/game-init.slice';
 import {
-  GameStartEventsToClient,
-  GameStartEventsToServer,
+  GameInitEventsToClient,
+  GameInitEventsToServer,
   IAcceptGamePayload,
   IAskAcceptPayload,
   IChallengeGamePayload,
   IUpdateGameStatePayload,
 } from '../types/game-socket-events';
 
-export const GameConnectionContext = React.createContext<
-  | {
-      challengeGame: (from: string, to: string) => void;
-      acceptGame: () => void;
-      declineGame: () => void;
-      onAskAccept: (handler: (payload: IAskAcceptPayload) => any) => void;
-      onGameStateUpdate: (
-        handler: (payload: IUpdateGameStatePayload) => any,
-      ) => void;
-    }
-  | undefined
->(undefined); // 'Blue' for default, default can be removed
+export const GameConnectionContext = React.createContext<any>(undefined); // 'Blue' for default, default can be removed
 
 export interface IGameConnectionProps {}
-
-const askAcceptHandlers: Array<(payload: IAskAcceptPayload) => any> = [];
-const updateGameStateHandlers: Array<
-  (payload: IUpdateGameStatePayload) => any
-> = [];
 
 /**
  * Having as a wrapper doesn't make any sense..
@@ -42,10 +27,8 @@ const updateGameStateHandlers: Array<
  */
 const GameConnection: React.FC<IGameConnectionProps> = ({ children }) => {
   const userInfo = useSelector((state: RootStateType) => state.userInfo);
-  const [currentGameId, setCurrentGameId] = useState<string | undefined>(
-    undefined,
-  );
   const history = useHistory();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!userInfo) {
@@ -56,24 +39,14 @@ const GameConnection: React.FC<IGameConnectionProps> = ({ children }) => {
     (socket as any)['auth'] = { id: userInfo._id };
     socket.connect();
 
-    socket.on(
-      GameStartEventsToClient.AskAccept,
-      (payload: IAskAcceptPayload) => {
-        setCurrentGameId(payload.gameId);
-        askAcceptHandlers.forEach((handler) => handler(payload));
-      },
-    );
-
-    socket.on(
-      GameStartEventsToClient.SendGameState,
-      (payload: IUpdateGameStatePayload) => {
-        updateGameStateHandlers.forEach((handler) => handler(payload));
-      },
-    );
-
-    socket.on(GameStartEventsToClient.StartGame, () => {
+    socket.on(GameInitEventsToClient.StartGame, () => {
       console.log('GameStartEventsToClient.StartGame');
+      dispatch(startGame());
       history.push('/game');
+    });
+
+    socket.on(GameInitEventsToClient.ChallengeGameResponse, ({ gameId }) => {
+      dispatch(initGame(gameId));
     });
 
     return () => {
@@ -81,51 +54,8 @@ const GameConnection: React.FC<IGameConnectionProps> = ({ children }) => {
     };
   }, [userInfo]);
 
-  const challengeGame = (from: string, to: string) => {
-    const payload: IChallengeGamePayload = { from, to };
-    socket.emit(GameStartEventsToServer.ChallengeGame, payload);
-  };
-
-  const acceptGame = () => {
-    if (!currentGameId) {
-      console.log(`NO GAME WITH SUCH ID: ${currentGameId}`);
-      return;
-    }
-    const payload: IAcceptGamePayload = { gameId: currentGameId };
-
-    socket.emit(GameStartEventsToServer.AcceptGame, payload);
-  };
-
-  const declineGame = () => {
-    if (!currentGameId) {
-      console.log(`NO GAME WITH SUCH ID: ${currentGameId}`);
-      return;
-    }
-    const payload: IAcceptGamePayload = { gameId: currentGameId };
-
-    socket.emit(GameStartEventsToServer.DeclineGame, payload);
-  };
-
-  const onAskAccept = (handler: (payload: IAskAcceptPayload) => any) => {
-    askAcceptHandlers.push(handler);
-  };
-
-  const onGameStateUpdate = (
-    handler: (payload: IUpdateGameStatePayload) => any,
-  ) => {
-    updateGameStateHandlers.push(handler);
-  };
-
   return (
-    <GameConnectionContext.Provider
-      value={{
-        challengeGame,
-        acceptGame,
-        declineGame,
-        onAskAccept,
-        onGameStateUpdate,
-      }}
-    >
+    <GameConnectionContext.Provider value={null}>
       {children}
     </GameConnectionContext.Provider>
   );

@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setActiveFriendById, setFriends } from '../store/friends-info.slice';
 import { RootStateType } from '../../../../../store/store';
 import { GameConnectionContext } from '../../../providers/GameConnection';
+import ChallengeFriend from './ChallengeFriend';
 
 export type Handle<T> = T extends ForwardRefExoticComponent<
   RefAttributes<infer T2>
@@ -104,13 +105,13 @@ const FriendsInfo: React.FC<IFriendsInfoProps> = (
     fetchFriends();
   };
 
-  const onFriendChallenge = (
-    friendId: string,
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => {
-    gameConnection?.challengeGame(userInfo?._id!, friendId);
-    e.stopPropagation();
-  };
+  // const onFriendChallenge = (
+  //   friendId: string,
+  //   e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  // ) => {
+  //   gameConnection?.challengeGame(userInfo?._id!, friendId);
+  //   e.stopPropagation();
+  // };
 
   const onFriendSelection = (friendId: string) => {
     dispatch(setActiveFriendById(friendId));
@@ -129,13 +130,7 @@ const FriendsInfo: React.FC<IFriendsInfoProps> = (
               key={friend.username}
             >
               <ProfileView user={friend}>
-                <Fab
-                  color='primary'
-                  aria-label='add'
-                  onClick={(e) => onFriendChallenge(friend._id, e)}
-                >
-                  <SportsKabaddiIcon />
-                </Fab>
+                <ChallengeFriend friend={friend} />
               </ProfileView>
             </div>
           ))}
