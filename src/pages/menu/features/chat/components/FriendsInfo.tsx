@@ -71,7 +71,7 @@ const FriendsInfo: React.FC<IFriendsInfoProps> = ({
   }, []);
 
   useEffect(() => {
-    onFriendSelection(friends[0]?._id);
+    onFriendSelection(friends?.[0]?._id);
   }, [friends]);
 
   const addFriend = async (email: string | undefined) => {

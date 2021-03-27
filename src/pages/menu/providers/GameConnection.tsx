@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { io } from 'socket.io-client';
+import { socket } from '../../../shared/service/socket';
 import { RootStateType } from '../../../store/store';
 import {
   GameStartEventsToClient,
@@ -9,16 +9,8 @@ import {
   IAcceptGamePayload,
   IAskAcceptPayload,
   IChallengeGamePayload,
-  IEvent,
   IUpdateGameStatePayload,
 } from '../types/game-socket-events';
-
-const socketUrl = 'ws://localhost:3001/game';
-
-export const gameSocket = io(socketUrl, {
-  transports: ['websocket'],
-  autoConnect: false,
-});
 
 export const GameConnectionContext = React.createContext<
   | {
@@ -46,19 +38,16 @@ const GameConnection: React.FC<IGameConnectionProps> = ({ children }) => {
   );
   const history = useHistory();
 
-  // let askAcceptHandlers: Array<(payload: IAskAcceptPayload) => any>;
-  // let updateGameStateHandlers: Array<(payload: IUpdateGameStatePayload) => any>;
-
   useEffect(() => {
     if (!userInfo) {
       return;
     }
 
     console.log('SOCKET INIT ', { id: userInfo?._id });
-    (gameSocket as any)['auth'] = { id: userInfo._id };
-    gameSocket.connect();
+    (socket as any)['auth'] = { id: userInfo._id };
+    socket.connect();
 
-    gameSocket.on(
+    socket.on(
       GameStartEventsToClient.AskAccept,
       (payload: IAskAcceptPayload) => {
         console.log(
@@ -72,26 +61,26 @@ const GameConnection: React.FC<IGameConnectionProps> = ({ children }) => {
       },
     );
 
-    gameSocket.on(
+    socket.on(
       GameStartEventsToClient.SendGameState,
       (payload: IUpdateGameStatePayload) => {
         updateGameStateHandlers.forEach((handler) => handler(payload));
       },
     );
 
-    gameSocket.on(GameStartEventsToClient.StartGame, () => {
+    socket.on(GameStartEventsToClient.StartGame, () => {
       console.log('GameStartEventsToClient.StartGame');
       history.push('/game');
     });
 
     return () => {
-      gameSocket.disconnect();
+      socket.disconnect();
     };
   }, [userInfo]);
 
   const challengeGame = (from: string, to: string) => {
     const payload: IChallengeGamePayload = { from, to };
-    gameSocket.emit(GameStartEventsToServer.ChallengeGame, payload);
+    socket.emit(GameStartEventsToServer.ChallengeGame, payload);
   };
 
   const acceptGame = () => {
@@ -101,7 +90,7 @@ const GameConnection: React.FC<IGameConnectionProps> = ({ children }) => {
     }
     const payload: IAcceptGamePayload = { gameId: currentGameId };
 
-    gameSocket.emit(GameStartEventsToServer.AcceptGame, payload);
+    socket.emit(GameStartEventsToServer.AcceptGame, payload);
   };
 
   const onAskAccept = (handler: (payload: IAskAcceptPayload) => any) => {

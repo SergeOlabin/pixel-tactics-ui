@@ -28,6 +28,7 @@ export interface IChatProps {
 }
 
 const Messages: React.FC<IChatProps> = ({ messages }) => {
+  console.log('messages', messages);
   const classes = useStyles();
   const username = useSelector(
     (state: RootStateType) => state.userInfo?.username,

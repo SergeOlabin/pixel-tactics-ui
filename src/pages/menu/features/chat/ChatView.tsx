@@ -6,14 +6,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import SendIcon from '@material-ui/icons/Send';
+import { Socket } from 'dgram';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import usePrevious from '../../../../shared/hooks/use-previous';
-import { chatSocket } from '../../../../shared/service/socket';
+import { socket } from '../../../../shared/service/socket';
 import { RootStateType } from '../../../../store/store';
 import { GameConnectionContext } from '../../providers/GameConnection';
 import ActiveUserInfo from './components/ActiveUserInfo';
 import ChallengeUserDialog from './components/ChallengeUserDialog';
+// import ChallengeUserDialog from './components/ChallengeUserDialog';
 import FriendsInfo from './components/FriendsInfo';
 import Messages from './components/Messages';
 import {
@@ -43,35 +45,15 @@ const useStyles = makeStyles({
   },
 });
 
-const initMessages: IMessagePayload[] = [
-  // {
-  //   content: 'Test message',
-  //   author: {
-  //     id: '60552a2685fed51344213fe1',
-  //     username: 'Nusya',
-  //   },
-  //   time: '9:00',
-  // },
-  // {
-  //   content: 'Test message',
-  //   author: {
-  //     id: '605516ee43cf612ad48ea78f',
-  //     username: 'SergeAdmin',
-  //   },
-  //   time: '9:00',
-  // },
-];
-
 const ChatView: React.FC = () => {
   const classes = useStyles();
 
   const userInfo = useSelector((state: RootStateType) => state.userInfo);
   const inputRef = useRef<HTMLInputElement>(null);
-  const [messages, setMessages] = useState(initMessages);
+  const [messages, setMessages] = useState<IMessagePayload[]>([]);
   const [activeFriendId, setActiveFriend] = useState<string | undefined>(
     undefined,
   );
-  // const [activeSocket, setActiveSocket] = useState<Socket | undefined>(undefined);
   const previous = usePrevious({ activeFriendId });
   const gameConnection = useContext(GameConnectionContext);
 
@@ -84,7 +66,7 @@ const ChatView: React.FC = () => {
           from: userId,
           to: activeFriendId,
         };
-        chatSocket.emit(ChatEventsToServer.CloseChat, JSON.stringify(payload));
+        socket.emit(ChatEventsToServer.CloseChat, payload);
       }
     };
   }, []);
@@ -93,15 +75,9 @@ const ChatView: React.FC = () => {
     const id = userInfo?._id;
     if (!id) return;
 
-    (chatSocket as any)['auth'] = { id };
-    chatSocket.connect();
-    chatSocket.on(ChatEventsToClient.SendToClient, (message: string) => {
+    socket.on(ChatEventsToClient.SendToClient, (message: IMessagePayload) => {
       console.log('MSG RECEIVED on CLIENT', message);
-      const data: IMessagePayload = JSON.parse(message);
-
-      setMessages((state) => {
-        return [...state, data];
-      });
+      setMessages((state) => [...state, message]);
     });
   }, [userInfo]);
 
@@ -113,14 +89,14 @@ const ChatView: React.FC = () => {
         from: userInfo?._id,
         to: previous?.activeFriendId,
       };
-      chatSocket.emit(ChatEventsToServer.CloseChat, JSON.stringify(payload));
+      socket.emit(ChatEventsToServer.CloseChat, payload);
     }
 
     const payload: IOpenChatPayload = {
       from: userInfo?._id,
       to: activeFriendId,
     };
-    chatSocket.emit(ChatEventsToServer.OpenChat, JSON.stringify(payload));
+    socket.emit(ChatEventsToServer.OpenChat, payload);
   }, [activeFriendId]);
 
   const onSend = () => {
@@ -138,8 +114,8 @@ const ChatView: React.FC = () => {
       date: `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
       content,
     };
-    chatSocket.emit(ChatEventsToServer.SendToServer, JSON.stringify(payload));
-    console.log('socket', chatSocket);
+    socket.emit(ChatEventsToServer.SendToServer, payload);
+    console.log('socket', socket);
     inputRef.current.value = '';
   };
 
