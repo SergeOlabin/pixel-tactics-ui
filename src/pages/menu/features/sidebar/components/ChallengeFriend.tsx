@@ -13,6 +13,7 @@ import {
   IDeclineGamePayload,
 } from '../../../types/game-socket-events';
 import { dropGame } from '../store/game-init.slice';
+import ButtonWithGameIdWorkaround from './ButtonWithGameIdWorkaround';
 import InfoDialog, { SimpleDialogProps } from './dialogs/InfoDialog';
 
 const useStyles = makeStyles((theme) => createStyles({}), {
@@ -32,7 +33,6 @@ const initDialogState: SimpleDialogProps = {
 const ChallengeFriend: React.FC<IChallengeFriendProps> = ({ friend }) => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state: RootStateType) => state);
-  const gameId = useSelector((state: RootStateType) => state.gameInit?.gameId);
 
   const [dialogState, setDialogState] = useState<SimpleDialogProps>(
     initDialogState,
@@ -43,17 +43,17 @@ const ChallengeFriend: React.FC<IChallengeFriendProps> = ({ friend }) => {
       GameInitEventsToClient.GameDeclined,
       (payload: IDeclineGamePayload) => {
         closeDialog();
-        dispatch(dropGame());
+        // dispatch(dropGame());
 
-        const username =
-          payload.from === userInfo?.username ? 'You' : friend.username;
+        // const username =
+        //   payload.from === userInfo?.username ? 'You' : friend.username;
 
-        openUserCancelledDialog(username);
+        // openUserCancelledDialog(username);
       },
     );
   }, []);
 
-  const declineChallenge = () => {
+  const declineChallenge = (gameId: string) => {
     console.log('declineChallenge', userInfo?._id, gameId);
     if (!gameId) {
       throw new Error(`Pending game not found`);
@@ -92,9 +92,7 @@ const ChallengeFriend: React.FC<IChallengeFriendProps> = ({ friend }) => {
       title: `You have challenged ${friend.username}`,
       content: <div>Waiting for {friend.username}</div>,
       actions: (
-        <Button autoFocus color='primary'>
-          Cancel
-        </Button>
+        <ButtonWithGameIdWorkaround declineChallenge={declineChallenge} />
       ),
       onClose: closeDialog,
     });
@@ -122,15 +120,6 @@ const ChallengeFriend: React.FC<IChallengeFriendProps> = ({ friend }) => {
       >
         <SportsKabaddiIcon />
       </Fab>
-      {/* <Button
-        autoFocus
-        onClick={() => {
-          declineChallenge();
-        }}
-        color='primary'
-      >
-        DECLINE MANUALLY
-      </Button> */}
       <InfoDialog {...dialogState} />
     </>
   );

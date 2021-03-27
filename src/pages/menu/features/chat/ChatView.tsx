@@ -14,7 +14,7 @@ import { socket } from '../../../../shared/service/socket';
 import { RootStateType } from '../../../../store/store';
 import { GameConnectionContext } from '../../providers/GameConnection';
 import ActiveUserInfo from '../sidebar/components/ActiveUserInfo';
-import ChallengeUserDialog from '../sidebar/components/dialogs/ChallengeUserDialog';
+import OnChallengeDialog from '../sidebar/components/dialogs/OnChallengeDialog';
 // import ChallengeUserDialog from './components/ChallengeUserDialog';
 import FriendsInfo from '../sidebar/components/FriendsInfo';
 import Messages from './components/Messages';

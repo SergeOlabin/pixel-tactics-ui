@@ -12,7 +12,7 @@ import { useHistory } from 'react-router';
 import useFetch from 'use-http';
 import { RootStateType } from '../../../../../store/store';
 import { setActiveFriendById, setFriends } from '../store/friends-info.slice';
-import FormDialog from './AddFriendDialog';
+import FormDialog from './dialogs/AddFriendDialog';
 import ChallengeFriend from './ChallengeFriend';
 import ProfileView from './ProfileView';
 

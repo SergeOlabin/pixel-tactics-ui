@@ -22,7 +22,7 @@ export interface IChallengeUserDialogProps {}
 
 const DEFAULT_TITLE_PART = 'challenged you to a game.';
 
-const ChallengeUserDialog: React.FC<IChallengeUserDialogProps> = () => {
+const OnChallengeDialog: React.FC<IChallengeUserDialogProps> = () => {
   const classes = useStyles();
   const gameConnection = useContext(GameConnectionContext);
   const dispatch = useDispatch();
@@ -43,6 +43,13 @@ const ChallengeUserDialog: React.FC<IChallengeUserDialogProps> = () => {
         dispatch(initGame(payload.gameId));
         setTitle(`${activeFriend?.username} ${DEFAULT_TITLE_PART}`);
         setIsOpen(true);
+      },
+    );
+
+    socket.on(
+      GameInitEventsToClient.GameDeclined,
+      (payload: IDeclineGamePayload) => {
+        setIsOpen(false);
       },
     );
   }, [activeFriend]);
@@ -79,4 +86,4 @@ const ChallengeUserDialog: React.FC<IChallengeUserDialogProps> = () => {
   );
 };
 
-export default ChallengeUserDialog;
+export default OnChallengeDialog;

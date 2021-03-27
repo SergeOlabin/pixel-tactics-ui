@@ -7,7 +7,8 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import ActiveUserInfo from './components/ActiveUserInfo';
-import ChallengeUserDialog from './components/dialogs/ChallengeUserDialog';
+import OnChallengeCancelDialog from './components/dialogs/OnChallengeCancelDialog';
+import OnChallengeDialog from './components/dialogs/OnChallengeDialog';
 import FriendsInfo from './components/FriendsInfo';
 
 const useStyles = makeStyles(
@@ -40,7 +41,8 @@ const Sidebar: React.FC<ISidebarProps> = ({}) => {
         <Typography variant='h4'>Friends</Typography>
         <FriendsInfo />
       </Grid>
-      <ChallengeUserDialog />
+      <OnChallengeDialog />
+      <OnChallengeCancelDialog />
     </>
   );
 };
