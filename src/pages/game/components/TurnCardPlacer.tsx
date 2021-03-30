@@ -39,15 +39,17 @@ const TurnCardPlacer: React.FC<ITurnCardPlacerProps> = (props) => {
   if (props.mirrored) slots.reverse();
 
   const player = useContext(PlayerContext);
-  const turn = useSelector((state: IAppState) => state.game.turns[player]);
+  const turn = useSelector(
+    (state: IAppState) => state.game?.players[player].turnState,
+  );
   console.log(turn);
 
   return (
     <div className={classes.root}>
       {slots.map((wave) => (
         <div key={wave} className={classes.cardSlot}>
-          {wave === turn.wave ? (
-            <PlayerTurnCard player={player}>{turn.stage}</PlayerTurnCard>
+          {wave === turn?.wave ? (
+            <PlayerTurnCard player={player}>{turn?.state}</PlayerTurnCard>
           ) : (
             ''
           )}

@@ -5,7 +5,7 @@ import {
   CARD_DIMENSIONS,
 } from '../../../shared/constants/CardGeometry';
 import { Players, Waves, Positions } from '../types/game-types';
-import BoardCard from './BoardCard';
+// import BoardCard from './BoardCard';
 import { LeaderCardWithPopperPreview } from './LeaderCard';
 
 const useStyles = makeStyles(
@@ -60,16 +60,17 @@ const Unit: React.FC<IUnitProps> = (props) => {
     unitMap.reverse();
   }
 
-  const cards = unitMap.map((waves) =>
-    waves.map(
-      (place) => place && <BoardCard place={place} key={getKey(place)} />,
-    ),
-  );
+  // const cards = unitMap.map((waves) =>
+  //   waves.map(
+  //     (place) => place && <BoardCard place={place} key={getKey(place)} />,
+  //   ),
+  // );
 
-  // setLeader
-  cards[1][1] = <LeaderCardWithPopperPreview key='leader' />;
+  // // setLeader
+  // cards[1][1] = <LeaderCardWithPopperPreview key='leader' />;
 
-  return <div className={classes.root}>{[...cards]}</div>;
+  return <div className={classes.root}>CARDS</div>;
+  // return <div className={classes.root}>{[...cards]}</div>;
 };
 
 const getKey = (place: { wave: Waves; position: Positions }) =>

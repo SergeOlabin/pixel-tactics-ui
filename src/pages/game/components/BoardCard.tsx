@@ -40,14 +40,13 @@ const BoardCard: React.FC<IBoardCardProps> = (props) => {
   const dispatch = useDispatch();
 
   const ownerPlayer = useContext(PlayerContext);
-  const currentPlayer = useSelector(
-    (state: IAppState) => state.game.activePlayer,
-  );
+  const currentPlayer = useSelector((state: IAppState) => state.game?.turn!);
 
   const activeCard = useSelector((state: IAppState) => state.activeCard);
+  // TODO: FIX
   const card = useSelector(
     (state: IAppState) =>
-      state.game.board[ownerPlayer][place.wave][place.position],
+      state.game!.board[ownerPlayer][place.wave][place.position]!,
   );
 
   const isActive = activeCard?.place === place;

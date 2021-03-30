@@ -8,6 +8,8 @@ import {
   startGame,
 } from '../../pages/menu/features/sidebar/store/game-init.slice';
 import { GameInitEventsToClient } from '../../pages/menu/types/game-socket-events';
+import { setGame } from '../../pages/game/store/game-slice';
+import { IGameStateAdaptedToPlayer } from '../../pages/game/types/game-types';
 
 export const GameConnectionContext = React.createContext<any>(undefined); // 'Blue' for default, default can be removed
 
@@ -44,9 +46,13 @@ const GameConnection: React.FC<IGameConnectionProps> = ({ children }) => {
       dispatch(initGame(gameId));
     });
 
-    socket.on(GameInitEventsToClient.SendGameState, (payload) => {
-      console.log('GameInitEventsToClient.SendGameState', payload);
-    });
+    socket.on(
+      GameInitEventsToClient.SendGameState,
+      (payload: IGameStateAdaptedToPlayer) => {
+        console.log('GameInitEventsToClient.SendGameState', payload);
+        dispatch(setGame(payload));
+      },
+    );
 
     return () => {
       socket.disconnect();

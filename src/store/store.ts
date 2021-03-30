@@ -2,7 +2,6 @@ import { Action, configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import gameReducer from '../pages/game/store/game-slice';
-import { IGameState } from '../pages/game/store/types';
 import activeCardReducer from './slices/active-card-slice';
 import { IActiveCardState } from './types';
 import userInfoReducer, { IUserState } from './slices/user.slice';
@@ -12,9 +11,10 @@ import friendsInfoReducer, {
 import gameInitReducer, {
   IGameInitState,
 } from '../pages/menu/features/sidebar/store/game-init.slice';
+import { IGameStateAdaptedToPlayer } from '../pages/game/types/game-types';
 
 export interface IAppState {
-  game: IGameState;
+  game: IGameStateAdaptedToPlayer | null;
   activeCard: IActiveCardState;
   userInfo: IUserState;
   friendsInfo: IFriendsInfoState;

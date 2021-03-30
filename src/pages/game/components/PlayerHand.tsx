@@ -48,7 +48,7 @@ export interface IPlayerHandProps {}
 const PlayerHand: React.FC<IPlayerHandProps> = (props) => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const hand = useSelector((state: IAppState) => state.game.hand);
+  const hand = useSelector((state: IAppState) => state.game?.hand.cards);
   const activeCard = useSelector((state: IAppState) => state.activeCard);
 
   const [magnifiedCardType, setMagnifier] = useState<CharacterList | null>(
