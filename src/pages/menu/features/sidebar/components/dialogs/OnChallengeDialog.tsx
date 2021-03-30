@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles, createStyles } from '@material-ui/core';
-import { GameConnectionContext } from '../../../../providers/GameConnection';
 import ConfirmationDialog from './ConfirmationDialog';
-import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootStateType } from '../../../../../../store/store';
 import { socket } from '../../../../../../shared/service/socket';
 import {
@@ -24,7 +23,6 @@ const DEFAULT_TITLE_PART = 'challenged you to a game.';
 
 const OnChallengeDialog: React.FC<IChallengeUserDialogProps> = () => {
   const classes = useStyles();
-  const gameConnection = useContext(GameConnectionContext);
   const dispatch = useDispatch();
   const gameId = useSelector((state: RootStateType) => state.gameInit?.gameId);
   const { userInfo } = useSelector((state: RootStateType) => state);
@@ -32,16 +30,16 @@ const OnChallengeDialog: React.FC<IChallengeUserDialogProps> = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState('');
 
-  const { activeFriend } = useSelector(
-    (state: RootStateType) => state.friendsInfo,
-  );
+  const { friends } = useSelector((state: RootStateType) => state.friendsInfo);
 
   useEffect(() => {
     socket.on(
       GameInitEventsToClient.AskAccept,
       (payload: IAskAcceptPayload) => {
+        const friend = friends.find((f) => f._id === payload.from);
+
         dispatch(initGame(payload.gameId));
-        setTitle(`${activeFriend?.username} ${DEFAULT_TITLE_PART}`);
+        setTitle(`${friend?.username} ${DEFAULT_TITLE_PART}`);
         setIsOpen(true);
       },
     );
@@ -52,7 +50,7 @@ const OnChallengeDialog: React.FC<IChallengeUserDialogProps> = () => {
         setIsOpen(false);
       },
     );
-  }, [activeFriend]);
+  }, [friends]);
 
   const onClose = () => {
     if (!gameId) {

@@ -2,7 +2,8 @@ import { makeStyles } from '@material-ui/core';
 import { deepPurple } from '@material-ui/core/colors';
 import React from 'react';
 import { CARDS } from '../../../shared/Characters';
-import { IBoardCard, Waves } from '../../../shared/types/types';
+import { IBoardCard } from '../types/types';
+import { Waves } from '../types/game-types';
 import CardHeader from './card-parts/CardHeader';
 import PowerDescription from './card-parts/PowerDescription';
 import CardTemplate from './CardTemplate';
@@ -56,13 +57,13 @@ const HeroCard: React.FC<IHeroCardProps> = ({
     </PowerDescription>
   ) : (
     <React.Fragment>
-      <PowerDescription additionalClasses={[classes.Vanguard]}>
+      <PowerDescription additionalClasses={[classes.vanguard]}>
         {cardData.powers.vanguard.description}
       </PowerDescription>
-      <PowerDescription additionalClasses={[classes.Flank]}>
+      <PowerDescription additionalClasses={[classes.flank]}>
         {cardData.powers.flank.description}
       </PowerDescription>
-      <PowerDescription additionalClasses={[classes.Rear]}>
+      <PowerDescription additionalClasses={[classes.rear]}>
         {cardData.powers.rear.description}
       </PowerDescription>
       <PowerDescription additionalClasses={[classes.order]}>
@@ -75,7 +76,7 @@ const HeroCard: React.FC<IHeroCardProps> = ({
     <>
       <CardTemplate singleDescription={!!activeDescriptionWave}>
         {{
-          header: <CardHeader stats={stats} name={cardData.type}></CardHeader>,
+          header: <CardHeader stats={stats} name={cardData.type} />,
           content: description,
         }}
       </CardTemplate>

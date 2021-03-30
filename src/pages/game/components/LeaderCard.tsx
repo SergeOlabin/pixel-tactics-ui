@@ -2,7 +2,7 @@ import { createStyles, makeStyles } from '@material-ui/core';
 import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CARDS } from '../../../shared/Characters';
-import { IBoardCard } from '../../../shared/types/types';
+import { IBoardCard } from '../types/types';
 import { setActiveCard } from '../../../store/slices/active-card-slice';
 import { ActiveCardLocation } from '../../../store/types';
 import { IAppState } from '../../../store/store';
@@ -50,7 +50,7 @@ const LeaderCard: React.FC<ILeaderCardProps> = () => {
 
   const classes = useStyles();
 
-  if (!card) return <EmptyCardTemplate></EmptyCardTemplate>;
+  if (!card) return <EmptyCardTemplate />;
 
   const cardData = CARDS[card.type].leader;
   const stats = {
@@ -90,7 +90,7 @@ const LeaderCard: React.FC<ILeaderCardProps> = () => {
         <CardTemplate singleDescription>
           {{
             header: (
-              <CardHeader stats={stats} name={cardData.name}></CardHeader>
+              <CardHeader stats={stats} name={cardData.name} />
             ),
             content: (
               <PowerDescription>{cardData.power.description}</PowerDescription>

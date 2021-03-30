@@ -6,7 +6,7 @@ import {
   CARD_DIMENSIONS,
   ICardDimensions,
 } from '../../../shared/constants/CardGeometry';
-import { Waves, Players } from '../../../shared/types/types';
+import { Waves, Players } from '../types/game-types';
 import { IAppState } from '../../../store/store';
 
 const useStyles = makeStyles(

@@ -1,11 +1,5 @@
-import {
-  Players,
-  ITurn,
-  CharacterList,
-  Waves,
-  Positions,
-  IBoardCard,
-} from '../../../shared/types/types';
+import { Players, Positions, Waves } from '../types/game-types';
+import { ITurn, CharacterList, IBoardCard } from '../types/types';
 
 type WaveRecords = Record<Waves, CardRecord>;
 type CardRecord = Partial<Record<Positions, IBoardCard | undefined>>;

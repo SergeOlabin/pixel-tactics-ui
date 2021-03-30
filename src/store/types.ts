@@ -1,4 +1,4 @@
-import { IBoardCard, IPlace } from '../shared/types/types';
+import { IBoardCard, IPlace } from '../pages/game/types/types';
 
 export enum ActiveCardLocation {
   Board = 'Board',

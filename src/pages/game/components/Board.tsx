@@ -3,9 +3,9 @@ import React from 'react';
 import Unit from './Unit';
 import { useSelector } from 'react-redux';
 import { IAppState } from '../../../store/store';
-import { Players } from '../../../shared/types/types';
 import TurnCardPlacer from './TurnCardPlacer';
 import FinishTurnButton from './FinishTurn';
+import { Players } from '../types/game-types';
 
 const useStyles = makeStyles(
   (theme) =>

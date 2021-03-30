@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { socket } from '../../../shared/service/socket';
-import { RootStateType } from '../../../store/store';
-import { initGame, startGame } from '../features/sidebar/store/game-init.slice';
+import { socket } from '../service/socket';
+import { RootStateType } from '../../store/store';
 import {
-  GameInitEventsToClient,
-  GameInitEventsToServer,
-  IAcceptGamePayload,
-  IAskAcceptPayload,
-  IChallengeGamePayload,
-  IUpdateGameStatePayload,
-} from '../types/game-socket-events';
+  initGame,
+  startGame,
+} from '../../pages/menu/features/sidebar/store/game-init.slice';
+import { GameInitEventsToClient } from '../../pages/menu/types/game-socket-events';
 
 export const GameConnectionContext = React.createContext<any>(undefined); // 'Blue' for default, default can be removed
 
@@ -35,7 +31,6 @@ const GameConnection: React.FC<IGameConnectionProps> = ({ children }) => {
       return;
     }
 
-    console.log('SOCKET INIT ', { id: userInfo?._id });
     (socket as any)['auth'] = { id: userInfo._id };
     socket.connect();
 
@@ -47,6 +42,10 @@ const GameConnection: React.FC<IGameConnectionProps> = ({ children }) => {
 
     socket.on(GameInitEventsToClient.ChallengeGameResponse, ({ gameId }) => {
       dispatch(initGame(gameId));
+    });
+
+    socket.on(GameInitEventsToClient.SendGameState, (payload) => {
+      console.log('GameInitEventsToClient.SendGameState', payload);
     });
 
     return () => {

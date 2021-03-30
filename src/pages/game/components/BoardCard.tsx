@@ -2,7 +2,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TRANSITION_TIMEOUT } from '../../../shared/constants/CardGeometry';
-import { IPlace } from '../../../shared/types/types';
+import { IPlace } from '../types/types';
 import { setActiveCard } from '../../../store/slices/active-card-slice';
 import { ActiveCardLocation } from '../../../store/types';
 import { IAppState } from '../../../store/store';
@@ -77,7 +77,7 @@ const BoardCard: React.FC<IBoardCardProps> = (props) => {
 
   const classes = useStyles();
 
-  if (!card) return <EmptyCardTemplate></EmptyCardTemplate>;
+  if (!card) return <EmptyCardTemplate />;
 
   return (
     <>

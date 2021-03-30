@@ -4,7 +4,7 @@ import {
   ICardDimensions,
   CARD_DIMENSIONS,
 } from '../../../shared/constants/CardGeometry';
-import { Players, Waves, Positions } from '../../../shared/types/types';
+import { Players, Waves, Positions } from '../types/game-types';
 import BoardCard from './BoardCard';
 import { LeaderCardWithPopperPreview } from './LeaderCard';
 

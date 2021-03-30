@@ -1,4 +1,10 @@
-import { IHero, ILeader, ICard, ICardHero, ICardLeader } from '../types/types';
+import {
+  IHero,
+  ILeader,
+  ICard,
+  ICardHero,
+  ICardLeader,
+} from '../../pages/game/types/types';
 import { Character } from '../Characters';
 
 export const makeCardFromCharacter = (Character: Character): ICard => ({

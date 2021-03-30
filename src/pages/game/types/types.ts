@@ -1,3 +1,5 @@
+import { Positions, Waves } from './game-types';
+
 export enum CharacterList {
   Alchemist = 'Alchemist',
   DragonMage = 'DragonMage',
@@ -24,23 +26,6 @@ export enum CharacterList {
   Mystic = 'Mystic',
   Paladin = 'Paladin',
   Planestalker = 'Planestalker',
-}
-
-export enum Players {
-  Red = 'Red',
-  Blue = 'Blue',
-}
-
-export enum Waves {
-  Vanguard = 'Vanguard',
-  Flank = 'Flank',
-  Rear = 'Rear',
-}
-
-export enum Positions {
-  Left = 'Left',
-  Center = 'Center',
-  Right = 'Right',
 }
 
 export enum AttackTypes {

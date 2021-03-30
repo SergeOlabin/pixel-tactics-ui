@@ -1,22 +1,14 @@
 import Divider from '@material-ui/core/Divider';
 import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 import SendIcon from '@material-ui/icons/Send';
-import { Socket } from 'dgram';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import usePrevious from '../../../../shared/hooks/use-previous';
 import { socket } from '../../../../shared/service/socket';
 import { RootStateType } from '../../../../store/store';
-import { GameConnectionContext } from '../../providers/GameConnection';
-import ActiveUserInfo from '../sidebar/components/ActiveUserInfo';
-import OnChallengeDialog from '../sidebar/components/dialogs/OnChallengeDialog';
-// import ChallengeUserDialog from './components/ChallengeUserDialog';
-import FriendsInfo from '../sidebar/components/FriendsInfo';
 import Messages from './components/Messages';
 import {
   ChatEventsToClient,

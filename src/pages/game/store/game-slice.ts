@@ -1,10 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {
-  CharacterList,
-  Players,
-  Positions,
-  Waves,
-} from '../../../shared/types/types';
+import { Players, Positions, Waves } from '../types/game-types';
+import { CharacterList } from '../types/types';
 import { IGameState } from './types';
 
 const initialState: IGameState = {
