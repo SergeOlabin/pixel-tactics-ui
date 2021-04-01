@@ -1,7 +1,7 @@
 import { createStyles, makeStyles } from '@material-ui/core';
 import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CARDS } from '../../../shared/Characters';
+import { CARDS } from '../../../shared/Cards';
 import { IBoardCard } from '../types/types';
 import { setActiveCard } from '../../../store/slices/active-card-slice';
 import { ActiveCardLocation } from '../../../store/types';

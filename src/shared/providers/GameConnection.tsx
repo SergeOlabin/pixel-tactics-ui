@@ -54,6 +54,10 @@ const GameConnection: React.FC<IGameConnectionProps> = ({ children }) => {
       },
     );
 
+    // socket.on(SelectLeaderEvent.ToClient, (payload: any) => {
+    //   console.log(SelectLeaderEvent.ToClient, payload);
+    // });
+
     return () => {
       socket.disconnect();
     };

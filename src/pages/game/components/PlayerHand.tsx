@@ -3,10 +3,10 @@ import { makeStyles, createStyles } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import HeroCard, { MagnifiedContext } from './HeroCard';
 import { CARD_DIMENSIONS } from '../../../shared/constants/CardGeometry';
-import { CharacterList } from '../types/types';
 import { IAppState } from '../../../store/store';
 import { setActiveCard } from '../../../store/slices/active-card-slice';
 import { ActiveCardLocation } from '../../../store/types';
+import { CharacterList } from '../types/character-list';
 
 const useStyles = makeStyles(
   (theme) =>

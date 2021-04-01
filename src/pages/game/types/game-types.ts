@@ -1,4 +1,4 @@
-import { CharacterList } from './types';
+import { CharacterList } from './character-list';
 
 export enum Players {
   Blue = 'playerBlue',

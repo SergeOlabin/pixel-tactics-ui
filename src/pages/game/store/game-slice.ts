@@ -7,7 +7,6 @@ import {
   Positions,
   Waves,
 } from '../types/game-types';
-import { CharacterList } from '../types/types';
 
 // const initialState: IGameState = {
 //   leaders: {

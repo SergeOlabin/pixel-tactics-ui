@@ -1,5 +1,5 @@
 import { IHero, ILeader, AttackTypes } from '../../pages/game/types/types';
-import { Character } from '../../shared/Characters';
+import { Character } from '../../shared/Cards';
 
 export class AlchemistHero implements IHero {
   public readonly type = 'Alchemist';

@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import { deepPurple } from '@material-ui/core/colors';
 import React from 'react';
-import { CARDS } from '../../../shared/Characters';
+import { CARDS } from '../../../shared/Cards';
 import { IBoardCard } from '../types/types';
 import { Waves } from '../types/game-types';
 import CardHeader from './card-parts/CardHeader';

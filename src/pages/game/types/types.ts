@@ -1,32 +1,5 @@
+import { CharacterList } from './character-list';
 import { Positions, Waves } from './game-types';
-
-export enum CharacterList {
-  Alchemist = 'Alchemist',
-  DragonMage = 'DragonMage',
-  Illusionist = 'Illusionist',
-  Knight = 'Knight',
-  Overlord = 'Overlord',
-  Mascot = 'Mascot',
-  Vampire = 'Vampire',
-  Templar = 'Templar',
-  Witch = 'Witch',
-  Fighter = 'Fighter',
-  Pyromancer = 'Pyromancer',
-  Healer = 'Healer',
-  Homunculus = 'Homunculus',
-  Trapper = 'Trapper',
-  Summoner = 'Summoner',
-  Scientist = 'Scientist',
-  Priestess = 'Priestess',
-  Assassin = 'Assassin',
-  Gunner = 'Gunner',
-  Doppelganger = 'Doppelganger',
-  Oracle = 'Oracle',
-  Berserker = 'Berserker',
-  Mystic = 'Mystic',
-  Paladin = 'Paladin',
-  Planestalker = 'Planestalker',
-}
 
 export enum AttackTypes {
   Melee = 'Melee',

@@ -1,9 +1,4 @@
-import {
-  IHero,
-  ILeader,
-  ICard,
-  CharacterList,
-} from '../pages/game/types/types';
+import { IHero, ILeader, ICard } from '../pages/game/types/types';
 import { Alchemist } from '../static/cards/Alchemist';
 import { makeCardFromCharacter } from './helpers/MakeCard';
 import { DragonMage } from '../static/cards/DragonMage';
@@ -11,6 +6,7 @@ import { Illusionist } from '../static/cards/Illusionist';
 import { Knight } from '../static/cards/Knight';
 import { Overlord } from '../static/cards/Overlord';
 import { Mascot } from '../static/cards/Mascot';
+import { CharacterList } from '../pages/game/types/character-list';
 
 type HeroClassType = new (...args: any[]) => IHero;
 type LeaderClassType = new (...args: any[]) => ILeader;

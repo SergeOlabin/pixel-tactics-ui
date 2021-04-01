@@ -5,7 +5,7 @@ import {
   ICardHero,
   ICardLeader,
 } from '../../pages/game/types/types';
-import { Character } from '../Characters';
+import { Character } from '../Cards';
 
 export const makeCardFromCharacter = (Character: Character): ICard => ({
   hero: heroToCard(new Character.Hero()),
