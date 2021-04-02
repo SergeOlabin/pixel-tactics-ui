@@ -20,7 +20,7 @@ export interface IDialogFormDialogRef {
   toggle: () => void;
 }
 
-const FormDialog = React.forwardRef(
+const AddFriendDialog = React.forwardRef(
   (props: IDialogFormDialogProps, ref: Ref<IDialogFormDialogRef>) => {
     const [isOpen, setOpen] = React.useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -75,6 +75,6 @@ const FormDialog = React.forwardRef(
     );
   },
 );
-FormDialog.displayName = 'FormDialog';
+AddFriendDialog.displayName = 'FormDialog';
 
-export default FormDialog;
+export default AddFriendDialog;

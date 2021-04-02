@@ -53,7 +53,9 @@ export const PlayerContext = React.createContext<Players>(Players.Blue); // 'Blu
 
 const Board: React.FC<IBoardProps> = () => {
   const classes = useStyles();
-  const activePlayer = useSelector((state: IAppState) => state.game!.turn);
+  const activePlayer = useSelector(
+    (state: IAppState) => state.game!.playerColor,
+  );
 
   const opponent = Object.values(Players).find(
     (v) => v !== activePlayer,

@@ -10,10 +10,11 @@ import {
 import { setGame } from '../../pages/game/store/game-slice';
 import { IGameStateAdaptedToPlayer } from '../../pages/game/types/game-types';
 import { GameInitEventsToClient } from '../../pages/game/types/game-socket-events';
+import { GameEventTypesToClient } from '../../pages/game/types/game-event-types';
 
-export const GameConnectionContext = React.createContext<any>(undefined); // 'Blue' for default, default can be removed
+export const SocketConnectionContext = React.createContext<any>(undefined); // 'Blue' for default, default can be removed
 
-export interface IGameConnectionProps {}
+export interface ISocketConnectionProps {}
 
 /**
  * Having as a wrapper doesn't make any sense..
@@ -23,7 +24,7 @@ export interface IGameConnectionProps {}
  *
  *
  */
-const GameConnection: React.FC<IGameConnectionProps> = ({ children }) => {
+const SocketConnection: React.FC<ISocketConnectionProps> = ({ children }) => {
   const userInfo = useSelector((state: RootStateType) => state.userInfo);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -54,9 +55,9 @@ const GameConnection: React.FC<IGameConnectionProps> = ({ children }) => {
       },
     );
 
-    // socket.on(SelectLeaderEvent.ToClient, (payload: any) => {
-    //   console.log(SelectLeaderEvent.ToClient, payload);
-    // });
+    socket.on(GameEventTypesToClient.SelectLeaderReq, () => {
+      console.log('SelectLeaderReq');
+    });
 
     return () => {
       socket.disconnect();
@@ -64,10 +65,10 @@ const GameConnection: React.FC<IGameConnectionProps> = ({ children }) => {
   }, [userInfo]);
 
   return (
-    <GameConnectionContext.Provider value={null}>
+    <SocketConnectionContext.Provider value={null}>
       {children}
-    </GameConnectionContext.Provider>
+    </SocketConnectionContext.Provider>
   );
 };
 
-export default GameConnection;
+export default SocketConnection;

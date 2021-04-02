@@ -9,7 +9,7 @@ import store from './store/store';
 import theme from './theme/theme';
 import { Provider as HttpProvider } from 'use-http';
 import { BASE_URL, HTTP_OPTIONS } from './shared/constants/http-options';
-import GameConnection from './shared/providers/GameConnection';
+import SocketConnection from './shared/providers/GameConnection';
 
 ReactDOM.render(
   <HttpProvider url={BASE_URL} options={HTTP_OPTIONS}>
@@ -18,9 +18,9 @@ ReactDOM.render(
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
         <BrowserRouter>
-          <GameConnection>
+          <SocketConnection>
             <Router />
-          </GameConnection>
+          </SocketConnection>
         </BrowserRouter>
       </ThemeProvider>
     </Provider>

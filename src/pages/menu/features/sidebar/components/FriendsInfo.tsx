@@ -12,7 +12,7 @@ import { useHistory } from 'react-router';
 import useFetch from 'use-http';
 import { RootStateType } from '../../../../../store/store';
 import { setActiveFriendById, setFriends } from '../store/friends-info.slice';
-import FormDialog from './dialogs/AddFriendDialog';
+import AddFriendDialog from './dialogs/AddFriendDialog';
 import ChallengeFriend from './ChallengeFriend';
 import ProfileView from './ProfileView';
 
@@ -55,7 +55,7 @@ const FriendsInfo: React.FC<IFriendsInfoProps> = () => {
     (state: RootStateType) => state.friendsInfo,
   );
 
-  let addFriendDialogHandle: Handle<typeof FormDialog> | null;
+  let addFriendDialogHandle: Handle<typeof AddFriendDialog> | null;
   // const [friends, setFriends] = useState<IUser[]>([]);
 
   const { get: getFriends } = useFetch('profile/friends');
@@ -110,7 +110,7 @@ const FriendsInfo: React.FC<IFriendsInfoProps> = () => {
             </div>
           ))}
         </List>
-        <FormDialog
+        <AddFriendDialog
           ref={(c) => (addFriendDialogHandle = c)}
           onSuccess={addFriend}
         >
@@ -122,7 +122,7 @@ const FriendsInfo: React.FC<IFriendsInfoProps> = () => {
           >
             <PersonAddIcon />
           </Fab>
-        </FormDialog>
+        </AddFriendDialog>
       </div>
     </>
   );

@@ -6,7 +6,7 @@ import { IUserState, setUser } from '../../store/slices/user.slice';
 import MenuAppBar from './components/MenuAppBar';
 import ChatView from './features/chat/ChatView';
 import Sidebar from './features/sidebar/Sidebar';
-import GameConnection from '../../shared/providers/GameConnection';
+import SocketConnection from '../../shared/providers/GameConnection';
 
 const useStyles = makeStyles(
   (theme) =>
