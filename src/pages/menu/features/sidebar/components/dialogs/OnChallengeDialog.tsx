@@ -4,14 +4,14 @@ import ConfirmationDialog from './ConfirmationDialog';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootStateType } from '../../../../../../store/store';
 import { socket } from '../../../../../../shared/service/socket';
+import { initGame } from '../../store/game-init.slice';
 import {
   GameInitEventsToClient,
   GameInitEventsToServer,
   IAcceptGamePayload,
   IAskAcceptPayload,
   IDeclineGamePayload,
-} from '../../../../types/game-socket-events';
-import { initGame } from '../../store/game-init.slice';
+} from '../../../../../game/types/game-socket-events';
 
 const useStyles = makeStyles((theme) => createStyles({}), {
   name: 'ChallengeUserDialog',

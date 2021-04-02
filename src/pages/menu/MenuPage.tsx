@@ -22,21 +22,6 @@ const useStyles = makeStyles(
 export interface IMenuPageProps {}
 
 const MenuPage: React.FC<IMenuPageProps> = () => {
-  const dispatch = useDispatch();
-
-  const { get } = useFetch();
-
-  const fetchUser = useCallback(async () => {
-    const userInfo: IUserState = await get('/profile');
-    if (userInfo) {
-      dispatch(setUser(userInfo));
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchUser();
-  }, [fetchUser]);
-
   const classes = useStyles();
   return (
     <>

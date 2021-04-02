@@ -2,13 +2,13 @@ import React from 'react';
 import { makeStyles, createStyles, Button } from '@material-ui/core';
 import InfoDialog, { SimpleDialogProps } from './InfoDialog';
 import { socket } from '../../../../../../shared/service/socket';
-import {
-  GameInitEventsToClient,
-  IDeclineGamePayload,
-} from '../../../../types/game-socket-events';
 import { dropGame } from '../../store/game-init.slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootStateType } from '../../../../../../store/store';
+import {
+  GameInitEventsToClient,
+  IDeclineGamePayload,
+} from '../../../../../game/types/game-socket-events';
 
 const useStyles = makeStyles((theme) => createStyles({}), {
   name: 'OnChallengeCancelDialog',

@@ -6,6 +6,7 @@ import { IAppState } from '../../../store/store';
 import TurnCardPlacer from './TurnCardPlacer';
 import FinishTurnButton from './FinishTurn';
 import { Players } from '../types/game-types';
+import Deck from './Deck';
 
 const useStyles = makeStyles(
   (theme) =>
@@ -34,10 +35,13 @@ const useStyles = makeStyles(
       turnCardPlacer: {
         marginLeft: theme.spacing(10),
       },
-      buttonContainer: {
+      rightContainer: {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+      },
+      deckContainer: {
+        marginLeft: theme.spacing(10),
       },
     }),
   { name: 'Board' },
@@ -49,7 +53,7 @@ export const PlayerContext = React.createContext<Players>(Players.Blue); // 'Blu
 
 const Board: React.FC<IBoardProps> = () => {
   const classes = useStyles();
-  const activePlayer = useSelector((state: IAppState) => state.game?.turn!);
+  const activePlayer = useSelector((state: IAppState) => state.game!.turn);
 
   const opponent = Object.values(Players).find(
     (v) => v !== activePlayer,
@@ -64,6 +68,9 @@ const Board: React.FC<IBoardProps> = () => {
             <div className={classes.turnCardPlacer}>
               <TurnCardPlacer mirrored />
             </div>
+            <div className={classes.deckContainer}>
+              <Deck />
+            </div>
           </PlayerContext.Provider>
         </div>
         <Divider variant='middle' className={classes.divider} />
@@ -73,10 +80,13 @@ const Board: React.FC<IBoardProps> = () => {
             <div className={classes.turnCardPlacer}>
               <TurnCardPlacer />
             </div>
+            <div className={classes.deckContainer}>
+              <Deck />
+            </div>
           </PlayerContext.Provider>
         </div>
       </div>
-      <div className={classes.buttonContainer}>
+      <div className={classes.rightContainer}>
         <FinishTurnButton />
       </div>
     </div>

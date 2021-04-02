@@ -7,9 +7,9 @@ import {
   initGame,
   startGame,
 } from '../../pages/menu/features/sidebar/store/game-init.slice';
-import { GameInitEventsToClient } from '../../pages/menu/types/game-socket-events';
 import { setGame } from '../../pages/game/store/game-slice';
 import { IGameStateAdaptedToPlayer } from '../../pages/game/types/game-types';
+import { GameInitEventsToClient } from '../../pages/game/types/game-socket-events';
 
 export const GameConnectionContext = React.createContext<any>(undefined); // 'Blue' for default, default can be removed
 

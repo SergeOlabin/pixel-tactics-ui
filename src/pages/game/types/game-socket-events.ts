@@ -16,6 +16,7 @@ export enum GameInitEventsToServer {
   ChallengeGame = 'challengeGame',
   AcceptGame = 'acceptGame',
   DeclineGame = 'declineGame',
+  CheckForExistingGame = 'checkForExistingGame',
 }
 
 export enum GameInitEventsToClient {
@@ -50,9 +51,11 @@ export interface IDeclineGamePayload {
   from: string;
 }
 
-export interface IUpdateGameStatePayload {}
-
 export interface IDeclineGamePayload {
   gameId: string;
   from: string;
+}
+
+export interface ICheckForExistingGamePayload {
+  userId: string;
 }

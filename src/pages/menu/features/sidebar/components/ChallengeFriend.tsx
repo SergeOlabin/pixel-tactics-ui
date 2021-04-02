@@ -8,10 +8,10 @@ import { IUser } from '../../../../../shared/types/user-types';
 import { RootStateType } from '../../../../../store/store';
 import {
   GameInitEventsToClient,
+  IDeclineGamePayload,
   GameInitEventsToServer,
   IChallengeGamePayload,
-  IDeclineGamePayload,
-} from '../../../types/game-socket-events';
+} from '../../../../game/types/game-socket-events';
 import { dropGame } from '../store/game-init.slice';
 import ButtonWithGameIdWorkaround from './ButtonWithGameIdWorkaround';
 import InfoDialog, { SimpleDialogProps } from './dialogs/InfoDialog';

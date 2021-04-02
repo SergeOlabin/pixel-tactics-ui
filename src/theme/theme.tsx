@@ -21,8 +21,12 @@ declare module '@material-ui/core/styles/createPalette' {
 const theme = createMuiTheme({
   palette: {
     // primary: {
-    //   // main: '#af55d6',
-    //   m,
+    //   // main: '#00c853',
+    //   // light: '#00c853',
+    //   // dark: '#00c853',
+    // },
+    // secondary: {
+    //   main: '#0091ea',
     // },
     error: {
       main: red.A400,

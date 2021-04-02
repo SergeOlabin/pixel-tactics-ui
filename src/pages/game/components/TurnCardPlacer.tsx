@@ -12,12 +12,12 @@ import { IAppState } from '../../../store/store';
 const useStyles = makeStyles(
   (theme) =>
     createStyles({
-      root: {
+      root: (props: ICardDimensions) => ({
         display: 'grid',
-        gridTemplateColumns: `repeat(1, ${CARD_DIMENSIONS.width}px)`,
-        gridTemplateRows: `repeat(3, ${CARD_DIMENSIONS.height}px)`,
+        gridTemplateColumns: `repeat(1, ${props.width}px)`,
+        gridTemplateRows: `repeat(3, ${props.height}px)`,
         gap: `${theme.spacing(1)}px`,
-      },
+      }),
       cardSlot: (props: ICardDimensions) => ({
         width: props.width,
         height: props.height,
