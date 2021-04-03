@@ -7,6 +7,7 @@ import TurnCardPlacer from './TurnCardPlacer';
 import FinishTurnButton from './FinishTurn';
 import { Players } from '../types/game-types';
 import Deck from './Deck';
+import AvailableActionsLabel from './AvailableActionsLabel';
 
 const useStyles = makeStyles(
   (theme) =>
@@ -43,6 +44,9 @@ const useStyles = makeStyles(
       deckContainer: {
         marginLeft: theme.spacing(10),
       },
+      actionsInfo: {
+        marginBottom: theme.spacing(1),
+      },
     }),
   { name: 'Board' },
 );
@@ -71,6 +75,9 @@ const Board: React.FC<IBoardProps> = () => {
               <TurnCardPlacer mirrored />
             </div>
             <div className={classes.deckContainer}>
+              <div className={classes.actionsInfo}>
+                <AvailableActionsLabel />
+              </div>
               <Deck />
             </div>
           </PlayerContext.Provider>
@@ -83,6 +90,9 @@ const Board: React.FC<IBoardProps> = () => {
               <TurnCardPlacer />
             </div>
             <div className={classes.deckContainer}>
+              <div className={classes.actionsInfo}>
+                <AvailableActionsLabel />
+              </div>
               <Deck />
             </div>
           </PlayerContext.Provider>

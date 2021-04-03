@@ -58,15 +58,12 @@ const Unit: React.FC<IUnitProps> = ({ mirrored }) => {
   const classes = useStyles(CARD_DIMENSIONS);
   const owner = useContext(PlayerContext);
 
-  console.log('owner', owner);
-
   const playerUnit = useSelector(
     (state: RootStateType) => state.game!.board[owner].unit,
   );
   const leader = useSelector(
     (state: RootStateType) => state.game?.board[owner].leader,
   );
-  console.log('leader', leader);
 
   const unitMap = getUnitMap();
   if (mirrored) {

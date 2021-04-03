@@ -3,6 +3,7 @@ import { makeStyles, createStyles } from '@material-ui/core';
 import {
   CARD_DIMENSIONS,
   ICardDimensions,
+  TRANSITION_TIMEOUT,
 } from '../../../shared/constants/CardGeometry';
 import { PlayerContext } from './Board';
 import { useSelector } from 'react-redux';
@@ -25,6 +26,7 @@ const useStyles = makeStyles(
         height: props.height,
         marginBottom: theme.spacing(1),
         border: '2px dotted #171818',
+        transition: `box-shadow ${TRANSITION_TIMEOUT}ms`,
         '&:hover': {
           boxShadow: theme.palette.cardShadows?.hover,
         },
@@ -43,22 +45,21 @@ export interface IDeckProps {}
 
 const Deck: React.FC<IDeckProps> = ({}) => {
   const classes = useStyles(CARD_DIMENSIONS);
-  const player = useContext(PlayerContext);
+  const owner = useContext(PlayerContext);
 
   const { leader } = useSelector(
-    (state: RootStateType) => state.game!.board[player],
+    (state: RootStateType) => state.game!.board[owner],
   );
 
   const { userInfo, game } = useSelector((state: RootStateType) => state);
   const { playerColor, turn } = game || {};
 
-  const active = playerColor === turn && playerColor === player;
-  const leaderSelection = !leader && playerColor === player;
+  const active = playerColor === turn?.currentPlayer && playerColor === owner;
+  const leaderSelection = !leader && playerColor === owner;
 
   const onClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.stopPropagation();
     if (leaderSelection) {
-      console.log('SELECT LEADER');
       const payload: IGameEvent = {
         gameId: game?._id!,
         type: GameEventTypes.DrawCardsForLeader,
@@ -73,7 +74,18 @@ const Deck: React.FC<IDeckProps> = ({}) => {
     if (!active) {
       return;
     }
-    console.log('DECK CLICK');
+    drawCard();
+  };
+
+  const drawCard = () => {
+    const payload: IGameEvent = {
+      gameId: game?._id!,
+      type: GameEventTypes.DrawCard,
+      payload: {
+        userId: userInfo?._id!,
+      },
+    };
+    socket.emit(GameEvent.ToServer, payload);
   };
 
   const cardClasses = [classes.cardSlot];
@@ -83,7 +95,7 @@ const Deck: React.FC<IDeckProps> = ({}) => {
   return (
     <>
       <div className={cardClasses.join(' ')} onClick={onClick}>
-        {player} DECK
+        {owner} DECK
       </div>
     </>
   );

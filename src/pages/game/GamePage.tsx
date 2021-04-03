@@ -52,9 +52,6 @@ const GamePage = () => {
   const { userInfo } = useSelector((state: RootStateType) => state);
   const { game } = useSelector((state: RootStateType) => state);
 
-  console.log('GamePage userInfo', userInfo);
-  console.log('GamePage game', game);
-
   // skip render if userInfo is not yet loaded
   if (!userInfo) {
     return <></>;

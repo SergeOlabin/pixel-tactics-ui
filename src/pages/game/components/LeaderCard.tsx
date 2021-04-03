@@ -33,8 +33,6 @@ const useStyles = makeStyles(
 const LeaderCard: React.FC<ILeaderCardProps> = ({ card }) => {
   const classes = useStyles();
 
-  console.log('LeaderCard', card);
-
   if (!card) return <EmptyCardTemplate />;
 
   const cardData = CARDS[card.type].leader;
