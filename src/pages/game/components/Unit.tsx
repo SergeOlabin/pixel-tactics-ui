@@ -1,10 +1,16 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
-import React from 'react';
+import React, { useCallback, useContext } from 'react';
+import { useSelector } from 'react-redux';
 import {
   ICardDimensions,
   CARD_DIMENSIONS,
 } from '../../../shared/constants/CardGeometry';
+import { RootStateType } from '../../../store/store';
 import { Players, Waves, Positions } from '../types/game-types';
+import { IPlace } from '../types/types';
+import { PlayerContext } from './Board';
+import BoardCard from './BoardCard';
+import { HeroCardWithPopperPreview } from './HeroCard';
 // import BoardCard from './BoardCard';
 import { LeaderCardWithPopperPreview } from './LeaderCard';
 
@@ -27,7 +33,6 @@ const useStyles = makeStyles(
 );
 
 export interface IUnitProps {
-  player: Players;
   mirrored?: boolean;
 }
 
@@ -49,28 +54,65 @@ const getUnitMap = () => [
   ],
 ];
 
-const Unit: React.FC<IUnitProps> = (props) => {
+const Unit: React.FC<IUnitProps> = ({ mirrored }) => {
   const classes = useStyles(CARD_DIMENSIONS);
+  const owner = useContext(PlayerContext);
 
-  // const playerUnit = useSelector((state: IAppState) => state.gameState.board[props.player]);
+  console.log('owner', owner);
+
+  const playerUnit = useSelector(
+    (state: RootStateType) => state.game!.board[owner].unit,
+  );
+  const leader = useSelector(
+    (state: RootStateType) => state.game?.board[owner].leader,
+  );
+  console.log('leader', leader);
 
   const unitMap = getUnitMap();
-  if (props.mirrored) {
-    unitMap.map((wave) => wave.reverse());
+  if (mirrored) {
+    unitMap.forEach((wave) => wave.reverse());
     unitMap.reverse();
   }
 
-  // const cards = unitMap.map((waves) =>
-  //   waves.map(
-  //     (place) => place && <BoardCard place={place} key={getKey(place)} />,
-  //   ),
-  // );
+  const getCardForPlace = React.useCallback(
+    (place: IPlace) => {
+      return playerUnit[place.wave][place.position];
+    },
+    [playerUnit],
+  );
 
-  // // setLeader
-  // cards[1][1] = <LeaderCardWithPopperPreview key='leader' />;
+  const cards = unitMap.map((waves) =>
+    waves.map(
+      (place) =>
+        place && (
+          <BoardCard place={place} key={getKey(place)}>
+            {getCardForPlace(place) && (
+              <HeroCardWithPopperPreview
+                card={getCardForPlace(place)}
+                activeDescriptionWave={place.wave}
+              />
+            )}
+          </BoardCard>
+        ),
+    ),
+  );
 
-  return <div className={classes.root}>CARDS</div>;
-  // return <div className={classes.root}>{[...cards]}</div>;
+  // setLeader
+  cards[1][1] = (
+    <BoardCard
+      place={{
+        position: Positions.Center,
+        wave: Waves.Flank,
+      }}
+      key='leader'
+    >
+      {leader?.type && (
+        <LeaderCardWithPopperPreview card={{ type: leader?.type }} />
+      )}
+    </BoardCard>
+  );
+
+  return <div className={classes.root}>{[...cards]}</div>;
 };
 
 const getKey = (place: { wave: Waves; position: Positions }) =>

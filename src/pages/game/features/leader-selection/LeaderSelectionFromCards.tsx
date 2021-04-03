@@ -11,6 +11,7 @@ import {
   ISelectLeaderPayload,
 } from '../../types/game-event-types';
 import { GameEvent, IGameEvent } from '../../types/game-socket-events';
+import LeaderCard from '../../components/LeaderCard';
 
 const useStyles = makeStyles(
   (theme) =>
@@ -72,7 +73,7 @@ const LeaderSelectionFromCards: React.FC<ILeaderSelectionFromCardsProps> = ({}) 
             onClick={() => selectLeader(type)}
           >
             <MagnifiedContext.Provider value={true}>
-              <HeroCard card={{ type }} />
+              <LeaderCard card={{ type, leader: true }} />
             </MagnifiedContext.Provider>
           </div>
         ))}

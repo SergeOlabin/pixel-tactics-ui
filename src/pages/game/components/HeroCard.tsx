@@ -7,6 +7,7 @@ import { Waves } from '../types/game-types';
 import CardHeader from './card-parts/CardHeader';
 import PowerDescription from './card-parts/PowerDescription';
 import CardTemplate from './CardTemplate';
+import WithPopperPreview from './WithPopperPreview';
 
 const useStyles = makeStyles(
   {
@@ -87,3 +88,10 @@ const HeroCard: React.FC<IHeroCardProps> = ({
 HeroCard.displayName = 'HeroCard';
 
 export default HeroCard;
+
+export const HeroCardWithPopperPreview = WithPopperPreview<IHeroCardProps>(
+  HeroCard,
+  {
+    activeDescriptionWave: undefined,
+  },
+);

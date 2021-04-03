@@ -5,7 +5,7 @@ import { TRANSITION_TIMEOUT } from '../../../shared/constants/CardGeometry';
 import { IPlace } from '../types/types';
 import { setActiveCard } from '../../../store/slices/active-card-slice';
 import { ActiveCardLocation } from '../../../store/types';
-import { IAppState } from '../../../store/store';
+import { IAppState, RootStateType } from '../../../store/store';
 import { PlayerContext } from './Board';
 import { EmptyCardTemplate } from './CardTemplate';
 import HeroCard, { IHeroCardProps } from './HeroCard';
@@ -13,6 +13,7 @@ import WithPopperPreview from './WithPopperPreview';
 
 export interface IBoardCardProps {
   place: IPlace;
+  children?: React.ReactNode;
 }
 
 const useStyles = makeStyles(
@@ -35,72 +36,61 @@ const useStyles = makeStyles(
   { name: 'BoardCard' },
 );
 
-const BoardCard: React.FC<IBoardCardProps> = (props) => {
-  const { place } = props;
+const BoardCard: React.FC<IBoardCardProps> = ({ place, children }) => {
   const dispatch = useDispatch();
 
   const ownerPlayer = useContext(PlayerContext);
-  const currentPlayer = useSelector(
-    (state: IAppState) => state.game?.playerColor,
-  );
+  // const card = useSelector(
+  //   (state: RootStateType) =>
+  //     state.game?.board[ownerPlayer].unit[place.wave][place.position],
+  // );
 
-  const activeCard = useSelector((state: IAppState) => state.activeCard);
-  // TODO: FIX
-  const card = useSelector(
-    (state: IAppState) =>
-      state.game!.board[ownerPlayer][place.wave][place.position]!,
-  );
+  // const currentPlayer = useSelector(
+  //   (state: RootStateType) => state.game?.turn.currentPlayer,
+  // );
+  // const activeCard = useSelector((state: RootStateType) => state.activeCard);
 
-  const isActive = activeCard?.place === place;
+  // const isActive = activeCard?.place === place;
 
-  const onCardClick = (event: React.MouseEvent) => {
-    event.stopPropagation();
-    if (!activeCard && ownerPlayer !== currentPlayer) {
-      console.log('NOT OWNER');
-      return;
-    }
+  // const onCardClick = (event: React.MouseEvent) => {
+  //   event.stopPropagation();
+  //   if (!activeCard && ownerPlayer !== currentPlayer) {
+  //     console.log('NOT OWNER');
+  //     return;
+  //   }
 
-    toggleCardSelection();
-  };
+  //   toggleCardSelection();
+  // };
 
-  const toggleCardSelection = () => {
-    if (card) {
-      const payload = isActive
-        ? null
-        : {
-            card,
-            place,
-            location: ActiveCardLocation.Board,
-          };
-      dispatch(setActiveCard(payload));
-    }
-  };
+  // const toggleCardSelection = () => {
+  //   if (card) {
+  //     const payload = isActive
+  //       ? null
+  //       : {
+  //           card,
+  //           place,
+  //           location: ActiveCardLocation.Board,
+  //         };
+  //     dispatch(setActiveCard(payload));
+  //   }
+  // };
 
   const classes = useStyles();
-
-  if (!card) return <EmptyCardTemplate />;
 
   return (
     <>
       <div
         className={[
           classes.cardContainer,
-          isActive ? classes.activeCard : '',
+          // isActive ? classes.activeCard : '',
         ].join(' ')}
         style={{ width: '100%', height: '100%' }}
-        onClick={onCardClick}
+        // onClick={onCardClick}
       >
-        <HeroCardWithPopperPreview
-          card={card}
-          activeDescriptionWave={props.place.wave}
-        />
+        {children || <EmptyCardTemplate />}
       </div>
     </>
   );
 };
 
-const HeroCardWithPopperPreview = WithPopperPreview<IHeroCardProps>(HeroCard, {
-  activeDescriptionWave: undefined,
-});
-
-export default BoardCard;
+export default React.memo(BoardCard);

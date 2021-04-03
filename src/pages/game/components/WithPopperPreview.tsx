@@ -45,7 +45,7 @@ const WithPopperPreview = <P extends Record<string, any>>(
           onMouseLeave={handlePopoverClose}
           ref={anchorRef}
         >
-          <Child {...props}></Child>
+          <Child {...props} />
         </div>
 
         <Popper

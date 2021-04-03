@@ -66,7 +66,7 @@ const Board: React.FC<IBoardProps> = () => {
       <div className={classes.boardsContainer}>
         <div className={classes.playerGroup}>
           <PlayerContext.Provider value={opponent}>
-            <Unit player={opponent} mirrored />
+            <Unit mirrored />
             <div className={classes.turnCardPlacer}>
               <TurnCardPlacer mirrored />
             </div>
@@ -78,7 +78,7 @@ const Board: React.FC<IBoardProps> = () => {
         <Divider variant='middle' className={classes.divider} />
         <div className={classes.playerGroup}>
           <PlayerContext.Provider value={activePlayer}>
-            <Unit player={activePlayer} />
+            <Unit />
             <div className={classes.turnCardPlacer}>
               <TurnCardPlacer />
             </div>

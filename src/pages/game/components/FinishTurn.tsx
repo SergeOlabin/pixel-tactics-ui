@@ -1,12 +1,8 @@
+import { createStyles, Fab, makeStyles } from '@material-ui/core';
+import { green, grey } from '@material-ui/core/colors';
 import React from 'react';
-import { makeStyles, createStyles, Fab } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-import { withStyles } from '@material-ui/core/styles';
-import { Theme } from '@material-ui/core/styles';
-import purple from '@material-ui/core/colors/purple';
 import { useSelector } from 'react-redux';
 import { RootStateType } from '../../../store/store';
-import { green, grey } from '@material-ui/core/colors';
 
 const useStyles = makeStyles(
   (theme) =>
