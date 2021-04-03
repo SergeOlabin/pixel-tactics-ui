@@ -63,7 +63,7 @@ const Deck: React.FC<IDeckProps> = ({}) => {
         gameId: game?._id!,
         type: GameEventTypes.DrawCardsForLeader,
         payload: {
-          userId: userInfo?._id,
+          userId: userInfo?._id!,
         },
       };
       socket.emit(GameEvent.ToServer, payload);

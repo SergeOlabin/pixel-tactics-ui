@@ -9,7 +9,10 @@ export enum GameEvent {
 export interface IGameEvent {
   type: GameEventTypes;
   gameId: string;
-  payload?: unknown;
+  payload: {
+    userId: string;
+    [key: string]: any;
+  };
 }
 
 export enum GameInitEventsToServer {

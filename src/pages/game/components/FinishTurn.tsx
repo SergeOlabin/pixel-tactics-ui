@@ -30,8 +30,9 @@ const FinishTurnButton: React.FC = () => {
   const user = useSelector((state: RootStateType) => state.userInfo?.username);
   const { playerColor, turn } =
     useSelector((state: RootStateType) => state.game) || {};
+  const { currentPlayer } = turn!;
 
-  const buttonActive = playerColor && turn && playerColor === turn;
+  const buttonActive = playerColor && turn && playerColor === currentPlayer;
   const buttonColor = buttonActive ? green : grey;
   const buttonTitle = buttonActive ? 'End Turn' : 'Waiting...';
 

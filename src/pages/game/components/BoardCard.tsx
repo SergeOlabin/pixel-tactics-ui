@@ -40,7 +40,9 @@ const BoardCard: React.FC<IBoardCardProps> = (props) => {
   const dispatch = useDispatch();
 
   const ownerPlayer = useContext(PlayerContext);
-  const currentPlayer = useSelector((state: IAppState) => state.game?.turn!);
+  const currentPlayer = useSelector(
+    (state: IAppState) => state.game?.playerColor,
+  );
 
   const activeCard = useSelector((state: IAppState) => state.activeCard);
   // TODO: FIX

@@ -28,7 +28,7 @@ export interface IGameState {
   // meta: IGameMeta;
   board: IBoardStateClass;
   players: IPlayersStateClass;
-  turn: Players;
+  turn: ITurnState;
 }
 
 export interface IGameStateAdaptedToPlayer {
@@ -36,19 +36,24 @@ export interface IGameStateAdaptedToPlayer {
   players: IPlayersStateClass;
   board: IBoardStateAdaptedToPlayer;
   hand: IPlayerHand;
-  turn: Players;
+  turn: ITurnState;
   playerColor: Players;
 }
 
 export interface IBoardStateAdaptedToPlayer
   extends Record<Players, Omit<IPlayerBoard, 'hand' | 'deck'>> {}
 
+// TURN
+export class ITurnState {
+  firstPlayer: Players;
+  currentPlayer: Players;
+  wave: Waves;
+}
+
 // PLAYERS
-export interface IPlayerState {
+export class IPlayerState {
   userId: string;
-  turnState: ITurnState;
   actionsMeta: IActionsState;
-  first: boolean;
 }
 
 export class IPlayersStateClass {
@@ -61,10 +66,10 @@ export interface IActionsState {
   available: number;
 }
 
-export interface ITurnState {
-  wave: Waves;
-  state: TurnStage;
-}
+// export interface ITurnState {
+//   wave: Waves;
+//   state: TurnStage;
+// }
 
 // BOARD
 export class IBoardStateClass {
@@ -91,7 +96,7 @@ export class IPlayerLeader {
 }
 
 export class IBoardCard {
-  cardType: string;
+  cardType: CharacterList;
   stats: IBoardCardStats;
   effects: IBoardCardEffect[];
 }
@@ -103,4 +108,19 @@ export class IBoardCardStats {
 
 export class IBoardCardEffect {}
 
-export class IPlayerUnit {}
+export class IPlayerUnit {
+  [Waves.Vanguard]: {
+    [Positions.Left]: IBoardCard | null;
+    [Positions.Center]: IBoardCard | null;
+    [Positions.Right]: IBoardCard | null;
+  };
+  [Waves.Flank]: {
+    [Positions.Left]: IBoardCard | null;
+    [Positions.Right]: IBoardCard | null;
+  };
+  [Waves.Rear]: {
+    [Positions.Left]: IBoardCard | null;
+    [Positions.Center]: IBoardCard | null;
+    [Positions.Right]: IBoardCard | null;
+  };
+}

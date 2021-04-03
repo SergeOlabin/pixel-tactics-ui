@@ -6,7 +6,7 @@ import {
   CARD_DIMENSIONS,
   ICardDimensions,
 } from '../../../shared/constants/CardGeometry';
-import { Waves, Players } from '../types/game-types';
+import { Waves, Players, TurnStage } from '../types/game-types';
 import { IAppState } from '../../../store/store';
 
 const useStyles = makeStyles(
@@ -38,18 +38,21 @@ const TurnCardPlacer: React.FC<ITurnCardPlacerProps> = (props) => {
   const slots = Object.values(Waves);
   if (props.mirrored) slots.reverse();
 
-  const player = useContext(PlayerContext);
-  const turn = useSelector(
-    (state: IAppState) => state.game?.players[player].turnState,
-  );
-  console.log(turn);
+  const ownerPlayer = useContext(PlayerContext);
+  const { turn } = useSelector((state: IAppState) => state.game!);
+
+  const { wave: activeWave } = turn;
+  const stage =
+    turn.currentPlayer === ownerPlayer
+      ? TurnStage.InProgress
+      : TurnStage.Waiting;
 
   return (
     <div className={classes.root}>
       {slots.map((wave) => (
         <div key={wave} className={classes.cardSlot}>
-          {wave === turn?.wave ? (
-            <PlayerTurnCard player={player}>{turn?.state}</PlayerTurnCard>
+          {wave === activeWave ? (
+            <PlayerTurnCard player={ownerPlayer}>{stage}</PlayerTurnCard>
           ) : (
             ''
           )}
