@@ -11,6 +11,7 @@ import { setGame } from '../../pages/game/store/game-slice';
 import { IGameStateAdaptedToPlayer } from '../../pages/game/types/game-types';
 import { GameInitEventsToClient } from '../../pages/game/types/game-socket-events';
 import { GameEventTypesToClient } from '../../pages/game/types/game-event-types';
+import { useSnackbar } from 'notistack';
 
 export const SocketConnectionContext = React.createContext<any>(undefined); // 'Blue' for default, default can be removed
 
@@ -28,6 +29,7 @@ const SocketConnection: React.FC<ISocketConnectionProps> = ({ children }) => {
   const userInfo = useSelector((state: RootStateType) => state.userInfo);
   const history = useHistory();
   const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     if (!userInfo) {
@@ -57,6 +59,10 @@ const SocketConnection: React.FC<ISocketConnectionProps> = ({ children }) => {
 
     socket.on(GameEventTypesToClient.SelectLeaderReq, () => {
       console.log('SelectLeaderReq');
+    });
+
+    socket.on('exception', (error) => {
+      enqueueSnackbar(error.message, { variant: 'warning' });
     });
 
     return () => {

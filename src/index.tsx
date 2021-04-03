@@ -10,18 +10,27 @@ import theme from './theme/theme';
 import { Provider as HttpProvider } from 'use-http';
 import { BASE_URL, HTTP_OPTIONS } from './shared/constants/http-options';
 import SocketConnection from './shared/providers/GameConnection';
+import { SnackbarProvider } from 'notistack';
 
 ReactDOM.render(
   <HttpProvider url={BASE_URL} options={HTTP_OPTIONS}>
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <BrowserRouter>
-          <SocketConnection>
-            <Router />
-          </SocketConnection>
-        </BrowserRouter>
+        <SnackbarProvider
+          maxSnack={3}
+          autoHideDuration={4000}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+        >
+          <BrowserRouter>
+            <SocketConnection>
+              <Router />
+            </SocketConnection>
+          </BrowserRouter>
+        </SnackbarProvider>
       </ThemeProvider>
     </Provider>
   </HttpProvider>,

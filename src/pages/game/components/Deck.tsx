@@ -55,6 +55,8 @@ const Deck: React.FC<IDeckProps> = ({}) => {
   const { playerColor, turn } = game || {};
 
   const active = playerColor === turn?.currentPlayer && playerColor === owner;
+
+  console.log('deck', playerColor, turn?.currentPlayer, owner);
   const leaderSelection = !leader && playerColor === owner;
 
   const onClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {

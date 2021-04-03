@@ -52,7 +52,10 @@ const TurnCardPlacer: React.FC<ITurnCardPlacerProps> = (props) => {
       {slots.map((wave) => (
         <div key={wave} className={classes.cardSlot}>
           {wave === activeWave ? (
-            <PlayerTurnCard player={ownerPlayer}>{stage}</PlayerTurnCard>
+            <PlayerTurnCard player={ownerPlayer}>
+              {turn.firstPlayer} is FIRST
+              <div>{stage}</div>
+            </PlayerTurnCard>
           ) : (
             ''
           )}
