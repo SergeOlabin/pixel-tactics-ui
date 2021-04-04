@@ -2,8 +2,7 @@ import { makeStyles } from '@material-ui/core';
 import { deepPurple } from '@material-ui/core/colors';
 import React from 'react';
 import { CARDS } from '../../../shared/Cards';
-import { IBoardCard } from '../types/types';
-import { Waves } from '../types/game-types';
+import { IBoardCard, Waves } from '../types/game-types';
 import CardHeader from './card-parts/CardHeader';
 import PowerDescription from './card-parts/PowerDescription';
 import CardTemplate from './CardTemplate';
@@ -43,7 +42,7 @@ const HeroCard: React.FC<IHeroCardProps> = ({
   activeDescriptionWave,
 }) => {
   const classes = useStyles();
-  const cardData = CARDS[card.type].hero;
+  const cardData = CARDS[card.cardType].hero;
   const stats = {
     attack: cardData.attack,
     health: cardData.health,

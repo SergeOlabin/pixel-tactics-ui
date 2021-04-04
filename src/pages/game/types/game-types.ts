@@ -23,6 +23,11 @@ export enum TurnStage {
   Waiting = 'Waiting',
 }
 
+export interface IPlace {
+  wave: Waves;
+  position: Positions;
+}
+
 export interface IGameState {
   _id: string;
   // meta: IGameMeta;
@@ -97,8 +102,8 @@ export class IPlayerLeader {
 
 export class IBoardCard {
   cardType: CharacterList;
-  stats: IBoardCardStats;
-  effects: IBoardCardEffect[];
+  stats?: IBoardCardStats;
+  effects?: IBoardCardEffect[];
 }
 
 export class IBoardCardStats {

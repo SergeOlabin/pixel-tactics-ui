@@ -1,21 +1,16 @@
+import { createStyles, makeStyles } from '@material-ui/core';
 import React, { useContext } from 'react';
-import { makeStyles, createStyles } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 import {
   CARD_DIMENSIONS,
   ICardDimensions,
   TRANSITION_TIMEOUT,
 } from '../../../shared/constants/CardGeometry';
-import { PlayerContext } from './Board';
-import { useSelector } from 'react-redux';
-import { RootStateType } from '../../../store/store';
 import { socket } from '../../../shared/service/socket';
-import {
-  GameEvent,
-  GameInitEventsToServer,
-  ICheckForExistingGamePayload,
-  IGameEvent,
-} from '../types/game-socket-events';
+import { RootStateType } from '../../../store/store';
 import { GameEventTypes } from '../types/game-event-types';
+import { GameEvent, IGameEvent } from '../types/game-socket-events';
+import { PlayerContext } from './Board';
 
 const useStyles = makeStyles(
   (theme) =>
@@ -56,7 +51,6 @@ const Deck: React.FC<IDeckProps> = ({}) => {
 
   const active = playerColor === turn?.currentPlayer && playerColor === owner;
 
-  console.log('deck', playerColor, turn?.currentPlayer, owner);
   const leaderSelection = !leader && playerColor === owner;
 
   const onClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {

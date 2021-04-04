@@ -2,7 +2,6 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TRANSITION_TIMEOUT } from '../../../shared/constants/CardGeometry';
-import { IPlace } from '../types/types';
 import { setActiveCard } from '../../../store/slices/active-card-slice';
 import { ActiveCardLocation } from '../../../store/types';
 import { IAppState, RootStateType } from '../../../store/store';
@@ -10,6 +9,11 @@ import { PlayerContext } from './Board';
 import { EmptyCardTemplate } from './CardTemplate';
 import HeroCard, { IHeroCardProps } from './HeroCard';
 import WithPopperPreview from './WithPopperPreview';
+import { IPlace } from '../types/game-types';
+import { useCanIGo } from '../hooks/use-can-i-go';
+import { socket } from '../../../shared/service/socket';
+import { GameEvent, IGameEvent } from '../types/game-socket-events';
+import { GameEventTypes, IPlayCardPayload } from '../types/game-event-types';
 
 export interface IBoardCardProps {
   place: IPlace;
@@ -38,29 +42,47 @@ const useStyles = makeStyles(
 
 const BoardCard: React.FC<IBoardCardProps> = ({ place, children }) => {
   const dispatch = useDispatch();
+  const owner = useContext(PlayerContext);
 
-  const ownerPlayer = useContext(PlayerContext);
-  // const card = useSelector(
-  //   (state: RootStateType) =>
-  //     state.game?.board[ownerPlayer].unit[place.wave][place.position],
-  // );
+  const userId = useSelector((state: RootStateType) => state.userInfo?._id);
+  const activeCard = useSelector((state: RootStateType) => state.activeCard);
+  const { game } = useSelector((state: RootStateType) => state);
 
-  // const currentPlayer = useSelector(
-  //   (state: RootStateType) => state.game?.turn.currentPlayer,
-  // );
-  // const activeCard = useSelector((state: RootStateType) => state.activeCard);
+  const { canIGoMyCells } = useCanIGo();
 
-  // const isActive = activeCard?.place === place;
+  const card = useSelector(
+    (state: RootStateType) =>
+      state.game?.board[owner].unit[place.wave][place.position],
+  );
 
-  // const onCardClick = (event: React.MouseEvent) => {
-  //   event.stopPropagation();
-  //   if (!activeCard && ownerPlayer !== currentPlayer) {
-  //     console.log('NOT OWNER');
-  //     return;
-  //   }
+  const onCardClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    if (!canIGoMyCells) return;
 
-  //   toggleCardSelection();
-  // };
+    if (activeCard) {
+      if (activeCard.location === ActiveCardLocation.Hand) {
+        if (!card) {
+          console.log('CLICK with card in hand on EMPTY');
+
+          const payload: IPlayCardPayload = {
+            userId: userId!,
+            cardType: activeCard.card.type,
+            toPlace: place,
+          };
+
+          const event: IGameEvent = {
+            gameId: game?._id!,
+            payload,
+            type: GameEventTypes.PlayCard,
+          };
+
+          socket.emit(GameEvent.ToServer, event);
+        }
+      }
+    }
+
+    // toggleCardSelection();
+  };
 
   // const toggleCardSelection = () => {
   //   if (card) {
@@ -85,7 +107,7 @@ const BoardCard: React.FC<IBoardCardProps> = ({ place, children }) => {
           // isActive ? classes.activeCard : '',
         ].join(' ')}
         style={{ width: '100%', height: '100%' }}
-        // onClick={onCardClick}
+        onClick={onCardClick}
       >
         {children || <EmptyCardTemplate />}
       </div>

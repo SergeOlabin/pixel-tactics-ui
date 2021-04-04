@@ -55,11 +55,6 @@ export interface ICardEffect {
   // TODO:
 }
 
-export interface IPlace {
-  wave: Waves;
-  position: Positions;
-}
-
 export interface IHero {
   readonly type: string;
   readonly health: number;

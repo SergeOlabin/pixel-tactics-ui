@@ -92,7 +92,7 @@ const PlayerHand: React.FC<IPlayerHandProps> = (props) => {
       onClick={(event) => onCardClick(event, type)}
     >
       <MagnifiedContext.Provider value={magnifiedCardType === type}>
-        <HeroCard card={{ type }} />
+        <HeroCard card={{ cardType: type }} />
       </MagnifiedContext.Provider>
     </div>
   ));

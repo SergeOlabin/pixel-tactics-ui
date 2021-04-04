@@ -6,8 +6,7 @@ import {
   CARD_DIMENSIONS,
 } from '../../../shared/constants/CardGeometry';
 import { RootStateType } from '../../../store/store';
-import { Players, Waves, Positions } from '../types/game-types';
-import { IPlace } from '../types/types';
+import { Players, Waves, Positions, IPlace } from '../types/game-types';
 import { PlayerContext } from './Board';
 import BoardCard from './BoardCard';
 import { HeroCardWithPopperPreview } from './HeroCard';

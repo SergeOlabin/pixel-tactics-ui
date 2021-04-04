@@ -1,4 +1,5 @@
-import { IBoardCard, IPlace } from '../pages/game/types/types';
+import { IPlace } from '../pages/game/types/game-types';
+import { IBoardCard } from '../pages/game/types/types';
 
 export enum ActiveCardLocation {
   Board = 'Board',
