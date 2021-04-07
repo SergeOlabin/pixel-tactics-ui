@@ -1,11 +1,11 @@
 import { IHero, ILeader, ICard } from '../pages/game/types/types';
-import { Alchemist } from '../static/cards/Alchemist';
+import { AlchemistCharacter } from '../static/cards/Alchemist';
 import { makeCardFromCharacter } from './helpers/MakeCard';
-import { DragonMage } from '../static/cards/DragonMage';
-import { Illusionist } from '../static/cards/Illusionist';
-import { Knight } from '../static/cards/Knight';
-import { Overlord } from '../static/cards/Overlord';
-import { Mascot } from '../static/cards/Mascot';
+import { DragonMageCharacter } from '../static/cards/DragonMage';
+import { IllusionistCharacter } from '../static/cards/Illusionist';
+import { KnightCharacter } from '../static/cards/Knight';
+import { OverlordCharacter } from '../static/cards/Overlord';
+import { MascotCharacter } from '../static/cards/Mascot';
 import { CharacterList } from '../pages/game/types/character-list';
 
 type HeroClassType = new (...args: any[]) => IHero;
@@ -17,10 +17,10 @@ export interface Character {
 }
 
 export const CARDS: { [key: string]: ICard } = {
-  [CharacterList.Alchemist]: makeCardFromCharacter(Alchemist),
-  [CharacterList.DragonMage]: makeCardFromCharacter(DragonMage),
-  [CharacterList.Illusionist]: makeCardFromCharacter(Illusionist),
-  [CharacterList.Knight]: makeCardFromCharacter(Knight),
-  [CharacterList.Mascot]: makeCardFromCharacter(Mascot),
-  [CharacterList.Overlord]: makeCardFromCharacter(Overlord),
+  [CharacterList.Alchemist]: makeCardFromCharacter(AlchemistCharacter),
+  [CharacterList.DragonMage]: makeCardFromCharacter(DragonMageCharacter),
+  [CharacterList.Illusionist]: makeCardFromCharacter(IllusionistCharacter),
+  [CharacterList.Knight]: makeCardFromCharacter(KnightCharacter),
+  [CharacterList.Mascot]: makeCardFromCharacter(MascotCharacter),
+  [CharacterList.Overlord]: makeCardFromCharacter(OverlordCharacter),
 };

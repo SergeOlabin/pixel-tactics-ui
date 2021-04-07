@@ -1,8 +1,9 @@
+import { CharacterList } from '../../pages/game/types/character-list';
 import { IHero, ILeader, AttackTypes } from '../../pages/game/types/types';
 import { Character } from '../../shared/Cards';
 
 export class OverlordHero implements IHero {
-  public readonly type = 'Overlord';
+  public readonly type = CharacterList.Overlord;
   public readonly attack = 3;
   public readonly health = 7;
 
@@ -40,7 +41,7 @@ export class OverlordLeader implements ILeader {
   public power() {}
 }
 
-export const Overlord: Character = {
+export const OverlordCharacter: Character = {
   Hero: OverlordHero,
   Leader: OverlordLeader,
 };

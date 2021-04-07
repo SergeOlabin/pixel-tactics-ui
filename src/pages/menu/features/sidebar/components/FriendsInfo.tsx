@@ -92,6 +92,8 @@ const FriendsInfo: React.FC<IFriendsInfoProps> = () => {
     dispatch(setActiveFriendById(friendId));
   };
 
+  console.log('friends', friends);
+
   return (
     <>
       <div className={classes.container}>

@@ -1,8 +1,9 @@
+import { CharacterList } from '../../pages/game/types/character-list';
 import { IHero, ILeader, AttackTypes } from '../../pages/game/types/types';
 import { Character } from '../../shared/Cards';
 
 export class DragonMageHero implements IHero {
-  public readonly type = 'DragonMage';
+  public readonly type = CharacterList.DragonMage;
   public readonly attack = 6;
   public readonly health = 3;
 
@@ -39,7 +40,7 @@ export class DragonMageLeader implements ILeader {
   public power() {}
 }
 
-export const DragonMage: Character = {
+export const DragonMageCharacter: Character = {
   Hero: DragonMageHero,
   Leader: DragonMageLeader,
 };
