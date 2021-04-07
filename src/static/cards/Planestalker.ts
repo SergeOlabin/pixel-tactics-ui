@@ -2,23 +2,23 @@ import { CharacterList } from '../../pages/game/types/character-list';
 import { IHero, ILeader, AttackTypes } from '../../pages/game/types/types';
 import { Character } from '../../shared/Cards';
 
-export class AlchemistHero implements IHero {
-  public readonly type = CharacterList.Alchemist;
+export class PlanestalkerHero implements IHero {
+  public readonly type = CharacterList.Planestalker;
   public readonly attack = 3;
   public readonly health = 7;
 
   public vanguardDescription = `
-  Intercept
-  Ranged Attack
+    Intercept
+    Ranged Attack
   `;
   public flankDescription = `
-  Forerunner and Supporter have Ranged Attack.
+    Forerunner and Supporter have Ranged Attack.
   `;
   public rearDescription = `
-  Ranged Attack
+    Ranged Attack
   `;
   public orderDescription = `
-  Do 5 damage to all heroes in both flanks.
+    Do 5 damage to all heroes in both flanks.
   `;
 
   public vanguardPower() {}
@@ -27,20 +27,20 @@ export class AlchemistHero implements IHero {
   public order() {}
 }
 
-export class AlchemistLeader implements ILeader {
+export class PlanestalkerLeader implements ILeader {
   public readonly name = 'Zaamassal Kett';
   public readonly attack = 4;
   public readonly health = 19;
   public readonly attackType = AttackTypes.Melee;
 
   public readonly powerDescription = `
-  This leader's attack is ranged. All heroes in this unit have ranged attacks.
+    This leader's attack is ranged. All heroes in this unit have ranged attacks.
   `;
 
   public power() {}
 }
 
-export const AlchemistCharacter: Character = {
-  Hero: AlchemistHero,
-  Leader: AlchemistLeader,
+export const PlanestalkerCharacter: Character = {
+  Hero: PlanestalkerHero,
+  Leader: PlanestalkerLeader,
 };
