@@ -11539,10 +11539,10 @@ urs@^0.0.8:
   resolved "https://registry.yarnpkg.com/urs/-/urs-0.0.8.tgz#8a0e0b792073cdb7eec926d08ab1e017ffab3f66"
   integrity sha512-LaSSPpr91XrVA3vW2zPupw4K6DSQEDKdL4yQZX1mO2fpljIMpB5zctrjRvxLurelWSgKsHsCmfHNCImscryirQ==
 
-use-http@^1.0.18:
-  version "1.0.18"
-  resolved "https://registry.yarnpkg.com/use-http/-/use-http-1.0.18.tgz#6b7c6c533c7540a81f6acef00ffa52667fda7f91"
-  integrity sha512-0gCYr1/+vHLSLfDNxjqPo+nGw6PPRj6ljZxfchsTiHjvR4AuGkxLpkASI8iAUzOxy5OkUU7A2uVTCUDX3uXw6w==
+use-http@^1.0.19:
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/use-http/-/use-http-1.0.20.tgz#15d9d2a239f8621bc76fd191418fd601deafebae"
+  integrity sha512-3JOASSO828AsUwGjH3nhjUxHpR0lxIUSSNO/OM+0YydETX6FWJV5zWiGKTOV1Gsxu/3GLRFUbEJ1Cl3mUGkfnw==
   dependencies:
     urs "^0.0.8"
     use-ssr "^1.0.24"
